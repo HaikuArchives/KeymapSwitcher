@@ -1,0 +1,30 @@
+SubDir HAIKU_TOP src apps keymapswitcher ;
+
+SetSubDirSupportedPlatformsBeOSCompatible ;
+
+Application KeymapSwitcher :
+	DeskView.cpp
+	KeymapSwitcher.cpp
+	Replicator.cpp
+	SettingsWindow.cpp
+	Settings.cpp
+	: be $(TARGET_LIBSTDC++)
+	: KeymapSwitcher.rdef 
+;
+
+Addon keymap_switcher : 
+	SwitchFilter.cpp
+	Settings.cpp
+	: be $(TARGET_LIBSTDC++) input_server 
+
+;
+
+Package haiku-keymapswitcher-cvs :
+	KeymapSwitcher :
+	boot apps ;
+
+Package haiku-keymapswitcher-cvs :
+	keymap_switcher :
+	boot home config add-ons input_server filters ;
+
+Depends KeymapSwitcher : keymap_switcher ;
