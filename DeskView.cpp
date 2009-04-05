@@ -116,7 +116,7 @@ void DeskView::Init() {
 		settings->SetInt32("active", 0L);
 		settings->SetInt32("keymaps", 1L);
 		settings->SetString("n0", "American");
-		settings->SetInt32("d0", B_BEOS_ETC_DIRECTORY); 
+		settings->SetInt32("d0", B_BEOS_DATA_DIRECTORY); 
 		settings->Save(); // let Switcher know about new settings
 	}
 	active_keymap = 0;
@@ -222,7 +222,7 @@ void DeskView::DetachedFromWindow(void)
 void DeskView::Draw(BRect rect) {
 	BView::Draw(rect);
 	SetDrawingMode(B_OP_COPY);
-	rgb_color color = ui_color(B_MENU_SELECTION_BACKGROUND_COLOR);
+	rgb_color color = ui_color(B_DESKTOP_COLOR);
 
 	// draw rect
 	SetLowColor(189,185,189); // Deskbar's status pane color
@@ -543,9 +543,11 @@ void DeskView::ChangeKeyMapSilent(int32 change_to) {
 	param << "d" << active_keymap;
 	settings->FindInt32(param.String(), &dir);
 	find_directory((directory_which)dir, &path);
-	path.Append("Keymap");
+	if(dir == B_BEOS_DATA_DIRECTORY)
+		path.Append("Keymaps");
+	else	
+		path.Append("Keymap");
 	path.Append(name.String());
-	
 	// open source keymap file
 	BFile source_file(path.Path(), B_READ_ONLY);
 	off_t size = 0;

@@ -11,10 +11,10 @@ if [ $answer == "No" ]; then
 	exit
 fi
 
-/boot/beos/bin/install $APP_SRC   /boot/beos/apps/$APP_NAME
-/boot/beos/bin/install $ADDON_SRC /boot/beos/apps/$ADDON_NAME
-mimeset /boot/beos/apps/$APP_NAME  
-mimeset /boot/beos/apps/$ADDON_NAME
+/boot/system/bin/install $APP_SRC   /boot/system/apps/$APP_NAME
+/boot/system/bin/install $ADDON_SRC /boot/system/add-ons/input_server/filters/$ADDON_NAME
+mimeset /boot/system/apps/$APP_NAME  
+mimeset /boot/system/add-ons/input_server/filters/$ADDON_NAME
 
-ln -s /boot/beos/apps/$APP_NAME "/boot/home/config/be/Desktop Applets/Keymap Switcher"
+ln -s /boot/system/apps/$APP_NAME "/boot/home/config/be/Desktop Applets/Keymap Switcher"
 

@@ -5,7 +5,8 @@
 ## Intel and PowerPC builds of the BeOS.
 
 ## Application Specific Settings ---------------------------------------------
-RC=/boot/develop/tools/rc
+#RC=/boot/develop/tools/rc
+RC=rc
 
 # specify the name of the binary
 NAME=KeymapSwitcher

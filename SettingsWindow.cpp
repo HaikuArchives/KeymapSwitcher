@@ -96,7 +96,7 @@ void KeymapListView::MessageReceived(BMessage *message) {
 			index = IndexOf(ConvertFromScreen(message->DropPoint()));
 			KeymapItem *new_item = new KeymapItem(item);
 			BString name = new_item->Text();
-			if(B_BEOS_ETC_DIRECTORY == new_item->Dir())
+			if(B_BEOS_DATA_DIRECTORY == new_item->Dir())
 				name += " (System)";
 			else
 				name += " (User)";
@@ -200,11 +200,14 @@ SettingsWindow::SettingsWindow() :
 		int32 dir;
 		settings->FindInt32(param.String(), &dir);
 		find_directory((directory_which)dir, &path);
-		path.Append("Keymap/");
+		if(dir == B_BEOS_DATA_DIRECTORY)
+			path.Append("Keymaps");
+		else
+			path.Append("Keymap");
 		path.Append(name.String());
 
 		BString display_name = name;
-		if(dir == B_BEOS_ETC_DIRECTORY)
+		if(dir == B_BEOS_DATA_DIRECTORY)
 			display_name += " (System)";
 		else	display_name += " (User)";
 		selected_list->AddItem(new KeymapItem(display_name.String(), name.String(), dir));
@@ -240,8 +243,8 @@ SettingsWindow::SettingsWindow() :
 		B_FOLLOW_LEFT|B_FOLLOW_TOP, 0, false, true));
 
 	// populate available_list
-	find_directory(B_BEOS_ETC_DIRECTORY, &path);
-	path.Append("Keymap");
+	find_directory(B_BEOS_DATA_DIRECTORY, &path);
+	path.Append("Keymaps");
 	BDirectory *dir = new BDirectory(path.Path());
 	long maps = dir->CountEntries();
 	entry_ref ref;
@@ -251,14 +254,14 @@ SettingsWindow::SettingsWindow() :
 	BList temp_list;
 	for (int i=0; i<maps; i++) {
 		dir->GetNextRef(&ref);
-		temp_list.AddItem(new KeymapItem(ref.name, ref.name, (int32) B_BEOS_ETC_DIRECTORY), 0);
+		temp_list.AddItem(new KeymapItem(ref.name, ref.name, (int32) B_BEOS_DATA_DIRECTORY), 0);
 	}
 	for (int i=0; i<temp_list.CountItems(); i++)
 		available_list->AddUnder((KeymapItem*) temp_list.ItemAt(i), keymap_node);
 	temp_list.MakeEmpty();	
 	delete dir;	
 
-	find_directory(B_USER_SETTINGS_DIRECTORY, &path);
+	find_directory(B_USER_DATA_DIRECTORY, &path);
 	path.Append("Keymap");
 	dir = new BDirectory(path.Path());
 	maps = dir->CountEntries();
@@ -269,7 +272,7 @@ SettingsWindow::SettingsWindow() :
 		
 	for (int i=0; i<maps; i++) {
 		dir->GetNextRef(&ref);
-		temp_list.AddItem(new KeymapItem(ref.name, ref.name, (int32) B_USER_SETTINGS_DIRECTORY), 0);
+		temp_list.AddItem(new KeymapItem(ref.name, ref.name, (int32) B_USER_DATA_DIRECTORY), 0);
 	}
 	for (int i=0; i<temp_list.CountItems(); i++)
 		available_list->AddUnder((KeymapItem*) temp_list.ItemAt(i), keymap_node);
