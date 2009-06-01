@@ -77,7 +77,7 @@ enum __msgs {
 //#define DESKBAR_SIGNATURE "application/x-vnd.Be-TSKB"
 #define INDICATOR_SIGNATURE "application/x-vnd.KeymapSwitcher"
 
-#if 1 //def NDEBUG
+#if 0 //def NDEBUG
 #define trace(x...) syslog(0, __PRETTY_FUNCTION__);\
 					syslog(0, x);\
 					syslog(0, "\n");

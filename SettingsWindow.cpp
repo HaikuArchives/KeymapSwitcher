@@ -35,7 +35,7 @@
 #include "Resource.h"
 
 //CAUTION
-#define trace(x...) syslog(0, x);
+#define trace(x...) (void(0)) // syslog(0, x);
 //NO_CAUTION :)
 
 // the initial dimensions of the window.
