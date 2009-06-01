@@ -52,7 +52,7 @@ RSRCS=
 #		naming scheme you need to specify the path to the library
 #		and it's name
 #		library: my_lib.a entry: my_lib.a or path/my_lib.a
-LIBS=_APP_ be stdc++.r4
+LIBS=_APP_ be stdc++
 
 #	specify additional paths to directories following the standard
 #	libXXX.so or libXXX.a naming scheme.  You can specify full paths
@@ -121,9 +121,6 @@ all: _APP_ default
 
 ## include the makefile-engine
 include $(BUILDHOME)/etc/makefile-engine
-
-$(OBJ_DIR)/%.rsrc : %.rdef
-	$(RC) -o $@ $<
 
 clean ::
 	rm -f _APP_

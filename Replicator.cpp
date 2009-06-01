@@ -1,4 +1,5 @@
 #include <Application.h>
+#include <cstring>
 #include "KeymapSwitcher.h"
 #include "Replicator.h"
 
