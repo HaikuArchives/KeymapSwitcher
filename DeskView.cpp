@@ -442,7 +442,7 @@ void DeskView::MouseDown(BPoint where) {
 		if ((buttons & B_SECONDARY_MOUSE_BUTTON) || (modifiers & B_CONTROL_KEY)) {
 			// secondary button was clicked or control key was down, show menu and return
 			ShowContextMenu(where);
-		} else if (buttons & B_PRIMARY_MOUSE_BUTTON) {
+		} else if (buttons & B_PRIMARY_MOUSE_BUTTON && !disabled) {
 			ChangeKeyMap(NEXT_KEYMAP(active_keymap, keymaps->CountItems()));
 		}
 	}
