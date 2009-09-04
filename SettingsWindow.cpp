@@ -34,426 +34,433 @@
 #include "Replicator.h"
 #include "Resource.h"
 
-//CAUTION
+	//CAUTION
 #define trace(x...) (void(0)) // syslog(0, x);
-//NO_CAUTION :)
+	//NO_CAUTION :)
 
-// the initial dimensions of the window.
-const float WINDOW_X      = 100;
-const float WINDOW_Y      = 100;
-const float WINDOW_WIDTH  = 330;
-const float WINDOW_HEIGHT = 210;
+	// the initial dimensions of the window.
+	const float WINDOW_X      = 100;
+	const float WINDOW_Y      = 100;
+	const float WINDOW_WIDTH  = 330;
+	const float WINDOW_HEIGHT = 210;
 
-// some messages
-enum {
-	MSG_PRIMARY_MAP = 0x1000,
-	MSG_ALT_MAP,
-	MSG_KEYMAPS_CHANGED,
-	MSG_BEEP_CHECKBOX_TOGGLED,
-	MSG_HOTKEY_CHANGED,
-	MSG_SAVE_SETTINGS,
-	MSG_CLOSE,
-	MSG_ABOUT,
-	MSG_BEEP_SETUP,
-	MSG_SETTINGS_CHANGED,
-	MSG_ACTIVE_ITEM_DRAGGED,
-	MSG_ITEM_DRAGGED,
-	MSG_REMOVE_ACTIVE_ITEM,
-	MSG_MOVE_ACTIVE_ITEM
-};
+	// hot-keys
+	const uint32	KEY_LCTRL_SHIFT = 0x2000;
+	const uint32	KEY_OPT_SHIFT = 0x2001;
+	const uint32	KEY_ALT_SHIFT = 0x2002;
+	const uint32	KEY_SHIFT_SHIFT = 0x2003;
 
-KeymapItem::KeymapItem(KeymapItem *item) : BStringItem(((KeymapItem*) item)->Text()){
-	dir = (int32) item->Dir();
-	real_name = item->RealName();
-}
+	// some messages
+	enum {
+		MSG_PRIMARY_MAP = 0x1000,
+		MSG_ALT_MAP,
+		MSG_KEYMAPS_CHANGED,
+		MSG_BEEP_CHECKBOX_TOGGLED,
+		MSG_HOTKEY_CHANGED,
+		MSG_SAVE_SETTINGS,
+		MSG_CLOSE,
+		MSG_ABOUT,
+		MSG_BEEP_SETUP,
+		MSG_SETTINGS_CHANGED,
+		MSG_ACTIVE_ITEM_DRAGGED,
+		MSG_ITEM_DRAGGED,
+		MSG_REMOVE_ACTIVE_ITEM,
+		MSG_MOVE_ACTIVE_ITEM
+	};
 
-KeymapItem::KeymapItem(const char *text, const char *real_name, int32 dir) : BStringItem(text) {
-	this->dir = dir;
-	this->real_name = real_name;
-}
-
-KeymapListView::KeymapListView(BRect r, const char *name) : BListView(r, name) {
-}
-
-bool KeymapListView::InitiateDrag(BPoint point, int32 index, bool wasSelected) {
-	BListView::InitiateDrag(point, index, wasSelected);
-	BMessage message(MSG_ACTIVE_ITEM_DRAGGED);
-	message.AddInt32("index", index);
-	DragMessage(&message, ItemFrame(index));
-	return true;
-}
-
-void KeymapListView::MessageReceived(BMessage *message) {
-	switch (message->what) {
-		// new item arrived
-		case MSG_ITEM_DRAGGED: {
-			BMessage notify(MSG_KEYMAPS_CHANGED);
-			Window()->PostMessage(&notify);
-			KeymapItem *item;
-			message->FindPointer("keymap_item", (void **)&item);
-			DeselectAll();
-			int index = -1;
-			index = IndexOf(ConvertFromScreen(message->DropPoint()));
-			KeymapItem *new_item = new KeymapItem(item);
-			BString name = new_item->Text();
-			if(B_BEOS_DATA_DIRECTORY == new_item->Dir())
-				name += " (System)";
-			else
-				name += " (User)";
-			new_item->SetText(name.String());
-			if(0 > index) {
-				AddItem(new_item);
-				index = IndexOf(new_item);
-			} else AddItem(new_item, index);
-			Select(index);
-			//trace(index);
-			ScrollToSelection();
-			break;
-		}
-		// item dropped somewhere out there, remove it 
-		case MSG_REMOVE_ACTIVE_ITEM: {
-			BMessage notify(MSG_KEYMAPS_CHANGED);
-			Window()->PostMessage(&notify);
-			int32 index = -1;
-			message->FindInt32("index", &index);
-			delete (dynamic_cast<KeymapItem*> (RemoveItem(index)));
-			break;
-		}
-		// item dropped inside, rearrange items
-		case MSG_ACTIVE_ITEM_DRAGGED: {
-			BMessage notify(MSG_KEYMAPS_CHANGED);
-			Window()->PostMessage(&notify);
-			int32 draggedIndex = -1;
-			message->FindInt32("index", &draggedIndex);
-			int32 index = -1;
-			index = IndexOf(ConvertFromScreen(message->DropPoint()));
-			DeselectAll();
-			if (0>index) 
-				index = CountItems() - 1;
-			MoveItem(draggedIndex, index);
-			Select(index);
-			ScrollToSelection();
-			//trace(index);
-			return;						
-		}
+	KeymapItem::KeymapItem(KeymapItem *item) : BStringItem(((KeymapItem*) item)->Text()){
+		dir = (int32) item->Dir();
+		real_name = item->RealName();
 	}
-	BListView::MessageReceived(message);
-}
-	
-KeymapOutlineListView::KeymapOutlineListView(BRect r, const char *name) : BOutlineListView(r, name) {
-}
 
-bool KeymapOutlineListView::InitiateDrag(BPoint point, int32 index, bool wasSelected) {
-	BOutlineListView::InitiateDrag(point, index, wasSelected);
-	BMessage message(MSG_ITEM_DRAGGED);
-	message.AddInt32("index", index);
-	message.AddPointer("keymap_item", ItemAt(index));
-	if (NULL != Superitem(ItemAt(index)))
+	KeymapItem::KeymapItem(const char *text, const char *real_name, int32 dir) : BStringItem(text) {
+		this->dir = dir;
+		this->real_name = real_name;
+	}
+
+	KeymapListView::KeymapListView(BRect r, const char *name) : BListView(r, name) {
+	}
+
+	bool KeymapListView::InitiateDrag(BPoint point, int32 index, bool wasSelected) {
+		BListView::InitiateDrag(point, index, wasSelected);
+		BMessage message(MSG_ACTIVE_ITEM_DRAGGED);
+		message.AddInt32("index", index);
 		DragMessage(&message, ItemFrame(index));
-	else return false;
-	return true;
-}
-
-//  construct main window
-SettingsWindow::SettingsWindow() : 
-		BWindow(BRect(WINDOW_X, 
-			WINDOW_Y, 
-	                     	WINDOW_X + WINDOW_WIDTH,
-		          	WINDOW_Y + WINDOW_HEIGHT),
-	            	"Keymap Switcher",
-	            	B_TITLED_WINDOW, 
-	            	B_NOT_ZOOMABLE | B_NOT_RESIZABLE) {
-	trace("read settings");
-	settings = new Settings("Switcher");
-	keymaps_changed = false;
-	Lock();
-	
-	BBox *box = new BBox(Bounds(),B_EMPTY_STRING, 
-          		B_FOLLOW_LEFT_RIGHT | B_FOLLOW_TOP, 
-          		B_WILL_DRAW | B_FRAME_EVENTS | B_NAVIGABLE_JUMP, 
-          		B_PLAIN_BORDER);
-	AddChild(box);
-
-	BRect r = box->Bounds();
-	r.InsetBy(10,5);
-	r.bottom = r.top + 14;
-	r.right = r.left + 200;
-	box->AddChild(new BStringView(r, "string0", "Selected keymaps:"));
-	r.OffsetBy(0, 18);
-	r.bottom = r.top + 50;
-	selected_list = new KeymapListView(r, "selected_list");
-	box->AddChild(new BScrollView("scroll_selected", selected_list, 
-		B_FOLLOW_LEFT|B_FOLLOW_TOP, 0, false, true));
-	
-	// fill selected keymaps list
-	int32 count = 0;
-	settings->FindInt32("keymaps", &count); // retrieve keymaps number
-	BString param, name;
-	BPath path;
-	// read all the keymaps
-	for (int32 i = 0; i<count; i++) {
-		param = "";
-		param << "n" << i;
-		settings->FindString(param.String(), &name);
-		param = "";
-		param << "d" << i;
-		int32 dir;
-		settings->FindInt32(param.String(), &dir);
-		find_directory((directory_which)dir, &path);
-		if(dir == B_BEOS_DATA_DIRECTORY)
-			path.Append("Keymaps");
-		else
-			path.Append("Keymap");
-		path.Append(name.String());
-
-		BString display_name = name;
-		if(dir == B_BEOS_DATA_DIRECTORY)
-			display_name += " (System)";
-		else	display_name += " (User)";
-		selected_list->AddItem(new KeymapItem(display_name.String(), name.String(), dir));
+		return true;
 	}
-	
-	r.OffsetBy(0, 58);
-	r.bottom = r.top + 14;
-	r.right  = r.left + 140;
-	box->AddChild(new BStringView(r, "string1", "Available keymaps:"));
-	
-	//sz: 05.05.07: patch: "add" and "remove" keymap buttons added
-	BRect rA(r);
-	rA.OffsetBy(0, -3);
-	rA.left += 140;
-	rA.right  = rA.left + 17;
-	rA.bottom = rA.top + 16;
-	BMoveButton *buttonEx = new BMoveButton(rA, "add_keymap_button", 
-					R_ResAddButton, R_ResAddButtonPressed, R_ResAddButtonDisabled,
-		new BMessage(MSG_ACTIVE_ITEM_DRAGGED));
-	box->AddChild(buttonEx);
-	
-	rA.OffsetBy(27, 0);
-	buttonEx = new BMoveButton(rA, "remove_keymap_button",
-					R_ResRemoveButton, R_ResRemoveButtonPressed, R_ResRemoveButtonDisabled, 
-		new BMessage(MSG_REMOVE_ACTIVE_ITEM));
-	box->AddChild(buttonEx);
-	
-	r.OffsetBy(0, 18);
-	r.bottom = r.top + 100;
-	r.right  = r.left + 200;
-	available_list = new KeymapOutlineListView(r, "selected_list");
-	box->AddChild(new BScrollView("scroll_available", available_list, 
-		B_FOLLOW_LEFT|B_FOLLOW_TOP, 0, false, true));
 
-	// populate available_list
-	find_directory(B_BEOS_DATA_DIRECTORY, &path);
-	path.Append("Keymaps");
-	BDirectory *dir = new BDirectory(path.Path());
-	long maps = dir->CountEntries();
-	entry_ref ref;
-	KeymapItem *keymap_node = new KeymapItem("System", NULL, 0);
-	available_list->AddItem(keymap_node);
-	
-	BList temp_list;
-	for (int i=0; i<maps; i++) {
-		dir->GetNextRef(&ref);
-		temp_list.AddItem(new KeymapItem(ref.name, ref.name, (int32) B_BEOS_DATA_DIRECTORY), 0);
-	}
-	for (int i=0; i<temp_list.CountItems(); i++)
-		available_list->AddUnder((KeymapItem*) temp_list.ItemAt(i), keymap_node);
-	temp_list.MakeEmpty();	
-	delete dir;	
-
-	find_directory(B_USER_DATA_DIRECTORY, &path);
-	path.Append("Keymap");
-	dir = new BDirectory(path.Path());
-	maps = dir->CountEntries();
-	if(0 != maps) {
-		keymap_node = new KeymapItem("User", NULL, 0);
-		available_list->AddItem(keymap_node);
-	}
-		
-	for (int i=0; i<maps; i++) {
-		dir->GetNextRef(&ref);
-		temp_list.AddItem(new KeymapItem(ref.name, ref.name, (int32) B_USER_DATA_DIRECTORY), 0);
-	}
-	for (int i=0; i<temp_list.CountItems(); i++)
-		available_list->AddUnder((KeymapItem*) temp_list.ItemAt(i), keymap_node);
-	delete dir;
-	
-	// add hotkey and beep
-	int32 hotkey;
-	bool beep;
-	settings->FindInt32("hotkey", &hotkey);
-	settings->FindBool("beep", &beep);
-
-	r.OffsetTo(WINDOW_WIDTH-92, 5);
-	r.bottom = r.top + 14;
-	r.right = r.left + 80;	
-	box->AddChild(new BStringView(r, "string1", "Hotkey:"));
-
-	r.OffsetBy(0, 14);
-	BPopUpMenu *pop_key;
-	BString temp = "none";
-	if(hotkey == KEY_LCTRL_SHIFT)
-		temp = "Ctrl+Shift";
-	if(hotkey == KEY_ALT_SHIFT)
-		temp = "Alt+Shift";
-	if(hotkey == KEY_SHIFT_SHIFT)
-		temp = "Shift+Shift";
-	pop_key = new BPopUpMenu(temp.String());
-
-	BMessage *msg = new BMessage(MSG_HOTKEY_CHANGED);
-	msg->AddInt32("hotkey", KEY_LCTRL_SHIFT);
-	pop_key->AddItem(new BMenuItem("Ctrl+Shift", msg));
-
-	msg = new BMessage(MSG_HOTKEY_CHANGED);
-	msg->AddInt32("hotkey", KEY_ALT_SHIFT);
-	pop_key->AddItem(new BMenuItem("Alt+Shift", msg));
-
-	msg = new BMessage(MSG_HOTKEY_CHANGED);
-	msg->AddInt32("hotkey", KEY_SHIFT_SHIFT);
-	pop_key->AddItem(new BMenuItem("Shift+Shift", msg));
-	
-	BMenuField * menu_field = new BMenuField(r, "HotKey", NULL, pop_key);
-	menu_field->SetDivider(0);
-	
-	box->AddChild(menu_field);
-
-	r.OffsetBy(0, 39);
-/*	BCheckBox *will_beep = new BCheckBox(r,
-          		"willbeep", "Beep",
-          		new BMessage(MSG_BEEP_CHECKBOX_TOGGLED), B_FOLLOW_LEFT);
-          
-	will_beep->SetValue((beep?B_CONTROL_ON:B_CONTROL_OFF));
-  	box->AddChild(will_beep);
-*/
-  	long lTop = 46;
-	BButton *button = new BButton(BRect((WINDOW_WIDTH-80)-12,lTop,(WINDOW_WIDTH)-12,1),
-		"beep_button","Beep Setup",
-		new BMessage(MSG_BEEP_SETUP), B_FOLLOW_RIGHT);
-	box->AddChild(button);
-	
-	
-	lTop += 31;
-	/*BButton **/button = new BButton(BRect((WINDOW_WIDTH-80)-12,lTop,(WINDOW_WIDTH)-12,1),
-		"about_button","About",
-		new BMessage(MSG_ABOUT), B_FOLLOW_RIGHT);
-	box->AddChild(button);
-
-	lTop += 68;
-	button = new BButton(BRect((WINDOW_WIDTH-80)-12,lTop, (WINDOW_WIDTH)-12,1),
-		"save_button","Save",
-		new BMessage(MSG_SAVE_SETTINGS), B_FOLLOW_RIGHT);
-	box->AddChild(button);
-	button->MakeDefault(TRUE); 
-	
-	lTop += 31;
-	button = new BButton(BRect((WINDOW_WIDTH-80)-12,lTop,(WINDOW_WIDTH)-12,1),
-		"close_button","Cancel",
-		new BMessage(MSG_CLOSE), B_FOLLOW_RIGHT);
-	box->AddChild(button);
-
-	hotkey_changed = false;
-	Unlock();
-	Show();
-}
-
-// destructor
-SettingsWindow::~SettingsWindow() {
-	while(0 < available_list->CountItems())
-		delete (dynamic_cast<KeymapItem*> (available_list->RemoveItem(0L)));
-	while(0 < selected_list->CountItems())
-		delete (dynamic_cast<KeymapItem*> (selected_list->RemoveItem(0L)));
-}
-
-// process message
-void SettingsWindow::MessageReceived(BMessage *msg) {
-	switch (msg->what) {
-	case MSG_ACTIVE_ITEM_DRAGGED: {
-		BMessage reply(*msg);
-		reply.what = MSG_REMOVE_ACTIVE_ITEM;
-		msg->ReturnAddress().SendMessage(&reply);
-		break;
-	}
-	case MSG_KEYMAPS_CHANGED:
-		trace("keymaps changed");
-		keymaps_changed = true;
-		break;
-	case MSG_BEEP_CHECKBOX_TOGGLED: {
-		bool beep;		
-		settings->FindBool("beep", &beep);
-			settings->SetBool("beep", !beep);
-		break;
-	}
-	case MSG_HOTKEY_CHANGED: {
-		int32 temp = 0;
-		if (B_OK==msg->FindInt32("hotkey",&temp))
-			settings->SetInt32("hotkey", temp);
-		hotkey_changed = true;
-		break;
-	}
-	case MSG_BEEP_SETUP: {
-  		be_roster->Launch("application/x-vnd.Be.SoundsPrefs");
-		break;
-	}
-	case MSG_SAVE_SETTINGS: {
-		// delete all keymaps from settings
-		if(keymaps_changed) {
-			int32 keymaps = 0;
-			settings->FindInt32("keymaps", &keymaps);
-			BString param;
-			for (int i=0; i<keymaps; i++) {
-				param = "";
-				param << "d" << i;
-				settings->RemoveName(param.String());
-				param = "";
-				param << "n" << i;
-				settings->RemoveName(param.String());
+	void KeymapListView::MessageReceived(BMessage *message) {
+		switch (message->what) {
+			// new item arrived
+			case MSG_ITEM_DRAGGED: {
+				BMessage notify(MSG_KEYMAPS_CHANGED);
+				Window()->PostMessage(&notify);
+				KeymapItem *item;
+				message->FindPointer("keymap_item", (void **)&item);
+				DeselectAll();
+				int index = -1;
+				index = IndexOf(ConvertFromScreen(message->DropPoint()));
+				KeymapItem *new_item = new KeymapItem(item);
+				BString name = new_item->Text();
+				if(B_BEOS_DATA_DIRECTORY == new_item->Dir())
+					name += " (System)";
+				else
+					name += " (User)";
+				new_item->SetText(name.String());
+				if(0 > index) {
+					AddItem(new_item);
+					index = IndexOf(new_item);
+				} else AddItem(new_item, index);
+				Select(index);
+				//trace(index);
+				ScrollToSelection();
+				break;
 			}
-			// now save keymaps
-			settings->SetInt32("keymaps", selected_list->CountItems());
-			for (int i=0; i<selected_list->CountItems(); i++) {
-				KeymapItem *item = (KeymapItem*) selected_list->ItemAt(i);
-				trace((char*)(item->RealName()));
-				param = "";
-				param << "d" << i;
-				settings->SetInt32(param.String(), item->Dir());
-				param = "";
-				param << "n" << i;
-				settings->SetString(param.String(), item->RealName());	
+			// item dropped somewhere out there, remove it 
+			case MSG_REMOVE_ACTIVE_ITEM: {
+				BMessage notify(MSG_KEYMAPS_CHANGED);
+				Window()->PostMessage(&notify);
+				int32 index = -1;
+				message->FindInt32("index", &index);
+				delete (dynamic_cast<KeymapItem*> (RemoveItem(index)));
+				break;
+			}
+			// item dropped inside, rearrange items
+			case MSG_ACTIVE_ITEM_DRAGGED: {
+				BMessage notify(MSG_KEYMAPS_CHANGED);
+				Window()->PostMessage(&notify);
+				int32 draggedIndex = -1;
+				message->FindInt32("index", &draggedIndex);
+				int32 index = -1;
+				index = IndexOf(ConvertFromScreen(message->DropPoint()));
+				DeselectAll();
+				if (0>index) 
+					index = CountItems() - 1;
+				MoveItem(draggedIndex, index);
+				Select(index);
+				ScrollToSelection();
+				//trace(index);
+				return;						
 			}
 		}
-		trace("settings saved!");
-		settings->Save();
-		delete settings; // we save settings in its destructor
-		::UpdateIndicator(MSG_UPDATESETTINGS);
-		Close();
-		break;
+		BListView::MessageReceived(message);
 	}
-	case MSG_CLOSE:
-		Close();
-		break;
 		
-	case MSG_ABOUT:
-		ShowAboutWindow();
-		break;
-	default:
-		break;
+	KeymapOutlineListView::KeymapOutlineListView(BRect r, const char *name) : BOutlineListView(r, name) {
 	}
-	BWindow::MessageReceived(msg);
-}
 
-void SettingsWindow::ShowAboutWindow()  {
-	//BString strName = "Keymap Switcher";
-	BAlert *alert = new BAlert("About",
-					"Keymap Switcher\n\n"
-					"Copyright " B_UTF8_COPYRIGHT " 1999-2003 Stas Maximov\n"
-           			"Copyright " B_UTF8_COPYRIGHT " 2008 Haiku\n\n"
-              		"Original notice from Stas Maximov:\n"
-					"Tested and inspired by Sergey \"fyysik\" Dolgov, "
-					"Maxim \"baza\" Bazarov, Denis Korotkov, Nur Nazmetdinov "
-					"and others\n\n"
-              		"Thanks to Pierre Raynaud-Richard and Robert Polic for BeOS tips.\n\n"
-              		"Special thanks to all BeOS users, whether they use this app or not"
-					" - they're keeping BeOS alive!",
+	bool KeymapOutlineListView::InitiateDrag(BPoint point, int32 index, bool wasSelected) {
+		BOutlineListView::InitiateDrag(point, index, wasSelected);
+		BMessage message(MSG_ITEM_DRAGGED);
+		message.AddInt32("index", index);
+		message.AddPointer("keymap_item", ItemAt(index));
+		if (NULL != Superitem(ItemAt(index)))
+			DragMessage(&message, ItemFrame(index));
+		else return false;
+		return true;
+	}
+
+	//  construct main window
+	SettingsWindow::SettingsWindow() : 
+			BWindow(BRect(WINDOW_X, 
+				WINDOW_Y, 
+								WINDOW_X + WINDOW_WIDTH,
+						WINDOW_Y + WINDOW_HEIGHT),
+						"Keymap Switcher",
+						B_TITLED_WINDOW, 
+						B_NOT_ZOOMABLE | B_NOT_RESIZABLE) {
+		trace("read settings");
+		settings = new Settings("Switcher");
+		keymaps_changed = false;
+		Lock();
+		
+		BBox *box = new BBox(Bounds(),B_EMPTY_STRING, 
+					B_FOLLOW_LEFT_RIGHT | B_FOLLOW_TOP, 
+					B_WILL_DRAW | B_FRAME_EVENTS | B_NAVIGABLE_JUMP, 
+					B_PLAIN_BORDER);
+		AddChild(box);
+
+		BRect r = box->Bounds();
+		r.InsetBy(10,5);
+		r.bottom = r.top + 14;
+		r.right = r.left + 200;
+		box->AddChild(new BStringView(r, "string0", "Selected keymaps:"));
+		r.OffsetBy(0, 18);
+		r.bottom = r.top + 50;
+		selected_list = new KeymapListView(r, "selected_list");
+		box->AddChild(new BScrollView("scroll_selected", selected_list, 
+			B_FOLLOW_LEFT|B_FOLLOW_TOP, 0, false, true));
+		
+		// fill selected keymaps list
+		int32 count = 0;
+		settings->FindInt32("keymaps", &count); // retrieve keymaps number
+		BString param, name;
+		BPath path;
+		// read all the keymaps
+		for (int32 i = 0; i<count; i++) {
+			param = "";
+			param << "n" << i;
+			settings->FindString(param.String(), &name);
+			param = "";
+			param << "d" << i;
+			int32 dir;
+			settings->FindInt32(param.String(), &dir);
+			find_directory((directory_which)dir, &path);
+			if(dir == B_BEOS_DATA_DIRECTORY)
+				path.Append("Keymaps");
+			else
+				path.Append("Keymap");
+			path.Append(name.String());
+
+			BString display_name = name;
+			if(dir == B_BEOS_DATA_DIRECTORY)
+				display_name += " (System)";
+			else	display_name += " (User)";
+			selected_list->AddItem(new KeymapItem(display_name.String(), name.String(), dir));
+		}
+		
+		r.OffsetBy(0, 58);
+		r.bottom = r.top + 14;
+		r.right  = r.left + 140;
+		box->AddChild(new BStringView(r, "string1", "Available keymaps:"));
+		
+		//sz: 05.05.07: patch: "add" and "remove" keymap buttons added
+		BRect rA(r);
+		rA.OffsetBy(0, -3);
+		rA.left += 140;
+		rA.right  = rA.left + 17;
+		rA.bottom = rA.top + 16;
+		BMoveButton *buttonEx = new BMoveButton(rA, "add_keymap_button", 
+						R_ResAddButton, R_ResAddButtonPressed, R_ResAddButtonDisabled,
+			new BMessage(MSG_ACTIVE_ITEM_DRAGGED));
+		box->AddChild(buttonEx);
+		
+		rA.OffsetBy(27, 0);
+		buttonEx = new BMoveButton(rA, "remove_keymap_button",
+						R_ResRemoveButton, R_ResRemoveButtonPressed, R_ResRemoveButtonDisabled, 
+			new BMessage(MSG_REMOVE_ACTIVE_ITEM));
+		box->AddChild(buttonEx);
+		
+		r.OffsetBy(0, 18);
+		r.bottom = r.top + 100;
+		r.right  = r.left + 200;
+		available_list = new KeymapOutlineListView(r, "selected_list");
+		box->AddChild(new BScrollView("scroll_available", available_list, 
+			B_FOLLOW_LEFT|B_FOLLOW_TOP, 0, false, true));
+
+		// populate available_list
+		find_directory(B_BEOS_DATA_DIRECTORY, &path);
+		path.Append("Keymaps");
+		BDirectory *dir = new BDirectory(path.Path());
+		long maps = dir->CountEntries();
+		entry_ref ref;
+		KeymapItem *keymap_node = new KeymapItem("System", NULL, 0);
+		available_list->AddItem(keymap_node);
+		
+		BList temp_list;
+		for (int i=0; i<maps; i++) {
+			dir->GetNextRef(&ref);
+			temp_list.AddItem(new KeymapItem(ref.name, ref.name, (int32) B_BEOS_DATA_DIRECTORY), 0);
+		}
+		for (int i=0; i<temp_list.CountItems(); i++)
+			available_list->AddUnder((KeymapItem*) temp_list.ItemAt(i), keymap_node);
+		temp_list.MakeEmpty();	
+		delete dir;	
+
+		find_directory(B_USER_DATA_DIRECTORY, &path);
+		path.Append("Keymap");
+		dir = new BDirectory(path.Path());
+		maps = dir->CountEntries();
+		if(0 != maps) {
+			keymap_node = new KeymapItem("User", NULL, 0);
+			available_list->AddItem(keymap_node);
+		}
+			
+		for (int i=0; i<maps; i++) {
+			dir->GetNextRef(&ref);
+			temp_list.AddItem(new KeymapItem(ref.name, ref.name, (int32) B_USER_DATA_DIRECTORY), 0);
+		}
+		for (int i=0; i<temp_list.CountItems(); i++)
+			available_list->AddUnder((KeymapItem*) temp_list.ItemAt(i), keymap_node);
+		delete dir;
+		
+		// add hotkey and beep
+		int32 hotkey;
+		bool beep;
+		settings->FindInt32("hotkey", &hotkey);
+		settings->FindBool("beep", &beep);
+
+		r.OffsetTo(WINDOW_WIDTH-92, 5);
+		r.bottom = r.top + 14;
+		r.right = r.left + 80;	
+		box->AddChild(new BStringView(r, "string1", "Hotkey:"));
+
+		r.OffsetBy(0, 14);
+		BPopUpMenu *pop_key;
+		BString temp = "none";
+		if(hotkey == KEY_LCTRL_SHIFT)
+			temp = "Ctrl+Shift";
+		if(hotkey == KEY_ALT_SHIFT)
+			temp = "Alt+Shift";
+		if(hotkey == KEY_SHIFT_SHIFT)
+			temp = "Shift+Shift";
+		pop_key = new BPopUpMenu(temp.String());
+
+		BMessage *msg = new BMessage(MSG_HOTKEY_CHANGED);
+		msg->AddInt32("hotkey", KEY_LCTRL_SHIFT);
+		pop_key->AddItem(new BMenuItem("Ctrl+Shift", msg));
+
+		msg = new BMessage(MSG_HOTKEY_CHANGED);
+		msg->AddInt32("hotkey", KEY_ALT_SHIFT);
+		pop_key->AddItem(new BMenuItem("Alt+Shift", msg));
+
+		msg = new BMessage(MSG_HOTKEY_CHANGED);
+		msg->AddInt32("hotkey", KEY_SHIFT_SHIFT);
+		pop_key->AddItem(new BMenuItem("Shift+Shift", msg));
+		
+		BMenuField * menu_field = new BMenuField(r, "HotKey", NULL, pop_key);
+		menu_field->SetDivider(0);
+		
+		box->AddChild(menu_field);
+
+		r.OffsetBy(0, 39);
+	/*	BCheckBox *will_beep = new BCheckBox(r,
+					"willbeep", "Beep",
+					new BMessage(MSG_BEEP_CHECKBOX_TOGGLED), B_FOLLOW_LEFT);
+			  
+		will_beep->SetValue((beep?B_CONTROL_ON:B_CONTROL_OFF));
+		box->AddChild(will_beep);
+	*/
+		long lTop = 46;
+		BButton *button = new BButton(BRect((WINDOW_WIDTH-80)-12,lTop,(WINDOW_WIDTH)-12,1),
+			"beep_button","Beep Setup",
+			new BMessage(MSG_BEEP_SETUP), B_FOLLOW_RIGHT);
+		box->AddChild(button);
+		
+		
+		lTop += 31;
+		/*BButton **/button = new BButton(BRect((WINDOW_WIDTH-80)-12,lTop,(WINDOW_WIDTH)-12,1),
+			"about_button","About",
+			new BMessage(MSG_ABOUT), B_FOLLOW_RIGHT);
+		box->AddChild(button);
+
+		lTop += 68;
+		button = new BButton(BRect((WINDOW_WIDTH-80)-12,lTop, (WINDOW_WIDTH)-12,1),
+			"save_button","Save",
+			new BMessage(MSG_SAVE_SETTINGS), B_FOLLOW_RIGHT);
+		box->AddChild(button);
+		button->MakeDefault(TRUE); 
+		
+		lTop += 31;
+		button = new BButton(BRect((WINDOW_WIDTH-80)-12,lTop,(WINDOW_WIDTH)-12,1),
+			"close_button","Cancel",
+			new BMessage(MSG_CLOSE), B_FOLLOW_RIGHT);
+		box->AddChild(button);
+
+		hotkey_changed = false;
+		Unlock();
+		Show();
+	}
+
+	// destructor
+	SettingsWindow::~SettingsWindow() {
+		while(0 < available_list->CountItems())
+			delete (dynamic_cast<KeymapItem*> (available_list->RemoveItem(0L)));
+		while(0 < selected_list->CountItems())
+			delete (dynamic_cast<KeymapItem*> (selected_list->RemoveItem(0L)));
+	}
+
+	// process message
+	void SettingsWindow::MessageReceived(BMessage *msg) {
+		switch (msg->what) {
+		case MSG_ACTIVE_ITEM_DRAGGED: {
+			BMessage reply(*msg);
+			reply.what = MSG_REMOVE_ACTIVE_ITEM;
+			msg->ReturnAddress().SendMessage(&reply);
+			break;
+		}
+		case MSG_KEYMAPS_CHANGED:
+			trace("keymaps changed");
+			keymaps_changed = true;
+			break;
+		case MSG_BEEP_CHECKBOX_TOGGLED: {
+			bool beep;		
+			settings->FindBool("beep", &beep);
+				settings->SetBool("beep", !beep);
+			break;
+		}
+		case MSG_HOTKEY_CHANGED: {
+			int32 temp = 0;
+			if (B_OK==msg->FindInt32("hotkey",&temp))
+				settings->SetInt32("hotkey", temp);
+			hotkey_changed = true;
+			break;
+		}
+		case MSG_BEEP_SETUP: {
+			be_roster->Launch("application/x-vnd.Be.SoundsPrefs");
+			break;
+		}
+		case MSG_SAVE_SETTINGS: {
+			// delete all keymaps from settings
+			if(keymaps_changed) {
+				int32 keymaps = 0;
+				settings->FindInt32("keymaps", &keymaps);
+				BString param;
+				for (int i=0; i<keymaps; i++) {
+					param = "";
+					param << "d" << i;
+					settings->RemoveName(param.String());
+					param = "";
+					param << "n" << i;
+					settings->RemoveName(param.String());
+				}
+				// now save keymaps
+				settings->SetInt32("keymaps", selected_list->CountItems());
+				for (int i=0; i<selected_list->CountItems(); i++) {
+					KeymapItem *item = (KeymapItem*) selected_list->ItemAt(i);
+					trace((char*)(item->RealName()));
+					param = "";
+					param << "d" << i;
+					settings->SetInt32(param.String(), item->Dir());
+					param = "";
+					param << "n" << i;
+					settings->SetString(param.String(), item->RealName());	
+				}
+			}
+			trace("settings saved!");
+			settings->Save();
+			delete settings; // we save settings in its destructor
+			::UpdateIndicator(MSG_UPDATESETTINGS);
+			Close();
+			break;
+		}
+		case MSG_CLOSE:
+			Close();
+			break;
+			
+		case MSG_ABOUT:
+			ShowAboutWindow();
+			break;
+		default:
+			break;
+		}
+		BWindow::MessageReceived(msg);
+	}
+
+	void SettingsWindow::ShowAboutWindow()  {
+		//BString strName = "Keymap Switcher";
+		BAlert *alert = new BAlert("About",
+						"Keymap Switcher\n\n"
+						"Copyright " B_UTF8_COPYRIGHT " 1999-2003 Stas Maximov\n"
+						"Copyright " B_UTF8_COPYRIGHT " 2008-2009 Haiku\n"
+						"Version " VERSION "\n\n"
+						"Original notice from Stas Maximov:\n"
+						"Tested and inspired by Sergey \"fyysik\" Dolgov, "
+						"Maxim \"baza\" Bazarov, Denis Korotkov, Nur Nazmetdinov "
+						"and others\n\n"
+						"Thanks to Pierre Raynaud-Richard and Robert Polic for BeOS tips.\n\n"
+						"Special thanks to all BeOS users, whether they use this app or not"
+						" - they're keeping BeOS alive!\n\n",
 					"Okay", 0, 0, B_WIDTH_AS_USUAL, B_IDEA_ALERT);
 	
 	BTextView *view = alert->TextView();
