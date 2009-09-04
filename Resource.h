@@ -13,10 +13,10 @@ enum {
 	R_ResRemoveButtonDisabled = 205
 };
 
-// version defines
+	// version defines
 #define	VersionMajor  1
-#define	VersionMiddle 1
-#define	VersionMinor  0
+#define	VersionMiddle 2
+#define	VersionMinor  4
 #define VersionBuild  0
 
 #endif //_Resource_h_
