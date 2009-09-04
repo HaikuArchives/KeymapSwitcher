@@ -7,7 +7,7 @@ ADDON := keymap_switcher
 DIST_DIR := dist
 ADDON_DEST := $(DIST_DIR)/common/add-ons/input_server/filters/ 
 APP_DEST := $(DIST_DIR)/common/bin/ 
-VERSION := 1.2.3
+VERSION := 1.2.4
 
 default: $(OBJ_DIR)/$(APP)
 
@@ -35,4 +35,4 @@ package: $(OBJ_DIR)/$(APP)  $(APP_DEST) $(ADDON_DEST)
 	echo "Description: Easy to use Keymap Switcher for Haiku OS." >> $(DIST_DIR)/.OptionalPackageDescription
 	echo "License: BSD/MIT" >> $(DIST_DIR)/.OptionalPackageDescription
 	echo "URL: http://www.sf.net/projects/switcher" >> $(DIST_DIR)/.OptionalPackageDescription
-	cd $(DIST_DIR) && zip -9 -r -y KeymapSwitcher-$(VERSION)$(GCCVER_SUFFIX)-`date +%F`.zip common .OptionalPackageDescription
+	cd $(DIST_DIR) && zip -9 -r -y KeymapSwitcher-$(VERSION)-x86$(GCCVER_SUFFIX)-`date +%F`.zip common .OptionalPackageDescription
