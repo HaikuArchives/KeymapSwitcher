@@ -11,6 +11,7 @@ public:
 	~Settings();
 	status_t InitCheck();
 	status_t Reload();
+	status_t SetDefaults();
 	status_t Save();
 	status_t SetBool(const char *name, bool b);
 	status_t SetInt8(const char *name, int8 i);

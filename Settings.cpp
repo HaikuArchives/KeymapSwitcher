@@ -4,6 +4,7 @@
 #include <FindDirectory.h>
 #include <KernelExport.h>
 #include "Settings.h"
+#include "KeymapSwitcher.h"
 #include <stdio.h>
 #include <syslog.h>
 
@@ -12,6 +13,12 @@
 #else
 #define trace(x...) 
 #endif
+
+// hot-keys
+const uint32	KEY_LCTRL_SHIFT = 0x2000;
+const uint32	KEY_OPT_SHIFT = 0x2001;
+const uint32	KEY_ALT_SHIFT = 0x2002;
+const uint32	KEY_SHIFT_SHIFT = 0x2003;
 
 Settings::Settings(char *filename) : BMessage('pref') {
 	status = find_directory(B_USER_SETTINGS_DIRECTORY, &path);
@@ -30,10 +37,28 @@ status_t Settings::Reload() {
 	BFile file;
 	status = file.SetTo(path.Path(), B_READ_ONLY);
 	trace("reload:%s %08x\n", path.Path(), status);
+	if(status == B_ENTRY_NOT_FOUND) {
+		SetDefaults();
+		Save();
+	} else
 	if (status == B_OK) {
 		status = Unflatten(&file);
 	}
+
 	return status;
+}
+
+status_t Settings::SetDefaults() {
+	SetString("version", VERSION);
+	SetInt32("hotkey", KEY_LCTRL_SHIFT);
+	SetBool("beep", true);
+	SetBool("disabled", false);
+	SetInt32("active", 0L);
+	SetInt32("keymaps", 1L);
+	SetString("n0", "American");
+	SetInt32("d0", B_BEOS_DATA_DIRECTORY); 
+
+	return status = B_OK;
 }
 
 status_t Settings::Save() {
