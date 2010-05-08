@@ -65,7 +65,9 @@
 		MSG_ACTIVE_ITEM_DRAGGED,
 		MSG_ITEM_DRAGGED,
 		MSG_REMOVE_ACTIVE_ITEM,
-		MSG_MOVE_ACTIVE_ITEM
+		MSG_MOVE_ACTIVE_ITEM,
+		MSG_BUTTON_ADD_ITEM,
+		MSG_BUTTON_REMOVE_ITEM
 	};
 
 	KeymapItem::KeymapItem(KeymapItem *item) : BStringItem(((KeymapItem*) item)->Text()){
@@ -232,14 +234,16 @@
 		rA.bottom = rA.top + 16;
 		BMoveButton *buttonEx = new BMoveButton(rA, "add_keymap_button", 
 						R_ResAddButton, R_ResAddButtonPressed, R_ResAddButtonDisabled,
-			new BMessage(MSG_ACTIVE_ITEM_DRAGGED));
+			new BMessage(MSG_BUTTON_ADD_ITEM));
 		box->AddChild(buttonEx);
+		buttonEx->SetTarget(this);
 		
 		rA.OffsetBy(27, 0);
 		buttonEx = new BMoveButton(rA, "remove_keymap_button",
 						R_ResRemoveButton, R_ResRemoveButtonPressed, R_ResRemoveButtonDisabled, 
-			new BMessage(MSG_REMOVE_ACTIVE_ITEM));
+			new BMessage(MSG_BUTTON_REMOVE_ITEM));
 		box->AddChild(buttonEx);
+		buttonEx->SetTarget(this);
 		
 		r.OffsetBy(0, 18);
 		r.bottom = r.top + 100;
@@ -267,7 +271,11 @@
 		temp_list.MakeEmpty();	
 		delete dir;	
 
-		find_directory(B_USER_DATA_DIRECTORY, &path);
+		directory_which userDir = B_USER_SETTINGS_DIRECTORY;
+//		directory_which userDir = B_USER_DATA_DIRECTORY;
+
+		find_directory(userDir, &path);
+
 		path.Append("Keymap");
 		dir = new BDirectory(path.Path());
 		maps = dir->CountEntries();
@@ -278,7 +286,7 @@
 			
 		for (int i=0; i<maps; i++) {
 			dir->GetNextRef(&ref);
-			temp_list.AddItem(new KeymapItem(ref.name, ref.name, (int32) B_USER_DATA_DIRECTORY), 0);
+			temp_list.AddItem(new KeymapItem(ref.name, ref.name, (int32) userDir), 0);
 		}
 		for (int i=0; i<temp_list.CountItems(); i++)
 			available_list->AddUnder((KeymapItem*) temp_list.ItemAt(i), keymap_node);
@@ -391,6 +399,30 @@
 			msg->ReturnAddress().SendMessage(&reply);
 			break;
 		}
+		case MSG_BUTTON_ADD_ITEM: {
+			int32 index = available_list->CurrentSelection(0);
+			//int32 i = 0, z = 6;
+			//index *= z/i;
+			if(index >= 0) {
+				BMessage message(MSG_ITEM_DRAGGED);
+				message.AddInt32("index", index);
+				message.AddPointer("keymap_item", available_list->ItemAt(index));
+				PostMessage(&message, selected_list);
+			}
+		}
+		break;
+		case MSG_BUTTON_REMOVE_ITEM: {
+			int32 index = selected_list->CurrentSelection(0);
+			//int32 i = 0, z = 6;
+			//index *= z/i;
+			if(index >= 0) {
+				BMessage message(MSG_REMOVE_ACTIVE_ITEM);
+				message.AddInt32("index", index);
+			//	message.AddPointer("keymap_item", selected_list->ItemAt(index));
+				PostMessage(&message, selected_list);
+			}
+		}
+		break;
 		case MSG_KEYMAPS_CHANGED:
 			trace("keymaps changed");
 			keymaps_changed = true;
@@ -464,7 +496,7 @@
 		BAlert *alert = new BAlert("About",
 						"Keymap Switcher\n\n"
 						"Copyright " B_UTF8_COPYRIGHT " 1999-2003 Stas Maximov\n"
-						"Copyright " B_UTF8_COPYRIGHT " 2008-2009 Haiku\n"
+						"Copyright " B_UTF8_COPYRIGHT " 2008-2010 Haiku\n"
 						"Version " VERSION "\n\n"
 						"Original notice from Stas Maximov:\n"
 						"Tested and inspired by Sergey \"fyysik\" Dolgov, "
