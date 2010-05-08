@@ -16,7 +16,7 @@ enum {
 	// version defines
 #define	VersionMajor  1
 #define	VersionMiddle 2
-#define	VersionMinor  4
+#define	VersionMinor  5
 #define VersionBuild  0
 
 #endif //_Resource_h_

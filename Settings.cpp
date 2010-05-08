@@ -15,12 +15,12 @@
 #endif
 
 // hot-keys
-const uint32	KEY_LCTRL_SHIFT = 0x2000;
-const uint32	KEY_OPT_SHIFT = 0x2001;
-const uint32	KEY_ALT_SHIFT = 0x2002;
-const uint32	KEY_SHIFT_SHIFT = 0x2003;
+//const uint32	KEY_LCTRL_SHIFT = 0x2000;
+//const uint32	KEY_OPT_SHIFT = 0x2001;
+//const uint32	KEY_ALT_SHIFT = 0x2002;
+//const uint32	KEY_SHIFT_SHIFT = 0x2003;
 
-Settings::Settings(char *filename) : BMessage('pref') {
+Settings::Settings(const char *filename) : BMessage('pref') {
 	status = find_directory(B_USER_SETTINGS_DIRECTORY, &path);
 	trace("constr:%s %08x\n", path.Path(), status);
 	if (status != B_OK) {

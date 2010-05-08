@@ -7,7 +7,7 @@ ADDON := keymap_switcher
 DIST_DIR := dist
 ADDON_DEST := $(DIST_DIR)/common/add-ons/input_server/filters/ 
 APP_DEST := $(DIST_DIR)/common/bin/ 
-VERSION := 1.2.4
+VERSION := 1.2.5
 
 default: $(OBJ_DIR)/$(APP)
 

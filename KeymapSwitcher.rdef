@@ -14,7 +14,7 @@ resource app_version {
 	internal = VersionBuild,
 
 	short_info = "Keymap Switcher",
-	long_info = "Switcher 1.1 © 1999-2003 Stas Maximov\nKeymap Switcher ©2008 Haiku"
+	long_info = "Switcher 1.1 © 1999-2003 Stas Maximov\nKeymap Switcher ©2008-2010 Haiku"
 };
 
 // icons 

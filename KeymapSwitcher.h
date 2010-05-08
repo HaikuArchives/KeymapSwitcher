@@ -6,15 +6,9 @@
 #ifndef __KeymapSwitcher_H
 #define __KeymapSwitcher_H 
 
-// hotkeys pseudo-codes
-//extern const uint32	KEY_LCTRL_SHIFT;	//	0x2000
-//extern const uint32	KEY_OPT_SHIFT;	//	 0x2001;
-//extern const uint32	KEY_ALT_SHIFT;	//	 0x2002;
-//extern const uint32	KEY_SHIFT_SHIFT;	//	0x2003;
-
 //#define DESKBAR_SIGNATURE "application/x-vnd.Be-TSKB"
 #define REPLICANT_NAME "Switcher/Deskbar"
-#define VERSION "1.2.4"
+#define VERSION "1.2.5"
 #define BEEP_NAME "Keymap Switch"
 
 #endif		// __KeymapSwitcher_H	

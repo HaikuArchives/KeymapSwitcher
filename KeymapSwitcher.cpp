@@ -26,10 +26,10 @@
 #include "Resource.h"
 
 // hot-keys
-const uint32	KEY_LCTRL_SHIFT = 0x2000;
-const uint32	KEY_OPT_SHIFT = 0x2001;
-const uint32	KEY_ALT_SHIFT = 0x2002;
-const uint32	KEY_SHIFT_SHIFT = 0x2003;
+//const uint32	KEY_LCTRL_SHIFT = 0x2000;
+//const uint32	KEY_OPT_SHIFT = 0x2001;
+//const uint32	KEY_ALT_SHIFT = 0x2002;
+//const uint32	KEY_SHIFT_SHIFT = 0x2003;
 
 int main(int argc, char *argv[])  {
 	add_system_beep_event(BEEP_NAME);

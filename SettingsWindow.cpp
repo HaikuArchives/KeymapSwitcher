@@ -45,10 +45,10 @@
 	const float WINDOW_HEIGHT = 210;
 
 	// hot-keys
-	const uint32	KEY_LCTRL_SHIFT = 0x2000;
-	const uint32	KEY_OPT_SHIFT = 0x2001;
-	const uint32	KEY_ALT_SHIFT = 0x2002;
-	const uint32	KEY_SHIFT_SHIFT = 0x2003;
+//	const uint32	KEY_LCTRL_SHIFT = 0x2000;
+//	const uint32	KEY_OPT_SHIFT = 0x2001;
+//	const uint32	KEY_ALT_SHIFT = 0x2002;
+//	const uint32	KEY_SHIFT_SHIFT = 0x2003;
 
 	// some messages
 	enum {
@@ -304,6 +304,10 @@
 			temp = "Alt+Shift";
 		if(hotkey == KEY_SHIFT_SHIFT)
 			temp = "Shift+Shift";
+//		if(hotkey == KEY_CAPS_LOCK)
+//			temp = "Caps Lock";
+		if(hotkey == KEY_SCROLL_LOCK)
+			temp = "Scroll Lock";
 		pop_key = new BPopUpMenu(temp.String());
 
 		BMessage *msg = new BMessage(MSG_HOTKEY_CHANGED);
@@ -317,6 +321,14 @@
 		msg = new BMessage(MSG_HOTKEY_CHANGED);
 		msg->AddInt32("hotkey", KEY_SHIFT_SHIFT);
 		pop_key->AddItem(new BMenuItem("Shift+Shift", msg));
+		
+//		msg = new BMessage(MSG_HOTKEY_CHANGED);
+//		msg->AddInt32("hotkey", KEY_CAPS_LOCK);
+//		pop_key->AddItem(new BMenuItem("Caps Lock", msg));
+		
+		msg = new BMessage(MSG_HOTKEY_CHANGED);
+		msg->AddInt32("hotkey", KEY_SCROLL_LOCK);
+		pop_key->AddItem(new BMenuItem("Scroll Lock", msg));
 		
 		BMenuField * menu_field = new BMenuField(r, "HotKey", NULL, pop_key);
 		menu_field->SetDivider(0);

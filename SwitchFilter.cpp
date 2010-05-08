@@ -27,10 +27,10 @@
 #include <syslog.h>
 
 // hot-keys
-const uint32	KEY_LCTRL_SHIFT = 0x2000;
-const uint32	KEY_OPT_SHIFT = 0x2001;
-const uint32	KEY_ALT_SHIFT = 0x2002;
-const uint32	KEY_SHIFT_SHIFT = 0x2003;
+//const uint32	KEY_LCTRL_SHIFT = 0x2000;
+//const uint32	KEY_OPT_SHIFT = 0x2001;
+//const uint32	KEY_ALT_SHIFT = 0x2002;
+//const uint32	KEY_SHIFT_SHIFT = 0x2003;
 
 #if 0 // disable for a time 
 const int32 key_table[31][2] = {
@@ -78,9 +78,11 @@ enum __msgs {
 #define INDICATOR_SIGNATURE "application/x-vnd.KeymapSwitcher"
 
 #if 0 //def NDEBUG
-#define trace(x...) syslog(0, __PRETTY_FUNCTION__);\
-					syslog(0, x);\
-					syslog(0, "\n");
+//#define trace(x...) syslog(LOG_DEBUG, __PRETTY_FUNCTION__);\ .
+//					syslog(LOG_DEBUG, x);\ .
+//					syslog(LOG_DEBUG, "\n"); 
+
+#define trace(x...) syslog(LOG_DEBUG, x);
 /*
 //{ \
 //	if (NULL != s) { \
@@ -167,6 +169,9 @@ BInputServerFilter* instantiate_input_filter() {
 
 
 SwitchFilter::SwitchFilter() : BInputServerFilter() {
+
+	openlog("KS", LOG_NDELAY, LOG_USER);
+
 	trace("start");
 
 	// register your filter(s) with the input_server
@@ -193,6 +198,8 @@ SwitchFilter::~SwitchFilter() {
 		delete settings; // cause destructor saves settings here <g>
 	}
 	trace("end");
+
+	closelog();
 }
 
 
@@ -219,6 +226,14 @@ status_t SwitchFilter::InitCheck() {
 
 // Filter key pressed 
 filter_result SwitchFilter::Filter(BMessage *message, BList *outList) {
+/*	union U{
+		int32 long l;
+		char b[6];
+	} u;
+	memset(&u, 0, sizeof(u));
+	u.l = message->what;
+	trace("Filter:%s\n", u.b);
+*/	
 	switch (message->what) {
 	case B_KEY_MAP_CHANGED:
 		trace("key_map_changed");
@@ -236,31 +251,67 @@ filter_result SwitchFilter::Filter(BMessage *message, BList *outList) {
 		message->FindInt32("be:old_modifiers", (int32 *) &old_modifiers);
 		message->FindInt8("states", (int8 *)&states);
 
-		old_modifiers &= ~(B_CAPS_LOCK | B_SCROLL_LOCK | B_NUM_LOCK);
-		new_modifiers &= ~(B_CAPS_LOCK | B_SCROLL_LOCK | B_NUM_LOCK);
-
 		char *buf = new char[128];
-		sprintf(buf, "new: 0x%04X, old: 0x%04X", new_modifiers, old_modifiers);
+		sprintf(buf, "new: %#010lx, old: %#010lx states:%#04x", 
+				new_modifiers, old_modifiers, states);
 		trace(buf);
 		delete buf;
+
+		int32 hotkey;
+		settings->FindInt32("hotkey", &hotkey);
+
+		if(!switch_on_hold) {
+			// handle one-key switches first ...
+			switch (hotkey) {
+			case KEY_CAPS_LOCK: 
+				// Shift-CapsLock will be used to switch CAPITALIZATION
+				//if ((new_modifiers & (B_CAPS_LOCK | B_SHIFT_KEY)) == B_CAPS_LOCK) {
+				if (new_modifiers & B_CAPS_LOCK) {
+				//	UpdateIndicator();
+					// eat the message to prevent CAPITALIZATION ;-)
+					return B_SKIP_MESSAGE; 
+				}
+				if (old_modifiers & B_CAPS_LOCK) {
+					UpdateIndicator();
+					// eat the message to prevent CAPITALIZATION ;-)
+					return B_SKIP_MESSAGE; 
+				}
+				break;
+			case KEY_SCROLL_LOCK:
+				if ((new_modifiers & B_SCROLL_LOCK) != 0 || (old_modifiers & B_SCROLL_LOCK) != 0) {
+					UpdateIndicator();
+					// do not eat the message - to on/off the LED!
+					return B_DISPATCH_MESSAGE; 
+				}
+				break;
+			default:
+				break;
+			}
+		}
+
+		old_modifiers &= ~(B_CAPS_LOCK | B_SCROLL_LOCK | B_NUM_LOCK);
+		new_modifiers &= ~(B_CAPS_LOCK | B_SCROLL_LOCK | B_NUM_LOCK);
+		
 		if(switch_on_hold)
 			trace("switch is on hold now");					
+
 		if(switch_on_hold && new_modifiers == 0) {
 			UpdateIndicator();
 			switch_on_hold = false;
-			return B_SKIP_MESSAGE;
+			//return B_SKIP_MESSAGE;
+			return B_DISPATCH_MESSAGE; 
 		}
-		int32 hotkey;
-		settings->FindInt32("hotkey", &hotkey);
 		
+		// handle two-keys switches ...
 		switch (hotkey) {
 		case KEY_LCTRL_SHIFT: {
 			old_modifiers &= 0x0FF; // cut off all RIGHT and LEFT key bits
 			uint32 mask1 = B_SHIFT_KEY|B_CONTROL_KEY;
-			uint32 mask2 = B_SHIFT_KEY|B_OPTION_KEY;
-			if ((old_modifiers == mask1) || (old_modifiers == mask2))
+			//uint32 mask2 = B_SHIFT_KEY|B_OPTION_KEY;
+			if ((old_modifiers == mask1) /*|| (old_modifiers == mask2)*/)
 				switch_on_hold = true;
-			return B_SKIP_MESSAGE;
+			//return B_SKIP_MESSAGE;
+			return B_DISPATCH_MESSAGE; 
 		}
 		
 		case KEY_OPT_SHIFT:
@@ -269,21 +320,48 @@ filter_result SwitchFilter::Filter(BMessage *message, BList *outList) {
 			uint32 mask1 = B_SHIFT_KEY|B_COMMAND_KEY;
 			if (old_modifiers == mask1)
 				switch_on_hold = true;
-			return B_SKIP_MESSAGE;
+			//return B_SKIP_MESSAGE;
+			return B_DISPATCH_MESSAGE; 
 		} 
 		case KEY_SHIFT_SHIFT: {
 			uint32 mask1 = B_SHIFT_KEY|B_LEFT_SHIFT_KEY|B_RIGHT_SHIFT_KEY;
 			if (old_modifiers == mask1)
 				switch_on_hold = true;
-			return B_SKIP_MESSAGE;
+			//return B_SKIP_MESSAGE;
+			return B_DISPATCH_MESSAGE; 
 		}
 		default:
 			break;
 		}
 		break; // B_MODIFIERS_CHANGED
 	}
+/*
+	case B_UNMAPPED_KEY_UP:
+	case B_UNMAPPED_KEY_DOWN:
+							  {
+		uint32 key = 0;
+		uint32 modifiers = 0;
+		uint8 states = 0;
 
+		message->FindInt32("key", (int32 *) &key);
+		message->FindInt32("modifiers", (int32 *) &modifiers);
+		message->FindInt8("states", (int8 *)&states);
+
+		trace("UKD key:%#010x modif:%#010x states:%#010\n", key, modifiers, states);
+
+		if(modifiers & B_CAPS_LOCK) {
+			trace("skipped!\n");
+			return B_SKIP_MESSAGE;
+		}
+
+							  }
+		break;
+*/
+//	case B_KEY_UP: 
+//		trace("Key up:\n");
+		break;
 	case B_KEY_DOWN: {
+		trace("Key down:\n");
 		if(switch_on_hold) {
 			trace("skipping last modifier change");
 			switch_on_hold = false; // skip previous attempt
