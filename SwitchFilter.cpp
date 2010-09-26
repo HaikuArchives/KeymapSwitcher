@@ -32,8 +32,7 @@
 //const uint32	KEY_ALT_SHIFT = 0x2002;
 //const uint32	KEY_SHIFT_SHIFT = 0x2003;
 
-#if 0 // disable for a time 
-const int32 key_table[31][2] = {
+const int32 key_table[][2] = {
 {41,101},
 {42,114},
 {43,116},
@@ -66,7 +65,6 @@ const int32 key_table[31][2] = {
 {84,46},
 {85,47}
 };
-#endif
 
 enum __msgs {
 	MSG_CHANGEKEYMAP = 0x400, // thats for Indicator, don't change it
@@ -367,8 +365,6 @@ filter_result SwitchFilter::Filter(BMessage *message, BList *outList) {
 			switch_on_hold = false; // skip previous attempt
 		}
 		
-// disable for a time key mapping...		
-#if 0 					
 		// check if it is Alt+Key key pressed, we shall put correct value 
 		// just as it is with American keymap 
 		int32 modifiers = message->FindInt32("modifiers");
@@ -412,7 +408,7 @@ filter_result SwitchFilter::Filter(BMessage *message, BList *outList) {
 		if(raw > 0)
 			break;
 
-		for(int32 i=0; i<31;i++) {
+		for(int32 i=0; i<sizeof(key_table)/sizeof(key_table[0]);i++) {
 			if(key == key_table[i][0])
 				raw = key_table[i][1]; // set correct  value
 		}
@@ -420,7 +416,6 @@ filter_result SwitchFilter::Filter(BMessage *message, BList *outList) {
 			break;
 			
 		message->ReplaceInt32("raw_char", raw);
-#endif
 		break;
 	} 
 	default: 
