@@ -1,34 +1,35 @@
-1	english	x-vnd.Nexus-KeymapSwitcher	450140831
-KeymapSwitcher options:\n\t--deskbar\tautomatically add replicant to Deskbar\n\t--help\t\tprint this info and exit\n	SwitcherApplication		KeymapSwitcher options:\n\t--deskbar\tautomatically add replicant to Deskbar\n\t--help\t\tprint this info and exit\n
+1	english	x-vnd.Nexus-KeymapSwitcher	4126449138
  (system)	SwitcherSettingsWindow		 (system)
-Copyright © 2008-2010 Haiku, Inc.\n	SwitcherDeskView		Copyright © 2008-2010 Haiku, Inc.\n
-Quit	SwitcherDeskView		Quit
-OK	SwitcherSettingsWindow		OK
+ (user)	SwitcherSettingsWindow		 (user)
+About	SwitcherDeskView		About
 About…	SwitcherDeskView		About…
-Unable to install keymap indicator. Deskbar application is not running.	SwitcherSettingsWindow		Unable to install keymap indicator. Deskbar application is not running.
+Activate shortcuts substitution	SwitcherSettingsWindow		Activate shortcuts substitution
+Apply	SwitcherSettingsWindow		Apply
+Available keymaps:	SwitcherSettingsWindow		Available keymaps:
+Copyright © 1999-2003 Stas Maximov.\n	SwitcherDeskView		Copyright © 1999-2003 Stas Maximov.\n
+Copyright © 2008-2010 Haiku, Inc.\n	SwitcherDeskView		Copyright © 2008-2010 Haiku, Inc.\n
+Exit	SwitcherSettingsWindow		Exit
 Hotkey:	SwitcherSettingsWindow		Hotkey:
+Install in Deskbar	SwitcherSettingsWindow		Install in Deskbar
+Keymap Switcher	SwitcherSettingsWindow		Keymap Switcher
+Keymap Switcher\n\n	SwitcherDeskView		Keymap Switcher\n\n
+KeymapSwitcher options:\n\t--deskbar\tautomatically add replicant to Deskbar\n\t--help\t\tprint this info and exit\n	SwitcherApplication		KeymapSwitcher options:\n\t--deskbar\tautomatically add replicant to Deskbar\n\t--help\t\tprint this info and exit\n
+OK	SwitcherApplication		OK
+OK	SwitcherSettingsWindow		OK
+Okay	SwitcherDeskView		Okay
+Original notice from Stas Maximov:\n	SwitcherDeskView		Original notice from Stas Maximov:\n
+Quit	SwitcherDeskView		Quit
+Revert	SwitcherSettingsWindow		Revert
+Selected keymaps:	SwitcherSettingsWindow		Selected keymaps:
 Settings…	SwitcherDeskView		Settings…
+Special thanks to all BeOS users, whether they use this app or not - they're keeping BeOS alive!\n\n	SwitcherDeskView		Special thanks to all BeOS users, whether they use this app or not - they're keeping BeOS alive!\n\n
+Start Deskbar	SwitcherSettingsWindow		Start Deskbar
 Substitute shortcuts with %KEYMAP%'s ones	SwitcherSettingsWindow		Substitute shortcuts with %KEYMAP%'s ones
 System	SwitcherSettingsWindow		System
-Thanks to Pierre Raynaud-Richard and Robert Polic for BeOS tips.\n\n	SwitcherDeskView		Thanks to Pierre Raynaud-Richard and Robert Polic for BeOS tips.\n\n
-Original notice from Stas Maximov:\n	SwitcherDeskView		Original notice from Stas Maximov:\n
-Install in Deskbar	SwitcherSettingsWindow		Install in Deskbar
-Special thanks to all BeOS users, whether they use this app or not - they're keeping BeOS alive!\n\n	SwitcherDeskView		Special thanks to all BeOS users, whether they use this app or not - they're keeping BeOS alive!\n\n
-Unable to install keymap indicator. Deskbar application is not running.	SwitcherApplication		Unable to install keymap indicator. Deskbar application is not running.
-OK	SwitcherApplication		OK
-Apply	SwitcherSettingsWindow		Apply
-About	SwitcherDeskView		About
-Revert	SwitcherSettingsWindow		Revert
- (user)	SwitcherSettingsWindow		 (user)
-Copyright © 1999-2003 Stas Maximov.\n	SwitcherDeskView		Copyright © 1999-2003 Stas Maximov.\n
-Keymap Switcher	SwitcherSettingsWindow		Keymap Switcher
-Okay	SwitcherDeskView		Okay
-Exit	SwitcherSettingsWindow		Exit
-Available keymaps:	SwitcherSettingsWindow		Available keymaps:
-Version  %VERSION \n\n	SwitcherDeskView		Version  %VERSION \n\n
-Selected keymaps:	SwitcherSettingsWindow		Selected keymaps:
-Unable to create Settings configuration window.	SwitcherApplication		Unable to create Settings configuration window.
-Keymap Switcher\n\n	SwitcherDeskView		Keymap Switcher\n\n
 Tested and inspired by\n\tSergey \"fyysik\" Dolgov,\n\tMaxim \"baza\" Bazarov,\n\tDenis Korotkov,\n\tNur Nazmetdinov and others.\n\n	SwitcherDeskView		Tested and inspired by\n\tSergey \"fyysik\" Dolgov,\n\tMaxim \"baza\" Bazarov,\n\tDenis Korotkov,\n\tNur Nazmetdinov and others.\n\n
+Thanks to Pierre Raynaud-Richard and Robert Polic for BeOS tips.\n\n	SwitcherDeskView		Thanks to Pierre Raynaud-Richard and Robert Polic for BeOS tips.\n\n
+Unable to create Settings configuration window.	SwitcherApplication		Unable to create Settings configuration window.
+Unable to install keymap indicator. Deskbar application is not running.	SwitcherApplication		Unable to install keymap indicator. Deskbar application is not running.
+Unable to install keymap indicator. Deskbar application is not running.	SwitcherSettingsWindow		Unable to install keymap indicator. Deskbar application is not running.
 User	SwitcherSettingsWindow		User
-Activate shortcuts substitution	SwitcherSettingsWindow		Activate shortcuts substitution
+Version  %VERSION \n\n	SwitcherDeskView		Version  %VERSION \n\n

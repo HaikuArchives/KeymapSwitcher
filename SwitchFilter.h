@@ -19,8 +19,6 @@ const int maxCharBytes = 3;
 
 class SwitchFilter: public BInputServerFilter 
 {
-	friend class SettingsMonitor;
-
 	class SettingsMonitor : public BLooper {
 	public:
 		SettingsMonitor(const char *name, SwitchFilter *filter);
@@ -29,6 +27,8 @@ class SwitchFilter: public BInputServerFilter
 	private:
 		SwitchFilter *filter;
 	};
+
+	friend class SettingsMonitor;
 
 	void MonitorEvent();
 	void UpdateRemapTable();

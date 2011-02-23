@@ -435,7 +435,8 @@ void SettingsWindow::MessageReceived(BMessage *msg) {
 				BAlert* alert = new BAlert("Error",
 					   B_TRANSLATE("Unable to install keymap indicator. "
 									"Deskbar application is not running."),
-				   	   B_TRANSLATE("OK"), 0, 0, B_WIDTH_AS_USUAL, B_STOP_ALERT);
+				   	   B_TRANSLATE("Start Deskbar"), B_TRANSLATE("OK"),
+					   0, B_WIDTH_AS_USUAL, B_STOP_ALERT);
 				alert->Go();
 			}
 
