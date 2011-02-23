@@ -435,7 +435,8 @@
 			break;
 		}
 		case MSG_BEEP_SETUP: {
-			be_roster->Launch("application/x-vnd.Haiku-Sounds");
+			//be_roster->Launch("application/x-vnd.Haiku-Sounds");
+			be_roster->Launch(SOUNDS_PREF_SIGNATURE);
 			break;
 		}
 		case MSG_SAVE_SETTINGS: {

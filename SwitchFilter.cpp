@@ -19,6 +19,7 @@
 #include <Entry.h>
 #include <InputServerDevice.h>
 #include "SwitchFilter.h"
+#include "KeymapSwitcher.h"
 #include "Settings.h"
 #include <InputServerFilter.h>
 #include <Locker.h>
@@ -63,7 +64,7 @@ enum __msgs {
 }; 
 
 //#define DESKBAR_SIGNATURE "application/x-vnd.Be-TSKB"
-#define INDICATOR_SIGNATURE "application/x-vnd.KeymapSwitcher"
+//#define INDICATOR_SIGNATURE "application/x-vnd.KeymapSwitcher"
 
 #if 0 //def NDEBUG
 #define trace(x...) syslog(LOG_DEBUG, x);
@@ -386,7 +387,7 @@ filter_result SwitchFilter::Filter(BMessage *message, BList *outList) {
 
 // Gets Indicator's BMessenger
 BMessenger* SwitchFilter::GetIndicatorMessenger() {
-	const char *REPLICANT_NAME = "Switcher/Deskbar";
+	//const char *REPLICANT_NAME = "Switcher/Deskbar";
 	BMessenger *indicator = 0;
 
 	BMessage	request(B_GET_PROPERTY);
@@ -400,7 +401,8 @@ BMessenger* SwitchFilter::GetIndicatorMessenger() {
 //	request.AddSpecifier("View", REPLICANT_NAME);
 	request.AddSpecifier("View", "Status");
 	request.AddSpecifier("Window", "Deskbar");
-	to = BMessenger("application/x-vnd.Be-TSKB", -1);
+	//to = BMessenger("application/x-vnd.Be-TSKB", -1);
+	to = BMessenger(DESKBAR_SIGNATURE, -1);
 	
 	BMessage	reply;
 	

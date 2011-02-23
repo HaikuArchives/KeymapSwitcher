@@ -21,7 +21,8 @@ void UpdateIndicator(uint32 what) {
 	// In the Deskbar the Shelf is in the View "Status" in Window "Deskbar"
 	request.AddSpecifier("View", "Status");
 	request.AddSpecifier("Window", "Deskbar");
-	to = BMessenger("application/x-vnd.Be-TSKB", -1);
+	//to = BMessenger("application/x-vnd.Be-TSKB", -1);
+	to = BMessenger(DESKBAR_SIGNATURE, -1);
 	
 	BMessage	reply;
 	
