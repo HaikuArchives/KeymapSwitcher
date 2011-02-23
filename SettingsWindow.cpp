@@ -23,6 +23,7 @@
 #include <Path.h>
 #include <PopUpMenu.h>
 #include <Roster.h>
+#include <Screen.h>
 #include <ScrollView.h>
 #include <StringView.h>
 #include <TextView.h>
@@ -360,6 +361,15 @@ SettingsWindow::SettingsWindow()
 	
 	// resize a bit from minimal layout - controls will follow!
 	ResizeTo(fMaxWindowWidth * 1.1f, fMaxWindowHeight * 1.1f);
+
+	BScreen screen(this);
+	BRect rcScreen(0, 0, 640, 480);
+	if(screen.IsValid())
+		rcScreen = screen.Frame();
+
+	ptOrg.x = rcScreen.left + (rcScreen.Width() - Bounds().Width()) / 2;
+	ptOrg.y = rcScreen.top + (rcScreen.Height() - Bounds().Height()) / 3;
+	MoveTo(ptOrg);
 
 	hotkey_changed = false;
 	Unlock();
