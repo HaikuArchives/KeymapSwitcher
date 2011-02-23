@@ -76,8 +76,9 @@ typedef struct {
 } async_menu_info;
 
 
-BView *instantiate_deskbar_item()
-{ return new DeskView(REPLICANT_NAME); }
+BView *instantiate_deskbar_item() { 
+	return new DeskView(REPLICANT_NAME); 
+}
 
 //
 int32 ShowContextMenuAsync(void *pMenuInfo) {
@@ -108,144 +109,144 @@ DeskView::DeskView(BMessage *message) :
 
 // Prepare 
 void DeskView::Init() {
-//	InitVersionInfo();
-		
+	//	InitVersionInfo();
+
 	keymaps = new BList();
 	settings = new Settings("Switcher");
 	if (settings->InitCheck() != B_OK) {
 		// settings do not exist, populate default values
-			settings->SetDefaults();
-			settings->Save(); // let Switcher know about new settings
-		}
-		active_keymap = 0;
-		settings->FindInt32("active", &active_keymap);
-		disabled = false;
-		settings->FindBool("disabled", &disabled);
-		watching = false;	
+		settings->SetDefaults();
+		settings->Save(); // let Switcher know about new settings
+	}
+	active_keymap = 0;
+	settings->FindInt32("active", &active_keymap);
+	disabled = false;
+	settings->FindBool("disabled", &disabled);
+	watching = false;	
 
-		find_directory(B_USER_SETTINGS_DIRECTORY, &cur_map_path);
-		cur_map_path.Append("Key_map");
-		trace(cur_map_path.Path());
+	find_directory(B_USER_SETTINGS_DIRECTORY, &cur_map_path);
+	cur_map_path.Append("Key_map");
+	trace(cur_map_path.Path());
 
-		int32 count = 0;
-		settings->FindInt32("keymaps", &count); // retrieve keymaps number
-		BString param, name;
-		BPath path;
+	int32 count = 0;
+	settings->FindInt32("keymaps", &count); // retrieve keymaps number
+	BString param, name;
+	BPath path;
 
-		// read all the keymaps
-		for (int32 i = 0; i<count; i++) {
-			param = "";
-			param << "n" << i;
-			settings->FindString(param.String(), &name);
-			param = "";
-			param << "d" << i;
-			int32 dir;
-			trace(param.String());
-			settings->FindInt32(param.String(), &dir);
-			find_directory((directory_which)dir, &path);
-			path.Append(name.String());
-			trace(path.Path());
-			keymaps->AddItem((void *)new BString(path.Path()));
-		}
-		
-		// initialize app list
-		app_list = new BList;
-		BList *teams = new BList;
-		be_roster->GetAppList(teams);
-		int32 teams_count = teams->CountItems();
-		for (int i=0; i<teams_count; i++) {
-			team_id team = (team_id) teams->ItemAt(i);
-			app_info info;
-			be_roster->GetRunningAppInfo(team, &info);
-			
-			if((info.flags & B_BACKGROUND_APP) || (0 == strcmp(info.signature, DESKBAR_SIGNATURE))){
-				continue; // we don't need guys like input_server to appear in our list
-			}
-			team_keymap *item = new team_keymap;
-			item->team = team;
-			item->keymap = 0;
-			app_list->AddItem((void *)item);
-		}
-		DELETE(teams);
+	// read all the keymaps
+	for (int32 i = 0; i<count; i++) {
+		param = "";
+		param << "n" << i;
+		settings->FindString(param.String(), &name);
+		param = "";
+		param << "d" << i;
+		int32 dir;
+		trace(param.String());
+		settings->FindInt32(param.String(), &dir);
+		find_directory((directory_which)dir, &path);
+		path.Append(name.String());
+		trace(path.Path());
+		keymaps->AddItem((void *)new BString(path.Path()));
 	}
 
-	//
-	DeskView::~DeskView() {
-		be_roster->StopWatching(this);
-		settings->SetInt32("active", active_keymap);
-		if (NULL != settings) 
-			DELETE(settings);
-		if (NULL != app_list)
-			while (!app_list->IsEmpty())
-				delete (static_cast<team_keymap*> (app_list->RemoveItem(0L))); 
-			DELETE(app_list);
-		if (NULL != keymaps) {
-			while (!keymaps->IsEmpty())
-				delete (static_cast<BString*> (keymaps->RemoveItem(0L)));
-			DELETE(keymaps);
+	// initialize app list
+	app_list = new BList;
+	BList *teams = new BList;
+	be_roster->GetAppList(teams);
+	int32 teams_count = teams->CountItems();
+	for (int i=0; i<teams_count; i++) {
+		team_id team = (team_id) teams->ItemAt(i);
+		app_info info;
+		be_roster->GetRunningAppInfo(team, &info);
+
+		if((info.flags & B_BACKGROUND_APP) || (0 == strcmp(info.signature, DESKBAR_SIGNATURE))){
+			continue; // we don't need guys like input_server to appear in our list
 		}
+		team_keymap *item = new team_keymap;
+		item->team = team;
+		item->keymap = 0;
+		app_list->AddItem((void *)item);
 	}
+	DELETE(teams);
+}
 
-
-	// archiving overrides
-	DeskView *DeskView::Instantiate(BMessage *data) {
-		if (validate_instantiation(data, "DeskView")) {
-			return new DeskView(data);
-		}
-		return NULL;
+//
+DeskView::~DeskView() {
+	be_roster->StopWatching(this);
+	settings->SetInt32("active", active_keymap);
+	if (NULL != settings) 
+		DELETE(settings);
+	if (NULL != app_list)
+		while (!app_list->IsEmpty())
+			delete (static_cast<team_keymap*> (app_list->RemoveItem(0L))); 
+	DELETE(app_list);
+	if (NULL != keymaps) {
+		while (!keymaps->IsEmpty())
+			delete (static_cast<BString*> (keymaps->RemoveItem(0L)));
+		DELETE(keymaps);
 	}
+}
 
-	//
-	status_t DeskView::Archive(BMessage *data, bool deep) const {
-		BView::Archive(data, deep);
-		data->AddString("add_on", APP_SIGNATURE);
-		data->AddString("class", REPLICANT_NAME);
-		return B_NO_ERROR;
+
+// archiving overrides
+DeskView *DeskView::Instantiate(BMessage *data) {
+	if (validate_instantiation(data, "DeskView")) {
+		return new DeskView(data);
 	}
+	return NULL;
+}
 
-	//
-	void DeskView::AttachedToWindow(void) {
-		SetViewColor(Parent()->ViewColor());
-		SetDrawingMode( B_OP_ALPHA );
+//
+status_t DeskView::Archive(BMessage *data, bool deep) const {
+	BView::Archive(data, deep);
+	data->AddString("add_on", APP_SIGNATURE);
+	data->AddString("class", REPLICANT_NAME);
+	return B_NO_ERROR;
+}
+
+//
+void DeskView::AttachedToWindow(void) {
+	SetViewColor(Parent()->ViewColor());
+	SetDrawingMode( B_OP_ALPHA );
+}
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+void DeskView::DetachedFromWindow(void) 
+{
+}
+
+//
+void DeskView::Draw(BRect rect) {
+	BView::Draw(rect);
+	SetDrawingMode(B_OP_COPY);
+	rgb_color color = ui_color(B_DESKTOP_COLOR);
+
+	// draw rect
+	SetLowColor(189,185,189); // Deskbar's status pane color
+	if(disabled)
+		SetHighColor(128,128,128); // Disabled grey
+	else {
+		SetHighColor(color);
 	}
-
-	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-	void DeskView::DetachedFromWindow(void) 
-	{
-	}
-
-	//
-	void DeskView::Draw(BRect rect) {
-		BView::Draw(rect);
-		SetDrawingMode(B_OP_COPY);
-		rgb_color color = ui_color(B_DESKTOP_COLOR);
-
-		// draw rect
-		SetLowColor(189,185,189); // Deskbar's status pane color
-		if(disabled)
-			SetHighColor(128,128,128); // Disabled grey
-		else {
-			SetHighColor(color);
-		}
-		FillRect(rect);	  
+	FillRect(rect);	  
 
 
-		BString map_name;
+	BString map_name;
 
-		// get keymap name from the keymap path
-		BString *keymap = (BString *)keymaps->ItemAt(active_keymap); 
-		BPath path(keymap->String());
-		map_name = path.Leaf();
-			
-		if(disabled)
-			SetLowColor(128,128,128);
-		else
+	// get keymap name from the keymap path
+	BString *keymap = (BString *)keymaps->ItemAt(active_keymap); 
+	BPath path(keymap->String());
+	map_name = path.Leaf();
+
+	if(disabled)
+		SetLowColor(128,128,128);
+	else
 		SetLowColor(color);
 	SetHighColor(255,255,255);
 	float width = B_MINI_ICON+1;
 
 	float stringWidth = StringWidth(map_name.String(),2);
-	
+
 	MovePenTo((width - stringWidth)/2,13);
 	DrawString(map_name.String(), 2);
 }

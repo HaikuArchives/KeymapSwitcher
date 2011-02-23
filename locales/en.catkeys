@@ -1,0 +1,26 @@
+1	english	x-vnd.KeymapSwitcher	313153088
+ (System)	SwitcherSettingsWindow		 (System)
+Beep setup…	SwitcherSettingsWindow		Beep setup…
+Keymap Switcher\n\n	SwitcherSettingsWindow		Keymap Switcher\n\n
+Quit	SwitcherDeskView		Quit
+Copyright © 2008-2010 Haiku, Inc.\n	SwitcherSettingsWindow		Copyright © 2008-2010 Haiku, Inc.\n
+Hotkey:	SwitcherSettingsWindow		Hotkey:
+Settings…	SwitcherDeskView		Settings…
+System	SwitcherSettingsWindow		System
+Special thanks to all BeOS users, whether they use this app or not - they're keeping BeOS alive!\n\n	SwitcherSettingsWindow		Special thanks to all BeOS users, whether they use this app or not - they're keeping BeOS alive!\n\n
+Tested and inspired by\n\tSergey \"fyysik\" Dolgov,\n\tMaxim \"baza\" Bazarov,\n\tDenis Korotkov,\n\tNur Nazmetdinov and others.\n\n	SwitcherSettingsWindow		Tested and inspired by\n\tSergey \"fyysik\" Dolgov,\n\tMaxim \"baza\" Bazarov,\n\tDenis Korotkov,\n\tNur Nazmetdinov and others.\n\n
+ (User)	SwitcherSettingsWindow		 (User)
+Version  %VERSION \n\n	SwitcherSettingsWindow		Version  %VERSION \n\n
+Original notice from Stas Maximov:\n	SwitcherSettingsWindow		Original notice from Stas Maximov:\n
+Apply	SwitcherSettingsWindow		Apply
+Revert	SwitcherSettingsWindow		Revert
+Disable	SwitcherDeskView		Disable
+About…	SwitcherSettingsWindow		About…
+Keymap Switcher	SwitcherSettingsWindow		Keymap Switcher
+Thanks to Pierre Raynaud-Richard and Robert Polic for BeOS tips.\n\n	SwitcherSettingsWindow		Thanks to Pierre Raynaud-Richard and Robert Polic for BeOS tips.\n\n
+Available keymaps:	SwitcherSettingsWindow		Available keymaps:
+Okay	SwitcherSettingsWindow		Okay
+About	SwitcherSettingsWindow		About
+Selected keymaps:	SwitcherSettingsWindow		Selected keymaps:
+Copyright © 1999-2003 Stas Maximov.\n	SwitcherSettingsWindow		Copyright © 1999-2003 Stas Maximov.\n
+User	SwitcherSettingsWindow		User

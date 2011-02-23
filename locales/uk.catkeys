@@ -1,0 +1,26 @@
+1	ukrainian	x-vnd.KeymapSwitcher	313153088
+ (System)	SwitcherSettingsWindow		 (Системна)
+Beep setup…	SwitcherSettingsWindow		Встановити звук…
+Keymap Switcher\n\n	SwitcherSettingsWindow		Перемикач розкладок\n\n
+Quit	SwitcherDeskView		Вийти
+Hotkey:	SwitcherSettingsWindow		Горячі клавіші:
+Copyright © 2008-2010 Haiku, Inc.\n	SwitcherSettingsWindow		Copyright © 2008-2010 Haiku, Inc.\n
+Settings…	SwitcherDeskView		Настройки…
+System	SwitcherSettingsWindow		Система
+Special thanks to all BeOS users, whether they use this app or not - they're keeping BeOS alive!\n\n	SwitcherSettingsWindow		Особлива подяка всім користувачам BeOS , незалежно від того чи використовують вони додаток чи ні - завдяки їм  BeOS завжди живий!\n\n
+Tested and inspired by\n\tSergey \"fyysik\" Dolgov,\n\tMaxim \"baza\" Bazarov,\n\tDenis Korotkov,\n\tNur Nazmetdinov and others.\n\n	SwitcherSettingsWindow		Тестування і надхнення від\n\tСергія \"fyysik\" Долгова ,\n\tМаксима \"baza\" Базарова,\n\tДениса Короткова,\n\tНур Мухаметдинова і інших.\n\n
+ (User)	SwitcherSettingsWindow		 (Користувач)
+Version  %VERSION \n\n	SwitcherSettingsWindow		Версія  %VERSION \n\n
+Original notice from Stas Maximov:\n	SwitcherSettingsWindow		Авторська примітка від Стаса Максимова:\n
+Apply	SwitcherSettingsWindow		Прийняти
+Revert	SwitcherSettingsWindow		Повернути
+Disable	SwitcherDeskView		Скасувати
+About…	SwitcherSettingsWindow		Про…
+Keymap Switcher	SwitcherSettingsWindow		Перемикач розкладок
+Thanks to Pierre Raynaud-Richard and Robert Polic for BeOS tips.\n\n	SwitcherSettingsWindow		Подяка для Pierre Raynaud-Richard і Robert Polic за підказки для BeOS .\n\n
+Available keymaps:	SwitcherSettingsWindow		Доступні розкладки:
+Okay	SwitcherSettingsWindow		Гаразд
+About	SwitcherSettingsWindow		Про
+Selected keymaps:	SwitcherSettingsWindow		Вибрані розкладки:
+Copyright © 1999-2003 Stas Maximov.\n	SwitcherSettingsWindow		Copyright © 1999-2003 Стас Максимов.\n
+User	SwitcherSettingsWindow		Користувач
