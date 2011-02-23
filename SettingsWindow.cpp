@@ -217,7 +217,7 @@ SettingsWindow::SettingsWindow(bool fromDeskbar)
 	buttonOK->SetEnabled(!AlreadyInDeskbar());
 	buttonCancel->SetEnabled(!AlreadyInDeskbar());
 	
-	BString strRemap(B_TRANSLATE("Arrange shortcuts to %KEYMAP% keymap"));
+	BString strRemap(B_TRANSLATE("Remap shortcuts to %KEYMAP% keymap"));
 	strRemap.ReplaceAll("%KEYMAP%", "US-International");
 	checkRemap = new RemapCheckBox(rc, "check_remap", strRemap,
 			   new BMessage(MSG_CHECK_REMAP), B_FOLLOW_LEFT | B_FOLLOW_BOTTOM);
@@ -499,8 +499,8 @@ void SettingsWindow::AdjustRemapCheck(bool next_index)
 
 	index %= selected_list->CountItems() + 1;
 	checkRemap->SetIndex(index);
-	BString str(index <= 0 ? B_TRANSLATE("Activate shortcuts arrangement")
-			: B_TRANSLATE("Arrange shortcuts to %KEYMAP% keymap"));
+	BString str(index <= 0 ? B_TRANSLATE("Activate shortcuts remapping")
+			: B_TRANSLATE("Remap shortcuts to %KEYMAP% keymap"));
 	if (index > 0) {
 		KeymapItem *item = (KeymapItem*)selected_list->ItemAt(index - 1);
 		str.ReplaceAll("%KEYMAP%", item->RealName());
@@ -822,7 +822,7 @@ SettingsWindow::MoveButton::LoadPicture(BResources *resFrom, BPicture *picTo, ui
 	BView view(bmp->Bounds(), "", 0, 0);
 	AddChild(&view);
 	view.BeginPicture(picTo);
-	rgb_color color= {220,220,220, 255};
+	rgb_color color = ui_color(B_PANEL_BACKGROUND_COLOR);
 	view.SetHighColor(color);
 	view.FillRect(view.Bounds());
 	view.SetDrawingMode(B_OP_OVER);

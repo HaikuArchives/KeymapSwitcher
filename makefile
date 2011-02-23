@@ -52,9 +52,10 @@ package: $(OBJ_DIR)/$(APP) $(APP_DEST) $(ADDON_DEST) $(CATALOGS_DEST)
 	echo "URL: http://www.sf.net/projects/switcher" >> $(DIST_DIR)/.OptionalPackageDescription
 	cd $(DIST_DIR) && zip -9 -r -z -y $(PACKAGE_NAME).zip common .OptionalPackageDescription < .OptionalPackageDescription
 	echo "#!/bin/sh" > $(DIST_DIR)/update-$(PACKAGE_NAME).sh
+	echo "cd \`dirname \$$""0\`" >> $(DIST_DIR)/update-$(PACKAGE_NAME).sh
 	echo "hey input_server quit" >> $(DIST_DIR)/update-$(PACKAGE_NAME).sh
 	echo "hey Deskbar quit" >> $(DIST_DIR)/update-$(PACKAGE_NAME).sh
-	echo "unzip $(PACKAGE_NAME).zip -d /boot" >> $(DIST_DIR)/update-$(PACKAGE_NAME).sh
+	echo "unzip -o $(PACKAGE_NAME).zip -d /boot" >> $(DIST_DIR)/update-$(PACKAGE_NAME).sh
 	echo "/boot/system/Deskbar &" >> $(DIST_DIR)/update-$(PACKAGE_NAME).sh
 	echo "/boot/system/servers/input_server &" >> $(DIST_DIR)/update-$(PACKAGE_NAME).sh
 	chmod 700 $(DIST_DIR)/update-$(PACKAGE_NAME).sh

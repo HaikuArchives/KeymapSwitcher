@@ -10,7 +10,7 @@
 #define DESKBAR_SIGNATURE "application/x-vnd.Be-TSKB"
 #define REPLICANT_NAME "Switcher/Deskbar"
 #define BEEP_NAME "Keymap switch"
-#define SOUNDS_PREF_SIGNATURE "application/x-vnd.Haiku-Sounds"
+//#define SOUNDS_PREF_SIGNATURE "application/x-vnd.Haiku-Sounds"
 
 enum {
 	MSG_CHANGEKEYMAP = 0x400,

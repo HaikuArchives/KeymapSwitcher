@@ -317,11 +317,12 @@ filter_result SwitchFilter::Filter(BMessage *message, BList *outList) {
 			return B_SKIP_MESSAGE;		
 		} 
 */
-		modifiers &= ~(B_CAPS_LOCK | B_SCROLL_LOCK | B_NUM_LOCK);
-		if((modifiers != (B_COMMAND_KEY | B_LEFT_COMMAND_KEY)) && 
-			(modifiers != (B_COMMAND_KEY | B_RIGHT_COMMAND_KEY)))
+//		modifiers &= ~(B_CAPS_LOCK | B_SCROLL_LOCK | B_NUM_LOCK);
+//		if((modifiers != (B_COMMAND_KEY | B_LEFT_COMMAND_KEY)) && 
+//			(modifiers != (B_COMMAND_KEY | B_RIGHT_COMMAND_KEY)))
+		if(!(modifiers & (B_COMMAND_KEY | B_LEFT_COMMAND_KEY | B_RIGHT_COMMAND_KEY)))
 		{
-			trace("quitting because... %#x", modifiers);
+			trace("Do not remap. Cmd- is not pressed(%#x)", modifiers);
 			break; // only Cmd-based are mapped
 		}
 			
@@ -523,9 +524,9 @@ BMessenger* SwitchFilter::GetIndicatorMessenger() {
 
 //
 void SwitchFilter::UpdateIndicator() {
-	trace("go");
 	// tell Indicator to change icon
 	BMessenger *indicator = GetIndicatorMessenger();
+	trace("go:%#x", indicator);
 	if(indicator)
 		indicator->SendMessage(MSG_CHANGEKEYMAP);
 }

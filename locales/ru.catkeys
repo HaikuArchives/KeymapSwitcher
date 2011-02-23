@@ -1,13 +1,11 @@
-1	russian	x-vnd.Nexus-KeymapSwitcher	3301068710
+1	russian	x-vnd.Nexus-KeymapSwitcher	4128661695
  (system)	SwitcherSettingsWindow		 (системная)
  (user)	SwitcherSettingsWindow		 (пользовательская)
 About	SwitcherDeskView		О программе
 About…	SwitcherDeskView		О программе…
-Activate shortcuts arrangement	SwitcherSettingsWindow		Activate shortcuts arrangement
+Activate shortcuts remapping	SwitcherSettingsWindow		Activate shortcuts remapping
 Apply	SwitcherSettingsWindow		Применить
-Arrange shortcuts to %KEYMAP% keymap	SwitcherSettingsWindow		Arrange shortcuts to %KEYMAP% keymap
 Available keymaps:	SwitcherSettingsWindow		Доступные раскладки:
-Beep setup…	SwitcherDeskView		Настройка звука…
 Copyright © 1999-2003 Stas Maximov.\n	SwitcherDeskView		Copyright © 1999-2003 Стас Максимов.\n
 Copyright © 2008-2010 Haiku, Inc.\n	SwitcherDeskView		Copyright © 2008-2010 Haiku, Inc.\n
 Disable	SwitcherDeskView		Отключить
@@ -22,6 +20,7 @@ OK	SwitcherSettingsWindow		ОК
 Okay	SwitcherDeskView		Хорошо
 Original notice from Stas Maximov:\n	SwitcherDeskView		Первоначальное сообщение Стаса Максимова:\n
 Quit	SwitcherDeskView		Выход
+Remap shortcuts to %KEYMAP% keymap	SwitcherSettingsWindow		Remap shortcuts to %KEYMAP% keymap
 Revert	SwitcherSettingsWindow		Вернуть
 Selected keymaps:	SwitcherSettingsWindow		Выбранные раскладки:
 Settings…	SwitcherDeskView		Настройки…

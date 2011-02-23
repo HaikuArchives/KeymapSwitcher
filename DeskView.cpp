@@ -6,11 +6,14 @@
 
 #include "DeskView.h"
 
+#include <stdio.h>
+
 #include <Alert.h>
 #include <Beep.h>
 #include <Catalog.h>
 #include <Deskbar.h>
 #include <Dragger.h>
+#include <File.h>
 #include <FindDirectory.h>
 #include <InputServerDevice.h>
 #include <Locale.h>
@@ -20,13 +23,13 @@
 #include <TextView.h>
 
 #include "KeymapSwitcher.h"
-#include "SettingsWindow.h"
+//#include "SettingsWindow.h"
 
 
 #undef B_TRANSLATE_CONTEXT
 #define B_TRANSLATE_CONTEXT "SwitcherDeskView"
 
-#define NEXT_KEYMAP(index, total) ((++index)==total?0:index)
+#define NEXT_KEYMAP(index, total) ((++index) >= total ? 0 : index)
 
 #define DELETE(p) {if (0 != p) { delete p; p = 0; } }
 
@@ -61,7 +64,7 @@ const uint32	kSettings = 'CSet';
 const uint32	kAbout = 'CAbt';
 //const uint32	kBeepSettings = 'CBSt';
 const uint32	kUnloadNow = 'CUnl';
-const uint32	kDisableNow = 'CDis';
+//const uint32	kDisableNow = 'CDis';
 
 typedef struct {
 	BPopUpMenu*	menu;
@@ -87,22 +90,25 @@ int32 ShowContextMenuAsync(void *pMenuInfo) {
 // General constructor
 DeskView::DeskView(const char *name,
 	uint32 resizeMask, uint32 flags)
-		: BView(BRect(0,0, fIconX, fIconY), name, resizeMask, flags)
+		: BStringView(BRect(0,0, fIconX, fIconY), name, ":)",  resizeMask, flags)
 {
-	SetViewColor(B_TRANSPARENT_32_BIT);
+	//SetViewColor(B_TRANSPARENT_32_BIT);
 	AddChild(new BDragger(BRect(-10, -10, - 10, -10), this));
 	Init();	// Do prepare...
 }
 
 // Archive constructor
 DeskView::DeskView(BMessage *message) : 
-		BView(message)/*,
-		menu(new BPopUpMenu("Menu",false,false)) */{
-	SetViewColor(B_TRANSPARENT_COLOR);
+		BStringView(message)/*,
+		menu(new BPopUpMenu("Menu",false,false)) */
+{
+	//SetViewColor(B_TRANSPARENT_COLOR);
 	BFont font;
 	font.SetSize(13.f);
 	//font.SetFace(B_BOLD_FACE);
 	SetFont(&font);
+	SetAlignment(B_ALIGN_CENTER);
+
 	Init();	// Do prepare...
 }
 
@@ -119,8 +125,8 @@ void DeskView::Init() {
 	}
 	active_keymap = 0;
 	settings->FindInt32("active", &active_keymap);
-	disabled = false;
-	settings->FindBool("disabled", &disabled);
+//	disabled = false;
+//	settings->FindBool("disabled", &disabled);
 	watching = false;	
 	
 	find_directory(B_USER_SETTINGS_DIRECTORY, &cur_map_path);
@@ -197,7 +203,7 @@ DeskView *DeskView::Instantiate(BMessage *data) {
 
 //
 status_t DeskView::Archive(BMessage *data, bool deep) const {
-	BView::Archive(data, deep);
+	BStringView::Archive(data, deep);
 	data->AddString("add_on", APP_SIGNATURE);
 	data->AddString("class", REPLICANT_NAME);
 	return B_NO_ERROR;
@@ -205,18 +211,33 @@ status_t DeskView::Archive(BMessage *data, bool deep) const {
 
 //
 void DeskView::AttachedToWindow(void) {
-	SetViewColor(Parent()->ViewColor());
-	SetDrawingMode( B_OP_ALPHA );
+	//SetViewColor(Parent()->ViewColor());
+	//SetDrawingMode( B_OP_ALPHA );
+	//
+	BStringView::AttachedToWindow();
+
+	UpdateViewColors();
+	UpdateText();
+
+	BPoint pt;
+	GetPreferredSize(&pt.x, &pt.y);
+	ResizeTo(pt.x + 2, fIconY); // let some place for better look
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-void DeskView::DetachedFromWindow(void) 
+/*void DeskView::DetachedFromWindow(void) 
 {
-}
+}*/
 
 //
-void DeskView::Draw(BRect rect) {
-	BView::Draw(rect);
+/* 
+void DeskView::Draw(BRect rect)
+{
+	BPoint pt = PenLocation();
+	MovePenTo(pt.x, Bounds().bottom);
+
+	BStringView::Draw(rect);
+/ *	
 	SetDrawingMode(B_OP_COPY);
 	rgb_color color = ui_color(B_MENU_SELECTED_BACKGROUND_COLOR);
 	rgb_color gray_color = make_color(128, 128, 128);
@@ -256,6 +277,44 @@ void DeskView::Draw(BRect rect) {
 
 	MovePenTo((width - stringWidth)/2,13);
 	DrawString(map_name.String(), 2);
+* /	
+}
+*/
+
+void DeskView::UpdateViewColors()
+{
+	rgb_color low = /*disabled ?
+		make_color(128, 128, 128) :*/ ui_color(B_MENU_SELECTED_BACKGROUND_COLOR);
+	rgb_color high = /*disabled ?
+		make_color(0, 0, 0) :*/ make_color(255, 255, 255, 255);
+
+	SetViewColor(low);
+	SetLowColor(low);
+	SetHighColor(high);
+}
+
+void DeskView::UpdateText()
+{
+	BString map_name;
+	// get keymap name from the keymap path
+	BString *keymap = (BString *)keymaps->ItemAt(active_keymap); 
+	if(keymap == 0) {
+		keymap = (BString *)keymaps->ItemAt(0);
+	}
+
+	if (keymap != 0) {
+		BPath path(keymap->String());
+		map_name = path.Leaf();
+	}
+
+	if (map_name.Length() == 0)
+		map_name << ":(";
+
+	map_name.Truncate(2, true);
+
+	if(0 != map_name.Compare(Text())) {
+		SetText(map_name);
+	}
 }
 
 //
@@ -270,9 +329,11 @@ void DeskView::MessageReceived(BMessage *message) {
 		break;
 	}
 	case kSettings: {
+		/*
 		SettingsWindow *settingsWnd = new SettingsWindow(true);
 		if(settingsWnd == NULL)
-			trace("Unable to create SettingsWindow");
+			trace("Unable to create SettingsWindow");*/
+		be_roster->Launch(APP_SIGNATURE);
 		break;
 	}
 /*	case kBeepSettings: {
@@ -288,17 +349,21 @@ void DeskView::MessageReceived(BMessage *message) {
 		deskbar.RemoveItem(REPLICANT_NAME);
 		break;
 	}
-	case kDisableNow:
+/*	case kDisableNow: {
 		disabled = !disabled; 
+
+		UpdateViewColors();
+
 		settings->SetBool("disabled", disabled);
 		settings->Save();
-		Pulse();
+		Invalidate();
+		//Pulse();
 		break;
-
+	} */
 	case MSG_CHANGEKEYMAP:
 		// message from Switcher, change Indicator now!
-		if (disabled)
-			break;
+	//	if (disabled)
+	//		break;
 		ChangeKeyMap(NEXT_KEYMAP(active_keymap, keymaps->CountItems()));
 		break;
 
@@ -403,7 +468,7 @@ void DeskView::MessageReceived(BMessage *message) {
 	}
 		
 	}
-	BView::MessageReceived(message);
+	BStringView::MessageReceived(message);
 }
 
 int32 DeskView::FindApp(int32 team) {
@@ -418,8 +483,31 @@ int32 DeskView::FindApp(int32 team) {
 //
 void DeskView::Pulse() {
 
-	Draw(Bounds());
+	//Draw(Bounds());
 
+	UpdateText();
+/*
+	BString map_name;
+	// get keymap name from the keymap path
+	BString *keymap = (BString *)keymaps->ItemAt(active_keymap); 
+	if(keymap == 0) {
+		keymap = (BString *)keymaps->ItemAt(0);
+	}
+
+	if (keymap != 0) {
+		BPath path(keymap->String());
+		map_name = path.Leaf();
+	}
+
+	if (map_name.Length() == 0)
+		map_name << ":(";
+
+	map_name.Truncate(2, true);
+
+	if(0 != map_name.Compare(Text())) {
+		SetText(map_name);
+	}
+*/
 	if(!watching) {
 		if(B_OK == be_roster->StartWatching(this, B_REQUEST_LAUNCHED | B_REQUEST_QUIT | B_REQUEST_ACTIVATED))
 			trace("start watching");
@@ -447,12 +535,13 @@ void DeskView::MouseDown(BPoint where) {
 		if ((buttons & B_SECONDARY_MOUSE_BUTTON) || (modifiers & B_CONTROL_KEY)) {
 			// secondary button was clicked or control key was down, show menu and return
 			ShowContextMenu(where);
-		} else if (buttons & B_PRIMARY_MOUSE_BUTTON && !disabled) {
+		} else if (buttons & B_PRIMARY_MOUSE_BUTTON /*&& !disabled*/) {
 			ChangeKeyMap(NEXT_KEYMAP(active_keymap, keymaps->CountItems()));
 		} else if (buttons & B_TERTIARY_MOUSE_BUTTON) {
-			SettingsWindow *settingsWnd = new SettingsWindow(true);
+			/*SettingsWindow *settingsWnd = new SettingsWindow(true);
 			if(settingsWnd == NULL)
-				trace("Unable to create SettingsWindow");
+				trace("Unable to create SettingsWindow");*/
+			be_roster->Launch(APP_SIGNATURE);
 		}
 	}
 }
@@ -473,17 +562,17 @@ void DeskView::ShowContextMenu(BPoint where) {
 		item = new BMenuItem(path.Leaf(), msg);
 		item->SetTarget(this);
 		item->SetMarked(i == active_keymap);
-		if(disabled) item->SetEnabled(false);
+		//if(disabled) item->SetEnabled(false);
 		menu->AddItem(item);
 	}
 	
 	menu->AddSeparatorItem();
-	menu->AddItem(item = new BMenuItem(B_TRANSLATE("About" B_UTF8_ELLIPSIS), new BMessage(kAbout)));
+
+	menu->AddItem(item = new BMenuItem(B_TRANSLATE("Settings" B_UTF8_ELLIPSIS), new BMessage(kSettings)));
 	item->SetTarget(this);
 
 	menu->AddSeparatorItem();
-
-	menu->AddItem(item = new BMenuItem(B_TRANSLATE("Settings" B_UTF8_ELLIPSIS), new BMessage(kSettings)));
+	menu->AddItem(item = new BMenuItem(B_TRANSLATE("About" B_UTF8_ELLIPSIS), new BMessage(kAbout)));
 	item->SetTarget(this);
 
 /*	menu->AddSeparatorItem();
@@ -491,11 +580,11 @@ void DeskView::ShowContextMenu(BPoint where) {
 	menu->AddItem(item = new BMenuItem(B_TRANSLATE("Beep setup" B_UTF8_ELLIPSIS), new BMessage(kBeepSettings)));
 	item->SetTarget(this);
 */
-	menu->AddSeparatorItem();
+/*	menu->AddSeparatorItem();
 	menu->AddItem(item = new BMenuItem(B_TRANSLATE("Disable"), new BMessage(kDisableNow)));
 	item->SetTarget(this);
 	item->SetMarked(disabled);
-
+*/	
 	menu->AddItem(item = new BMenuItem(B_TRANSLATE("Quit"), new BMessage(kUnloadNow)));
 	item->SetTarget(this);
 	BRect bounds = Bounds();
@@ -512,6 +601,7 @@ void DeskView::ShowContextMenu(BPoint where) {
 
 // change keymap, when user changed keymap with mouse on deskbar or via hotkey.
 void DeskView::ChangeKeyMap(int32 change_to) {
+	fprintf(stderr, "change to:%ld\n", change_to);
 	ChangeKeyMapSilent(change_to);
 	bool should_beep = false;
 	settings->FindBool("beep", &should_beep);
@@ -521,8 +611,8 @@ void DeskView::ChangeKeyMap(int32 change_to) {
 
 // silently changes keymap.
 void DeskView::ChangeKeyMapSilent(int32 change_to) {
-	if (disabled)
-		return;
+//	if (disabled)
+//		return;
 	app_info info;
 	team_keymap *item;
 	bool need_switch = false;
@@ -620,3 +710,4 @@ void DeskView::ShowAboutWindow()  {
 
 	alert->Go();
 }
+
