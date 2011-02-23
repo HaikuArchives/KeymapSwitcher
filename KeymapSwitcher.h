@@ -8,7 +8,7 @@
 
 //#define DESKBAR_SIGNATURE "application/x-vnd.Be-TSKB"
 #define REPLICANT_NAME "Switcher/Deskbar"
-#define VERSION "1.2.5"
+#define VERSION "1.2.6"
 #define BEEP_NAME "Keymap Switch"
 
 #endif		// __KeymapSwitcher_H	

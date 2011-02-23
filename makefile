@@ -1,13 +1,15 @@
 ##
 ##
 ##
-OBJ_DIR := obj.x86
+OBJ_DIR := objects.x86-*
 APP := KeymapSwitcher
 ADDON := keymap_switcher
 DIST_DIR := dist
 ADDON_DEST := $(DIST_DIR)/common/add-ons/input_server/filters/ 
 APP_DEST := $(DIST_DIR)/common/bin/ 
-VERSION := 1.2.5
+CATALOGS_DEST := $(DIST_DIR)/common/data/locale/catalogs/
+APP_MIME_SIG := x-vnd.KeymapSwitcher
+VERSION := 1.2.6
 
 default: $(OBJ_DIR)/$(APP)
 
@@ -26,9 +28,13 @@ $(APP_DEST):
 $(ADDON_DEST):
 	mkdir -p $(ADDON_DEST)
 
-package: $(OBJ_DIR)/$(APP)  $(APP_DEST) $(ADDON_DEST)
+$(CATALOGS_DEST):
+	mkdir -p $(CATALOGS_DEST)
+
+package: $(OBJ_DIR)/$(APP)  $(APP_DEST) $(ADDON_DEST) $(CATALOGS_DEST)
 	-cp $(OBJ_DIR)/$(APP) $(APP_DEST)
 	-cp $(OBJ_DIR)/$(ADDON) $(ADDON_DEST)
+	-cp -r $(OBJ_DIR)/$(APP_MIME_SIG) $(CATALOGS_DEST)
 	echo "Package: KeymapSwitcher" > $(DIST_DIR)/.OptionalPackageDescription
 	echo "Version: $(VERSION)$(GCCVER_SUFFIX)" >> $(DIST_DIR)/.OptionalPackageDescription
 	echo "Copyright: Stanislav Maximov etc." >> $(DIST_DIR)/.OptionalPackageDescription

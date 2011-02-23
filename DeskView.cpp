@@ -20,12 +20,17 @@
 #include <InputServerDevice.h>
 #include <iostream>
 #include <File.h>
+#include <Catalog.h>
+#include <Locale.h>
 
 #include "SettingsWindow.h"
 #include "Settings.h"
 #include "DeskView.h"
 #include "KeymapSwitcher.h"
 #include "Resource.h"
+
+#undef B_TRANSLATE_CONTEXT
+#define B_TRANSLATE_CONTEXT "SwitcherDeskView"
 
 #define NEXT_KEYMAP(index, total) ((++index)==total?0:index)
 
@@ -471,15 +476,15 @@ void DeskView::ShowContextMenu(BPoint where) {
 	}
 	menu->AddSeparatorItem();
 
-	menu->AddItem(item = new BMenuItem("Settings" B_UTF8_ELLIPSIS, new BMessage(kSettings)));
+	menu->AddItem(item = new BMenuItem(B_TRANSLATE("Settings" B_UTF8_ELLIPSIS), new BMessage(kSettings)));
 	item->SetTarget(this);
 
 	menu->AddSeparatorItem();
-	menu->AddItem(item = new BMenuItem("Disable", new BMessage(kDisableNow)));
+	menu->AddItem(item = new BMenuItem(B_TRANSLATE("Disable"), new BMessage(kDisableNow)));
 	item->SetTarget(this);
 	item->SetMarked(disabled);
 
-	menu->AddItem(item = new BMenuItem("Quit", new BMessage(kUnloadNow)));
+	menu->AddItem(item = new BMenuItem(B_TRANSLATE("Quit"), new BMessage(kUnloadNow)));
 	item->SetTarget(this);
 	BRect bounds = Bounds();
 	bounds = ConvertToScreen(bounds);

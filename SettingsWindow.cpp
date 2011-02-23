@@ -26,6 +26,8 @@
 #include <Alert.h>
 #include <stdio.h>
 #include <syslog.h>
+#include <Catalog.h>
+#include <Locale.h>
 
 #include "Settings.h"
 #include "SettingsWindow.h"
@@ -34,6 +36,9 @@
 #include "Replicator.h"
 #include "Resource.h"
 
+#undef B_TRANSLATE_CONTEXT
+#define B_TRANSLATE_CONTEXT "SwitcherSettingsWindow"
+
 	//CAUTION
 #define trace(x...) (void(0)) // syslog(0, x);
 	//NO_CAUTION :)
@@ -41,8 +46,9 @@
 	// the initial dimensions of the window.
 	const float WINDOW_X      = 100;
 	const float WINDOW_Y      = 100;
-	const float WINDOW_WIDTH  = 330;
+	const float WINDOW_WIDTH  = 330 + 60;
 	const float WINDOW_HEIGHT = 210;
+	const float BUTTON_WIDTH = 140;
 
 	// hot-keys
 //	const uint32	KEY_LCTRL_SHIFT = 0x2000;
@@ -105,9 +111,9 @@
 				KeymapItem *new_item = new KeymapItem(item);
 				BString name = new_item->Text();
 				if(B_BEOS_DATA_DIRECTORY == new_item->Dir())
-					name += " (System)";
+					name += B_TRANSLATE(" (System)");
 				else
-					name += " (User)";
+					name += B_TRANSLATE(" (User)");
 				new_item->SetText(name.String());
 				if(0 > index) {
 					AddItem(new_item);
@@ -168,7 +174,7 @@
 				WINDOW_Y, 
 								WINDOW_X + WINDOW_WIDTH,
 						WINDOW_Y + WINDOW_HEIGHT),
-						"Keymap Switcher",
+						B_TRANSLATE("Keymap Switcher"),
 						B_TITLED_WINDOW, 
 						B_NOT_ZOOMABLE | B_NOT_RESIZABLE) {
 		trace("read settings");
@@ -186,7 +192,7 @@
 		r.InsetBy(10,5);
 		r.bottom = r.top + 14;
 		r.right = r.left + 200;
-		box->AddChild(new BStringView(r, "string0", "Selected keymaps:"));
+		box->AddChild(new BStringView(r, "string0", B_TRANSLATE("Selected keymaps:")));
 		r.OffsetBy(0, 18);
 		r.bottom = r.top + 50;
 		selected_list = new KeymapListView(r, "selected_list");
@@ -216,20 +222,20 @@
 
 			BString display_name = name;
 			if(dir == B_BEOS_DATA_DIRECTORY)
-				display_name += " (System)";
-			else	display_name += " (User)";
+				display_name += B_TRANSLATE(" (System)");
+			else	display_name += B_TRANSLATE(" (User)");
 			selected_list->AddItem(new KeymapItem(display_name.String(), name.String(), dir));
 		}
 		
 		r.OffsetBy(0, 58);
 		r.bottom = r.top + 14;
-		r.right  = r.left + 140;
-		box->AddChild(new BStringView(r, "string1", "Available keymaps:"));
+		r.right  = r.left + 170;
+		box->AddChild(new BStringView(r, "string1", B_TRANSLATE("Available keymaps:")));
 		
 		//sz: 05.05.07: patch: "add" and "remove" keymap buttons added
 		BRect rA(r);
 		rA.OffsetBy(0, -3);
-		rA.left += 140;
+		rA.left += 170;
 		rA.right  = rA.left + 17;
 		rA.bottom = rA.top + 16;
 		BMoveButton *buttonEx = new BMoveButton(rA, "add_keymap_button", 
@@ -258,7 +264,7 @@
 		BDirectory *dir = new BDirectory(path.Path());
 		long maps = dir->CountEntries();
 		entry_ref ref;
-		KeymapItem *keymap_node = new KeymapItem("System", NULL, 0);
+		KeymapItem *keymap_node = new KeymapItem(B_TRANSLATE("System"), NULL, 0);
 		available_list->AddItem(keymap_node);
 		
 		BList temp_list;
@@ -280,7 +286,7 @@
 		dir = new BDirectory(path.Path());
 		maps = dir->CountEntries();
 		if(0 != maps) {
-			keymap_node = new KeymapItem("User", NULL, 0);
+			keymap_node = new KeymapItem(B_TRANSLATE("User"), NULL, 0);
 			available_list->AddItem(keymap_node);
 		}
 			
@@ -298,10 +304,10 @@
 		settings->FindInt32("hotkey", &hotkey);
 		settings->FindBool("beep", &beep);
 
-		r.OffsetTo(WINDOW_WIDTH-92, 5);
+		r.OffsetTo((WINDOW_WIDTH-BUTTON_WIDTH)-12, 5);
 		r.bottom = r.top + 14;
-		r.right = r.left + 80;	
-		box->AddChild(new BStringView(r, "string1", "Hotkey:"));
+		r.right = r.left + BUTTON_WIDTH;
+		box->AddChild(new BStringView(r, "string1", B_TRANSLATE("Hotkey:")));
 
 		r.OffsetBy(0, 14);
 		BPopUpMenu *pop_key;
@@ -352,28 +358,28 @@
 		box->AddChild(will_beep);
 	*/
 		long lTop = 46;
-		BButton *button = new BButton(BRect((WINDOW_WIDTH-80)-12,lTop,(WINDOW_WIDTH)-12,1),
-			"beep_button","Beep Setup",
+		BButton *button = new BButton(BRect((WINDOW_WIDTH-BUTTON_WIDTH)-12,lTop,(WINDOW_WIDTH)-12,1),
+			"beep_button",B_TRANSLATE("Beep setup" B_UTF8_ELLIPSIS),
 			new BMessage(MSG_BEEP_SETUP), B_FOLLOW_RIGHT);
 		box->AddChild(button);
 		
 		
 		lTop += 31;
-		/*BButton **/button = new BButton(BRect((WINDOW_WIDTH-80)-12,lTop,(WINDOW_WIDTH)-12,1),
-			"about_button","About",
+		/*BButton **/button = new BButton(BRect((WINDOW_WIDTH-BUTTON_WIDTH)-12,lTop,(WINDOW_WIDTH)-12,1),
+			"about_button",B_TRANSLATE("About" B_UTF8_ELLIPSIS),
 			new BMessage(MSG_ABOUT), B_FOLLOW_RIGHT);
 		box->AddChild(button);
 
 		lTop += 68;
-		button = new BButton(BRect((WINDOW_WIDTH-80)-12,lTop, (WINDOW_WIDTH)-12,1),
-			"save_button","Save",
+		button = new BButton(BRect((WINDOW_WIDTH-BUTTON_WIDTH)-12,lTop, (WINDOW_WIDTH)-12,1),
+			"save_button",B_TRANSLATE("Apply"),
 			new BMessage(MSG_SAVE_SETTINGS), B_FOLLOW_RIGHT);
 		box->AddChild(button);
 		button->MakeDefault(TRUE); 
 		
 		lTop += 31;
-		button = new BButton(BRect((WINDOW_WIDTH-80)-12,lTop,(WINDOW_WIDTH)-12,1),
-			"close_button","Cancel",
+		button = new BButton(BRect((WINDOW_WIDTH-BUTTON_WIDTH)-12,lTop,(WINDOW_WIDTH)-12,1),
+			"close_button",B_TRANSLATE("Revert"),
 			new BMessage(MSG_CLOSE), B_FOLLOW_RIGHT);
 		box->AddChild(button);
 
@@ -441,7 +447,7 @@
 			break;
 		}
 		case MSG_BEEP_SETUP: {
-			be_roster->Launch("application/x-vnd.Be.SoundsPrefs");
+			be_roster->Launch("application/x-vnd.Haiku-Sounds");
 			break;
 		}
 		case MSG_SAVE_SETTINGS: {
@@ -493,19 +499,24 @@
 
 	void SettingsWindow::ShowAboutWindow()  {
 		//BString strName = "Keymap Switcher";
-		BAlert *alert = new BAlert("About",
-						"Keymap Switcher\n\n"
-						"Copyright " B_UTF8_COPYRIGHT " 1999-2003 Stas Maximov\n"
-						"Copyright " B_UTF8_COPYRIGHT " 2008-2010 Haiku\n"
-						"Version " VERSION "\n\n"
-						"Original notice from Stas Maximov:\n"
-						"Tested and inspired by Sergey \"fyysik\" Dolgov, "
-						"Maxim \"baza\" Bazarov, Denis Korotkov, Nur Nazmetdinov "
-						"and others\n\n"
-						"Thanks to Pierre Raynaud-Richard and Robert Polic for BeOS tips.\n\n"
-						"Special thanks to all BeOS users, whether they use this app or not"
-						" - they're keeping BeOS alive!\n\n",
-					"Okay", 0, 0, B_WIDTH_AS_USUAL, B_IDEA_ALERT);
+		BString str(B_TRANSLATE("Keymap Switcher\n\n"));
+		str << B_TRANSLATE("Copyright " B_UTF8_COPYRIGHT " 1999-2003 Stas Maximov.\n");
+		str << B_TRANSLATE("Copyright " B_UTF8_COPYRIGHT " 2008-2010 Haiku, Inc.\n");
+		str << B_TRANSLATE("Version  %VERSION \n\n");
+		str << B_TRANSLATE("Original notice from Stas Maximov:\n");
+		str << B_TRANSLATE("Tested and inspired by"
+			"\n\tSergey \"fyysik\" Dolgov,"
+			"\n\tMaxim \"baza\" Bazarov,"
+			"\n\tDenis Korotkov,"
+			"\n\tNur Nazmetdinov and others.\n\n");
+		str << B_TRANSLATE("Thanks to Pierre Raynaud-Richard and "
+							"Robert Polic for BeOS tips.\n\n");
+		str << B_TRANSLATE("Special thanks to all BeOS users, "
+						"whether they use this app or not"
+						" - they're keeping BeOS alive!\n\n");
+		str.ReplaceAll("%VERSION", VERSION);
+		BAlert *alert = new BAlert(B_TRANSLATE("About"), str,
+					B_TRANSLATE("Okay"), 0, 0, B_WIDTH_AS_USUAL, B_IDEA_ALERT);
 	
 	BTextView *view = alert->TextView();
 	view->SetStylable(true);

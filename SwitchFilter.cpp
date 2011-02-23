@@ -368,7 +368,7 @@ filter_result SwitchFilter::Filter(BMessage *message, BList *outList) {
 		// check if it is Alt+Key key pressed, we shall put correct value 
 		// just as it is with American keymap 
 		int32 modifiers = message->FindInt32("modifiers");
-		int32 raw = message->FindInt32("raw_char");
+		//int32 raw = message->FindInt32("raw_char");
 
 /*		if ((modifiers & B_CONTROL_KEY) && (raw == B_ESCAPE)) {
 			trace("Ctrl+Esc found. Generating message...");
@@ -405,17 +405,20 @@ filter_result SwitchFilter::Filter(BMessage *message, BList *outList) {
 			break; // no active app found. strange.. :))
 
 			
-		if(raw > 0)
-			break;
-
-		for(int32 i=0; i<sizeof(key_table)/sizeof(key_table[0]);i++) {
-			if(key == key_table[i][0])
-				raw = key_table[i][1]; // set correct  value
-		}
-		if(raw < 0) // have no raw value for this key
-			break;
+//		if(raw > 0)
+//			break;
 			
-		message->ReplaceInt32("raw_char", raw);
+		for(uint32 i=0; i<sizeof(key_table)/sizeof(key_table[0]);i++) {
+			if(key == key_table[i][0]) {
+				message->ReplaceInt32("raw_char", key_table[i][1]);
+//				raw = key_table[i][1]; // set correct  value
+				break;
+			}
+		}
+
+//		if(raw < 0) // have no raw value for this key
+//			break;
+			
 		break;
 	} 
 	default: 
