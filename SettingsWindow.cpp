@@ -55,26 +55,6 @@ const float fXSpacing = 5.;
 const float kBmpBtnX = 17.;
 const float kBmpBtnY = 16.;
 
-// some messages
-enum {
-	MSG_PRIMARY_MAP = 0x1000,
-	MSG_ALT_MAP,
-	MSG_KEYMAPS_CHANGED,
-	MSG_BEEP_CHECKBOX_TOGGLED,
-	MSG_HOTKEY_CHANGED,
-	MSG_SAVE_SETTINGS,
-	MSG_CLOSE,
-	MSG_ABOUT,
-	MSG_BEEP_SETUP,
-	MSG_SETTINGS_CHANGED,
-	MSG_ACTIVE_ITEM_DRAGGED,
-	MSG_ITEM_DRAGGED,
-	MSG_REMOVE_ACTIVE_ITEM,
-	MSG_MOVE_ACTIVE_ITEM,
-	MSG_BUTTON_ADD_ITEM,
-	MSG_BUTTON_REMOVE_ITEM
-};
-
 //  construct main window
 SettingsWindow::SettingsWindow() 
 				: 
@@ -431,12 +411,12 @@ void SettingsWindow::MessageReceived(BMessage *msg) {
 		trace("keymaps changed");
 		keymaps_changed = true;
 		break;
-	case MSG_BEEP_CHECKBOX_TOGGLED: {
+	/*case MSG_BEEP_CHECKBOX_TOGGLED: {
 		bool beep;		
 		settings->FindBool("beep", &beep);
 			settings->SetBool("beep", !beep);
 		break;
-	}
+	}*/
 	case MSG_HOTKEY_CHANGED: {
 		int32 temp = 0;
 		if (B_OK==msg->FindInt32("hotkey",&temp))

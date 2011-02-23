@@ -97,6 +97,7 @@ DeskView::DeskView(BMessage *message) :
 		BView(message)/*,
 		menu(new BPopUpMenu("Menu",false,false)) */{
 	SetViewColor(B_TRANSPARENT_COLOR);
+	SetFontSize(11.f);
 	Init();	// Do prepare...
 }
 
