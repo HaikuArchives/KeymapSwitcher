@@ -23,11 +23,6 @@ class DeskView : public BView
 	} team_keymap;
 
 public:
-	enum __msgs {
-		MSG_CHANGEKEYMAP = 0x400,
-		MSG_UPDATESETTINGS,
-		MSG_SHOW_RC_MENU = 0x500
-	}; 
 
 	DeskView(const char *name,
 		uint32 resizeMask = B_FOLLOW_LEFT | B_FOLLOW_TOP, 

@@ -18,32 +18,46 @@ extern "C" _EXPORT BInputServerFilter* instantiate_input_filter();
 
 class SwitchFilter: public BInputServerFilter 
 {
+	friend class SettingsMonitor;
+
 	class SettingsMonitor : public BLooper {
 	public:
-		SettingsMonitor(const char *name, Settings *settings);
+		SettingsMonitor(const char *name, SwitchFilter *filter);
 		~SettingsMonitor();
 		virtual void MessageReceived(BMessage *msg);
 	private:
-		Settings *settings;
+		SwitchFilter *filter;
 	};
 
+	void MonitorEvent();
+
 public:
+	
+	union _key {
+		char byte;
+		int8 bytes[3];
+	};
+
 	SwitchFilter();
 	virtual ~SwitchFilter();
 	virtual status_t InitCheck();
 	virtual filter_result Filter(BMessage *message, BList *outList);
 	status_t GetScreenRegion(BRegion *region) const;
+
 private:
 	void UpdateIndicator();
 	void ShowRCMenu(BMessage msg);
 	status_t GetReplicantName(BMessenger target,  int32 uid, BMessage *reply) const;
 	status_t GetReplicantView(BMessenger target,  int32 uid, BMessage *reply) const;
 	int32 GetReplicantAt(BMessenger target, int32 index) const;
-	BMessenger *GetIndicatorMessenger();	
-private:
+	BMessenger *GetIndicatorMessenger();
+
+	_key* RemapKey(int index);
+
 	Settings *settings;
 	bool switch_on_hold;
 	SettingsMonitor *monitor;
+	_key *remapKeys;
 };
 
 #endif	//	__SWITCHFILTER_H

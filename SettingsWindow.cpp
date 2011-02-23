@@ -18,7 +18,6 @@
 #include <Deskbar.h>
 #include <Directory.h>
 #include <Entry.h>
-#include <FindDirectory.h>
 #include <Locale.h>
 #include <Menu.h>
 #include <MenuField.h>
@@ -400,7 +399,7 @@ void SettingsWindow::MessageReceived(BMessage *msg) {
 		settings->Save();
 //		delete settings; // we save settings in its destructor
 
-		::UpdateIndicator(DeskView::MSG_UPDATESETTINGS);
+		::UpdateIndicator(MSG_UPDATESETTINGS);
 		/*if(!from_deskbar) {
 			be_app->PostMessage(B_QUIT_REQUESTED);
 		} else
@@ -420,7 +419,7 @@ void SettingsWindow::MessageReceived(BMessage *msg) {
 			//while(0 < available_list->CountItems())
 			//	delete (dynamic_cast<KeymapItem*> (available_list->RemoveItem(0L)));
 			settings->Save();
-			::UpdateIndicator(DeskView::MSG_UPDATESETTINGS);
+			::UpdateIndicator(MSG_UPDATESETTINGS);
 			
 			buttonOK->SetEnabled(false);
 			buttonCancel->SetEnabled(false);
@@ -553,6 +552,80 @@ SettingsWindow::KeymapListView::ReadKeymapsList(Settings* settings)
 		param = "";
 		param << "n" << i;
 		settings->SetString(param.String(), item->RealName());	
+
+//		if(i == 0) 
+//			UpdateRemapTable(settings, item->Dir(), item->RealName());
+	}
+}
+
+void
+SettingsWindow::KeymapListView::UpdateRemapTable(Settings* settings, int32 dir, const char* RealName)
+{
+	key_map KM = { 0 };
+
+	BPath path;
+	find_directory((directory_which)dir, &path);
+	if(dir == B_BEOS_DATA_DIRECTORY)
+		path.Append("Keymaps");
+	else
+		path.Append("Keymap");
+	path.Append(RealName);
+
+	bool bOk = false;
+
+	do {
+
+		BFile file(path.Path(), B_READ_ONLY);
+		if(file.Read(&KM, sizeof(key_map)) < (ssize_t)sizeof(key_map))
+			break;
+
+		for (size_t i = 0; i < sizeof(key_map); i += sizeof(uint32)) {
+			uint32* p = (uint32*)(((uint8*)&KM) + i);
+			*p = B_BENDIAN_TO_HOST_INT32(*p);
+		}
+
+		if(KM.version != 3) {
+			break;
+		}
+
+		uint32 charsSize = 0;
+		if(file.Read(&charsSize, sizeof(uint32)) < (ssize_t)sizeof(uint32)) {
+			break;
+		}
+
+		charsSize = B_BENDIAN_TO_HOST_INT32(charsSize);
+
+		char* chars = new char[charsSize];
+
+		if (file.Read(chars, charsSize) < (ssize_t)charsSize)
+			break;
+		
+		size_t count = min_c(sizeof(KM.normal_map)/sizeof(KM.normal_map[0]),128 );
+		for(size_t i = 0; i < count; i++) {
+			char n = chars[KM.normal_map[i]];
+			char b[5] = {0};
+			memcpy(b, &chars[KM.normal_map[i] + 1], n);
+		}
+
+		delete[] chars;
+
+		bOk = true;
+
+	} while(false);
+
+	if (!bOk) {
+		BString strVer;
+		strVer << KM.version;
+		BString str(B_TRANSLATE("Keymap file %FILE% version "
+			"%VERSION% was not loaded. Shortcuts will be remapped to "
+			"default keymap."));
+
+		str.ReplaceAll("%FILE%", path.Path());
+		str.ReplaceAll("%VERSION", strVer);
+
+		BAlert* alert = new BAlert("Warning", str, B_TRANSLATE("OK"), 0, 0,
+			   	B_WIDTH_AS_USUAL, B_WARNING_ALERT);
+		alert->Go();
 	}
 }
 

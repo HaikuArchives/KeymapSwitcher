@@ -34,7 +34,8 @@ extern void _restore_key_map_(); // magic undoc function :))
 
 #define trace(s) ((void) 0)
 
-#define B_MINI_ICON 16
+const float fIconX = 21;
+const float fIconY = 15;
 
 #define TRACE_MODIFIERS(s, m) \
 	trace(s); \
@@ -86,7 +87,7 @@ int32 ShowContextMenuAsync(void *pMenuInfo) {
 // General constructor
 DeskView::DeskView(const char *name,
 	uint32 resizeMask, uint32 flags)
-		: BView(BRect(0,0,B_MINI_ICON+1, B_MINI_ICON-1), name, resizeMask, flags)
+		: BView(BRect(0,0, fIconX, fIconY), name, resizeMask, flags)
 {
 	SetViewColor(B_TRANSPARENT_32_BIT);
 	AddChild(new BDragger(BRect(-10, -10, - 10, -10), this));
@@ -98,7 +99,10 @@ DeskView::DeskView(BMessage *message) :
 		BView(message)/*,
 		menu(new BPopUpMenu("Menu",false,false)) */{
 	SetViewColor(B_TRANSPARENT_COLOR);
-	SetFontSize(11.f);
+	BFont font;
+	font.SetSize(13.f);
+	font.SetFace(B_BOLD_FACE);
+	SetFont(&font);
 	Init();	// Do prepare...
 }
 
@@ -245,7 +249,7 @@ void DeskView::Draw(BRect rect) {
 	else
 		SetLowColor(color);
 	SetHighColor(255,255,255);
-	float width = B_MINI_ICON+1;
+	float width = fIconX;
 
 	float stringWidth = StringWidth(map_name.String(),2);
 

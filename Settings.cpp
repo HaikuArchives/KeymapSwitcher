@@ -1,13 +1,15 @@
 
 #include "Settings.h"
 
+#include <syslog.h>
+
 #include <File.h>
 #include <FindDirectory.h>
 
 #include "KeymapSwitcher.h"
 
 
-#if 0 //def NDEBUG
+#if 1 //def NDEBUG
 #define trace(x...) syslog(0, x); 
 #else
 #define trace(x...) 

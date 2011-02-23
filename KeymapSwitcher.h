@@ -12,6 +12,12 @@
 #define BEEP_NAME "Keymap switch"
 #define SOUNDS_PREF_SIGNATURE "application/x-vnd.Haiku-Sounds"
 
+enum __msgs {
+	MSG_CHANGEKEYMAP = 0x400,
+	MSG_UPDATESETTINGS,
+	MSG_SHOW_RC_MENU = 0x500
+}; 
+
 // add/remove keymap buttons ids 
 enum {
 	R_ResAddButton = 200,

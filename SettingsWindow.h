@@ -6,6 +6,7 @@
 #define __SETTINGSWINDOW_H
 
 
+#include <FindDirectory.h>
 #include <ListView.h>
 #include <OutlineListView.h>
 #include <PictureButton.h>
@@ -17,7 +18,7 @@
 
 class SettingsWindow: public BWindow {
 
-	// some messages
+	// private Settings Window messages
 	enum {
 		MSG_KEYMAPS_CHANGED = 0x1002, // indexes are backward compatible!
 		MSG_HOTKEY_CHANGED = 0x1004,
@@ -51,6 +52,7 @@ class SettingsWindow: public BWindow {
 
 		void ResetKeymapsList(const Settings* settings);
 		void ReadKeymapsList(Settings* settings);
+		void UpdateRemapTable(Settings* settings, int32 which, const char* RealName);
 	};
 
 	class KeymapOutlineListView : public BOutlineListView {

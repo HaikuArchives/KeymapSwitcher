@@ -50,10 +50,7 @@
 //			keypad '='   = 0x6a
 //			power key    = 0x6b
 
-union _key {
-	char byte;
-	int8 bytes[3];
-} keys_map[] = {
+union SwitchFilter::_key defaultRemapKeys[] = {
 /*x00*/ {   0 }, {   0 },  {   0 },  {   0 },  {   0 },  {   0 },  {   0 },  {   0 }, 
 /*x08*/ {   0 }, {   0 },  {   0 },  {   0 },  {   0 },  {   0 },  {   0 },  {   0 }, 
 /*x10*/ {   0 }, { '`' },  { '1' },  { '2' },  { '3' },  { '4' },  { '5' },  { '6' }, 
@@ -69,10 +66,13 @@ union _key {
 /*x60*/ {   0 }, {   0 },  {   0 },  {   0 },  {   0 },  {   0 },  {   0 },  {   0 }, 
 /*x68*/ {   0 }, {   0 },  {   0 },  {   0 },  {   0 },  {   0 },  {   0 },  {   0 }, 
 };
-			
+
+const int32 remapKeysCount = sizeof(defaultRemapKeys)/sizeof(defaultRemapKeys[0]);
+
+/*		
 enum __msgs {
 	MSG_CHANGEKEYMAP = 0x400, // thats for Indicator, don't change it
-}; 
+}; */
 
 #if 0 //def NDEBUG
 #define trace(x...) syslog(LOG_DEBUG, x);
@@ -95,7 +95,9 @@ BInputServerFilter* instantiate_input_filter() {
 }
 
 
-SwitchFilter::SwitchFilter() : BInputServerFilter() {
+SwitchFilter::SwitchFilter() : BInputServerFilter()
+{
+	remapKeys = NULL;
 
 	openlog("KS", LOG_NDELAY, LOG_USER);
 
@@ -128,6 +130,8 @@ SwitchFilter::~SwitchFilter() {
 	}
 	trace("end");
 
+	delete[] remapKeys;
+
 	closelog();
 }
 
@@ -137,7 +141,7 @@ status_t SwitchFilter::InitCheck() {
 	trace("init check");
 	settings = new Settings("Switcher");
 	//monitor = new SettingsMonitor(INDICATOR_SIGNATURE, settings);
-	monitor = new SettingsMonitor(APP_SIGNATURE, settings);
+	monitor = new SettingsMonitor(APP_SIGNATURE, this);
 	monitor->Run();
 	
 	return B_OK;
@@ -316,16 +320,17 @@ filter_result SwitchFilter::Filter(BMessage *message, BList *outList) {
 		// continue processing "modifiered" key
 		app_info appinfo;
 		if(B_OK != be_roster->GetActiveAppInfo(&appinfo)) 
-			break; // no active app found. strange.. :))
+			break; // no active app found. strange.. :)) //XXX ???
 
-		if(key > 0 && key <= (int)(sizeof(keys_map)/sizeof(keys_map[0]))
-			   && keys_map[key].byte != 0)
-		{
-			message->ReplaceInt32("raw_char", keys_map[key].byte);
+		if(key > 0 && key <= remapKeysCount
+			&& 0 != RemapKey(key) && RemapKey(key)->byte != 0)
+	   	{
+			_key* mappedKey = RemapKey(key);
+			message->ReplaceInt32("raw_char", mappedKey->byte);
 			message->RemoveName("bytes");
-			message->AddString("bytes", (const char *)keys_map[key].bytes);
+			message->AddString("bytes", (const char *)(mappedKey->bytes));
 			for (int i = 0; i < 3; i++)
-				message->ReplaceInt8("byte", i, keys_map[key].bytes[i]);
+				message->ReplaceInt8("byte", i, mappedKey->bytes[i]);
 		}
 
 		break;
@@ -337,6 +342,18 @@ filter_result SwitchFilter::Filter(BMessage *message, BList *outList) {
 	return B_DISPATCH_MESSAGE; // tell input_server to dispatch message
 }
 
+
+SwitchFilter::_key* SwitchFilter::RemapKey(int index)
+{
+	if (index < 0 || index > remapKeysCount)
+		return 0;
+
+	if (0 != remapKeys) {
+		return &remapKeys[index];
+	}
+
+	return &defaultRemapKeys[index];
+}
 
 // Gets Indicator's BMessenger
 BMessenger* SwitchFilter::GetIndicatorMessenger() {
@@ -480,14 +497,22 @@ status_t SwitchFilter::GetReplicantView(BMessenger target, int32 uid, BMessage *
 	return B_OK;
 }
 
-SwitchFilter::SettingsMonitor::SettingsMonitor(const char *name, Settings *settings) : BLooper(name) {
+void SwitchFilter::MonitorEvent()
+{
+	settings->Reload();
+	trace("monitor event!");
+}
+
+SwitchFilter::SettingsMonitor::SettingsMonitor(const char *name, SwitchFilter* filter)
+							   	: BLooper(name) 
+{
 	trace("creating monitor");
-	this->settings = settings; // copy pointer
+	this->filter = filter; // copy pointer
 
 	BLocker lock;
 	lock.Lock();
 	node_ref nref;
-	BEntry entry(settings->GetPath().String(), false);
+	BEntry entry(filter->settings->GetPath().String(), false);
 	if(B_OK != entry.InitCheck())
 		trace("entry is invalid!");
 	entry.GetNodeRef(&nref);
@@ -501,7 +526,7 @@ SwitchFilter::SettingsMonitor::~SettingsMonitor() {
 	BLocker lock;
 	lock.Lock();
 	node_ref nref;
-	BEntry entry(settings->GetPath().String(), false);
+	BEntry entry(filter->settings->GetPath().String(), false);
 	if(B_OK != entry.InitCheck())
 		trace("entry is invalid!");
 	entry.GetNodeRef(&nref);
@@ -516,7 +541,7 @@ void SwitchFilter::SettingsMonitor::MessageReceived(BMessage *message) {
 		case B_NODE_MONITOR: {
 			BLocker lock;
 			lock.Lock();
-			settings->Reload();
+			filter->MonitorEvent();
 			lock.Unlock();
 			return; // message handled
 		}
