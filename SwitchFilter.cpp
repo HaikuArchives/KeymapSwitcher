@@ -379,8 +379,8 @@ SwitchFilter::UpdateRemapTable()
 
 	int32 index = -1;
 	settings->FindInt32("remap", &index);
-	if(index <= 0)
-		return; // no remap option was configured
+	if(index < 0)
+		return; //  -1 means no remap option was configured
 
 	status_t st = B_OK;
 	directory_which dir;

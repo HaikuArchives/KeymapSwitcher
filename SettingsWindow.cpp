@@ -288,8 +288,7 @@ SettingsWindow::SettingsWindow(bool fromDeskbar)
 
 	// read the remap check state
 	int32 index = settings->FindInt32("remap");
-	fprintf(stderr, "remap:%ld\n", index);
-	checkRemap->SetIndex(index);
+	checkRemap->SetIndex(++index);
 	AdjustRemapCheck(false);
 
 	dividerBottom->MoveTo(ptOrg);
@@ -433,8 +432,7 @@ void SettingsWindow::MessageReceived(BMessage *msg) {
 			buttonOK->SetEnabled(false);
 			buttonCancel->SetEnabled(true);
 
-			fprintf(stderr, "save:%ld\n", checkRemap->Index());
-			settings->SetInt32("remap", checkRemap->Index());
+			settings->SetInt32("remap", checkRemap->Index() - 1);
 		}
 
 		trace("settings saved!");
@@ -465,6 +463,8 @@ void SettingsWindow::MessageReceived(BMessage *msg) {
 			
 			buttonOK->SetEnabled(false);
 			buttonCancel->SetEnabled(false);
+
+			AdjustRemapCheck(false);
 		}
 		break;
 		
