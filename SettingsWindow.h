@@ -6,6 +6,7 @@
 #define __SETTINGSWINDOW_H
 
 
+#include <CheckBox.h>
 #include <FindDirectory.h>
 #include <ListView.h>
 #include <OutlineListView.h>
@@ -14,7 +15,7 @@
 #include <Window.h>
 
 #include "Settings.h"
-
+#include <stdio.h>
 
 class SettingsWindow: public BWindow {
 
@@ -30,7 +31,8 @@ class SettingsWindow: public BWindow {
 		MSG_ITEM_DRAGGED,
 		MSG_REMOVE_ACTIVE_ITEM,
 		MSG_BUTTON_ADD_ITEM = 0x100e,
-		MSG_BUTTON_REMOVE_ITEM
+		MSG_BUTTON_REMOVE_ITEM,
+		MSG_CHECK_REMAP
 	};
 
 	class KeymapItem : public BStringItem {
@@ -52,7 +54,6 @@ class SettingsWindow: public BWindow {
 
 		void ResetKeymapsList(const Settings* settings);
 		void ReadKeymapsList(Settings* settings);
-//		void UpdateRemapTable(Settings* settings, int32 which, const char* RealName);
 	};
 
 	class KeymapOutlineListView : public BOutlineListView {
@@ -63,7 +64,7 @@ class SettingsWindow: public BWindow {
 		void PopulateTheTree();
 	};
 
-	class BMoveButton : public BPictureButton {
+	class MoveButton : public BPictureButton {
 		BPicture fPicOff;
 		BPicture fPicOn;
 		BPicture fPicDisabled;
@@ -72,19 +73,35 @@ class SettingsWindow: public BWindow {
 		uint32   fResIdDisabled;
 		status_t LoadPicture(BResources *resFrom, BPicture *picTo, uint32 resId);
 	public:
-		BMoveButton(BRect 		frame, const char *name,  
+		MoveButton(BRect 		frame, const char *name,  
 					uint32		resIdOff, uint32 resIdOn, uint32 resIdDisabled,
 					BMessage	*message,
 					uint32      behaviour		= B_ONE_STATE_BUTTON,
 					uint32		resizingMode 	= B_FOLLOW_LEFT	| B_FOLLOW_TOP,
 					uint32		flags			= B_WILL_DRAW	| B_NAVIGABLE);		
-		~BMoveButton();
+		~MoveButton();
 
 		virtual void AttachedToWindow();
 		virtual void GetPreferredSize(float *width, float *height);
 	};
 
+	class RemapCheckBox : public BCheckBox {
+		int32 fIndex;
+	public:
+		RemapCheckBox(BRect frame, const char* name, const char* label,
+						BMessage* message, uint32 resizing_mode)
+			: BCheckBox(frame, name, label,
+						message, resizing_mode), fIndex(0) {}
+
+		virtual void SetIndex(int32 index) { 
+			fIndex = index; 
+			BCheckBox::SetValue(fIndex > 0 ? 1 : 0);
+		}
+		int32 Index() const { return fIndex; }
+	};
+
 	bool AlreadyInDeskbar();
+	void AdjustRemapCheck(bool next_index);
 
 public:
 	SettingsWindow(bool fromDeskbar);
@@ -103,6 +120,7 @@ private:
 	BView *parent;
 	BButton* buttonOK;
 	BButton* buttonCancel;
+	RemapCheckBox* checkRemap;
 };
 
 

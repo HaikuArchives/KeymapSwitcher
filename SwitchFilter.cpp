@@ -296,6 +296,11 @@ filter_result SwitchFilter::Filter(BMessage *message, BList *outList) {
 			switch_on_hold = false; // skip previous attempt
 		}
 		
+		int32 index = -1;
+		settings->FindInt32("remap", &index);
+		if(index <= 0)
+			break; // no remap option was configured
+
 		// check if it is Alt+Key key pressed, we shall put correct value 
 		// just as it is with American keymap 
 		int32 modifiers = message->FindInt32("modifiers");
@@ -363,6 +368,7 @@ SwitchFilter::_key* SwitchFilter::RemapKey(uint32 index)
 void
 SwitchFilter::UpdateRemapTable()
 {
+	// clean existing table if exists...
 	delete[] remapKeys;
 	remapKeys = 0;
 
@@ -371,16 +377,25 @@ SwitchFilter::UpdateRemapTable()
 	if(keymaps <= 0)
 		return; // settings are empty - default mapping will be used.
 
+	int32 index = -1;
+	settings->FindInt32("remap", &index);
+	if(index <= 0)
+		return; // no remap option was configured
+
 	status_t st = B_OK;
 	directory_which dir;
-	if((st = settings->FindInt32("d0", (int32*)&dir)) != B_OK) {
-		trace("dir not found: %#x (%s)", st, strerror(st));
+	BString str("d");
+	str << index;
+	if((st = settings->FindInt32(str, (int32*)&dir)) != B_OK) {
+		trace("attr %s (dir) not found: %#x (%s)", str.String(), st, strerror(st));
 		return;
 	}
 
 	BString strRealName;
-	if((st = settings->FindString("n0", &strRealName)) != B_OK) {
-		trace("name not found: %#x (%s)", st, strerror(st));
+	str = "n";
+	str << index;
+	if((st = settings->FindString(str, &strRealName)) != B_OK) {
+		trace("attr %s (name) not found: %#x (%s)", str.String(), st, strerror(st));
 		return;
 	}
 

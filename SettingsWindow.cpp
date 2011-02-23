@@ -127,9 +127,9 @@ SettingsWindow::SettingsWindow(bool fromDeskbar)
 	fMaxButtonsWidth += pt.x + fXSpacing;
 	float fSelectorHeight = fmax(fLineHeight, pt.y);
 
-	// create divider
-	BBox* divider = new BBox(rc, B_EMPTY_STRING, B_FOLLOW_LEFT_RIGHT, B_WILL_DRAW, B_FANCY_BORDER);
-	box->AddChild(divider);
+	// create top divider
+	BBox* dividerTop = new BBox(rc, B_EMPTY_STRING, B_FOLLOW_LEFT_RIGHT, B_WILL_DRAW, B_FANCY_BORDER);
+	box->AddChild(dividerTop);
 
 	// create labels
 	BStringView* selMapsLabel = new BStringView(rc, "string0",
@@ -146,13 +146,13 @@ SettingsWindow::SettingsWindow(bool fromDeskbar)
 	BRect rcBtn(RC);
 	rcBtn.right  = rcBtn.left + kBmpBtnX;
 	rcBtn.bottom = rcBtn.top  + kBmpBtnY;
-	BMoveButton* addButton = new BMoveButton(rcBtn, "add_keymap_button", 
+	MoveButton* addButton = new MoveButton(rcBtn, "add_keymap_button", 
 					R_ResAddButton, R_ResAddButtonPressed, R_ResAddButtonDisabled,
 		new BMessage(MSG_BUTTON_ADD_ITEM), B_ONE_STATE_BUTTON, B_FOLLOW_RIGHT);
 	box->AddChild(addButton);
 	addButton->SetTarget(this);
 	
-	BMoveButton* delButton = new BMoveButton(rcBtn, "remove_keymap_button",
+	MoveButton* delButton = new MoveButton(rcBtn, "remove_keymap_button",
 					R_ResRemoveButton, R_ResRemoveButtonPressed, R_ResRemoveButtonDisabled, 
 		new BMessage(MSG_BUTTON_REMOVE_ITEM), B_ONE_STATE_BUTTON, B_FOLLOW_RIGHT);
 	box->AddChild(delButton);
@@ -216,8 +216,23 @@ SettingsWindow::SettingsWindow(bool fromDeskbar)
 	buttonOK->SetEnabled(!AlreadyInDeskbar());
 	buttonCancel->SetEnabled(!AlreadyInDeskbar());
 	
+	BString strRemap(B_TRANSLATE("Use %KEYMAP% keymap for shortcuts."));
+	strRemap.ReplaceAll("%KEYMAP%", "US-International");
+	checkRemap = new RemapCheckBox(rc, "check_remap", strRemap,
+			   new BMessage(MSG_CHECK_REMAP), B_FOLLOW_LEFT | B_FOLLOW_BOTTOM);
+	box->AddChild(checkRemap);
+
+	BPoint ptRemap;
+	checkRemap->GetPreferredSize(&ptRemap.x, &ptRemap.y);
+	checkRemap->ResizeToPreferred();
+
+	BBox* dividerBottom = new BBox(rc, B_EMPTY_STRING,
+		   B_FOLLOW_LEFT_RIGHT | B_FOLLOW_BOTTOM, B_WILL_DRAW, B_FANCY_BORDER);
+	box->AddChild(dividerBottom);
+	
+	fMaxListsWidth = fmax(fMaxListsWidth, ptRemap.x);
 	float fMaxWindowWidth =  X_INSET * 2 
-					+ fmax(fMaxListsWidth, b[0].pt.x + b[1].pt.x + fXSpacing);
+					+ fmax(fMaxListsWidth, b[0].pt.x + b[1].pt.x + X_INSET);
 
 	fMaxListsWidth = fMaxWindowWidth - X_INSET * 2;
 
@@ -229,8 +244,8 @@ SettingsWindow::SettingsWindow(bool fromDeskbar)
 		   ptOrg.y + (fSelectorHeight - selectorLabel->Bounds().Height()) / 2);
 	ptOrg.y += fSelectorHeight + Y_INSET/*fYSpacing*/;
 
-	divider->MoveTo(ptOrg);
-	divider->ResizeTo(fMaxListsWidth, 1);
+	dividerTop->MoveTo(ptOrg);
+	dividerTop->ResizeTo(fMaxListsWidth, 1);
 	
 	ptOrg.y += Y_INSET;
 
@@ -267,11 +282,26 @@ SettingsWindow::SettingsWindow(bool fromDeskbar)
 	// populate all available keymaps list - system keymaps
 	available_list->PopulateTheTree();
 
+	checkRemap->MoveTo(ptOrg);
+	checkRemap->ResizeTo(fMaxListsWidth, ptRemap.y);
+	ptOrg.y += checkRemap->Bounds().Height() + fYSpacing;
+
+	// read the remap check state
+	int32 index = settings->FindInt32("remap");
+	fprintf(stderr, "remap:%ld\n", index);
+	checkRemap->SetIndex(index);
+	AdjustRemapCheck(false);
+
+	dividerBottom->MoveTo(ptOrg);
+	dividerBottom->ResizeTo(fMaxListsWidth, 1);
+
+	ptOrg.y += dividerBottom->Bounds().Height() + Y_INSET;
+
 	float fMaxWindowHeight = ptOrg.y + fmax(b[0].pt.y, b[1].pt.y) + Y_INSET;
 	
 	ptOrg.x = fMaxWindowWidth - X_INSET - b[0].pt.x;
 	b[0].button->MoveTo(ptOrg);
-	ptOrg.x -= fXSpacing + b[1].pt.x;
+	ptOrg.x -= X_INSET + b[1].pt.x;
 	b[1].button->MoveTo(ptOrg);
 	
 
@@ -353,12 +383,21 @@ void SettingsWindow::MessageReceived(BMessage *msg) {
 			buttonOK->SetEnabled(true);
 			keymaps_changed = true;
 		}
+		AdjustRemapCheck(false);
 		break;
 	case MSG_HOTKEY_CHANGED: {
 		int32 temp = 0;
 		if (B_OK==msg->FindInt32("hotkey",&temp))
 			settings->SetInt32("hotkey", temp);
 		hotkey_changed = true;
+		break;
+	}
+	case MSG_CHECK_REMAP: {
+		if (!keymaps_changed) {
+			buttonOK->SetEnabled(true);
+			keymaps_changed = true;
+		}
+		AdjustRemapCheck(true);
 		break;
 	}
 	case MSG_SAVE_SETTINGS: {
@@ -393,6 +432,9 @@ void SettingsWindow::MessageReceived(BMessage *msg) {
 
 			buttonOK->SetEnabled(false);
 			buttonCancel->SetEnabled(true);
+
+			fprintf(stderr, "save:%ld\n", checkRemap->Index());
+			settings->SetInt32("remap", checkRemap->Index());
 		}
 
 		trace("settings saved!");
@@ -433,6 +475,25 @@ void SettingsWindow::MessageReceived(BMessage *msg) {
 		break;
 	}
 	BWindow::MessageReceived(msg);
+}
+
+void SettingsWindow::AdjustRemapCheck(bool next_index)
+{
+	int32 index = checkRemap->Index();
+	if (next_index)
+		index++;
+
+	index %= selected_list->CountItems() + 1;
+	checkRemap->SetIndex(index);
+	BString str(index <= 0 ? B_TRANSLATE("Use shortcuts remapping.")
+			: B_TRANSLATE("Use %KEYMAP% keymap for shortcuts."));
+	if (index > 0) {
+		KeymapItem *item = (KeymapItem*)selected_list->ItemAt(index - 1);
+		str.ReplaceAll("%KEYMAP%", item->RealName());
+	}
+	checkRemap->SetLabel(str);
+
+	fprintf(stderr, "adj:%ld\n", checkRemap->Index());
 }
 
 bool SettingsWindow::AlreadyInDeskbar()
@@ -552,83 +613,10 @@ SettingsWindow::KeymapListView::ReadKeymapsList(Settings* settings)
 		param = "";
 		param << "n" << i;
 		settings->SetString(param.String(), item->RealName());	
-
-//		if(i == 0) 
-//			UpdateRemapTable(settings, item->Dir(), item->RealName());
 	}
 }
-/*
-void
-SettingsWindow::KeymapListView::UpdateRemapTable(Settings* settings, int32 dir, const char* RealName)
-{
-	key_map KM = { 0 };
 
-	BPath path;
-	find_directory((directory_which)dir, &path);
-	if(dir == B_BEOS_DATA_DIRECTORY)
-		path.Append("Keymaps");
-	else
-		path.Append("Keymap");
-	path.Append(RealName);
-
-	bool bOk = false;
-
-	do {
-
-		BFile file(path.Path(), B_READ_ONLY);
-		if(file.Read(&KM, sizeof(key_map)) < (ssize_t)sizeof(key_map))
-			break;
-
-		for (size_t i = 0; i < sizeof(key_map); i += sizeof(uint32)) {
-			uint32* p = (uint32*)(((uint8*)&KM) + i);
-			*p = B_BENDIAN_TO_HOST_INT32(*p);
-		}
-
-		if(KM.version != 3) {
-			break;
-		}
-
-		uint32 charsSize = 0;
-		if(file.Read(&charsSize, sizeof(uint32)) < (ssize_t)sizeof(uint32)) {
-			break;
-		}
-
-		charsSize = B_BENDIAN_TO_HOST_INT32(charsSize);
-
-		char* chars = new char[charsSize];
-
-		if (file.Read(chars, charsSize) < (ssize_t)charsSize)
-			break;
-		
-		size_t count = min_c(sizeof(KM.normal_map)/sizeof(KM.normal_map[0]),128 );
-		for(size_t i = 0; i < count; i++) {
-			char n = chars[KM.normal_map[i]];
-			char b[5] = {0};
-			memcpy(b, &chars[KM.normal_map[i] + 1], n);
-		}
-
-		delete[] chars;
-
-		bOk = true;
-
-	} while(false);
-
-	if (!bOk) {
-		BString strVer;
-		strVer << KM.version;
-		BString str(B_TRANSLATE("Keymap file %FILE% version "
-			"%VERSION% was not loaded. Shortcuts will be remapped to "
-			"default keymap."));
-
-		str.ReplaceAll("%FILE%", path.Path());
-		str.ReplaceAll("%VERSION", strVer);
-
-		BAlert* alert = new BAlert("Warning", str, B_TRANSLATE("OK"), 0, 0,
-			   	B_WIDTH_AS_USUAL, B_WARNING_ALERT);
-		alert->Go();
-	}
-}
-*/
+	
 void
 SettingsWindow::KeymapListView::MessageReceived(BMessage *message)
 {
@@ -760,7 +748,7 @@ SettingsWindow::KeymapOutlineListView::InitiateDrag(BPoint point, int32 index, b
 
 static BPicture sPicture;
 
-SettingsWindow::BMoveButton::BMoveButton(BRect 		frame, const char *name,  
+SettingsWindow::MoveButton::MoveButton(BRect 		frame, const char *name,  
 						uint32		resIdOff, uint32 resIdOn, uint32 resIdDisabled,
 						BMessage	*message,
 						uint32		behavior		/*= B_ONE_STATE_BUTTON*/,
@@ -771,12 +759,12 @@ SettingsWindow::BMoveButton::BMoveButton(BRect 		frame, const char *name,
 {
 }
 
-SettingsWindow::BMoveButton::~BMoveButton()
+SettingsWindow::MoveButton::~MoveButton()
 {
 }
 
 void
-SettingsWindow::BMoveButton::AttachedToWindow()
+SettingsWindow::MoveButton::AttachedToWindow()
 {
 	//	debugger("app");
 	entry_ref ref;
@@ -799,14 +787,14 @@ SettingsWindow::BMoveButton::AttachedToWindow()
 
 
 void
-SettingsWindow::BMoveButton::GetPreferredSize(float *width, float *height)
+SettingsWindow::MoveButton::GetPreferredSize(float *width, float *height)
 {
 	*width  = 17.;
 	*height = 16.;
 }
 
 status_t
-SettingsWindow::BMoveButton::LoadPicture(BResources *resFrom, BPicture *picTo, uint32 resId)
+SettingsWindow::MoveButton::LoadPicture(BResources *resFrom, BPicture *picTo, uint32 resId)
 {
 	size_t size = 0;
 	const void *data = resFrom->LoadResource(B_MESSAGE_TYPE, resId, &size);
