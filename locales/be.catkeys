@@ -1,14 +1,13 @@
-1	belarusian	x-vnd.Nexus-KeymapSwitcher	4128661695
+1	belarusian	x-vnd.Nexus-KeymapSwitcher	450140831
  (system)	SwitcherSettingsWindow		 (сістэмная)
  (user)	SwitcherSettingsWindow		 (карыстальніцкая)
 About	SwitcherDeskView		Пра Праграму
 About…	SwitcherDeskView		Пра Праграму…
-Activate shortcuts remapping	SwitcherSettingsWindow		Уключыць падмену скаротаў
+Activate shortcuts substitution	SwitcherSettingsWindow		Уключыць падмену скаротаў
 Apply	SwitcherSettingsWindow		Прымяніць
 Available keymaps:	SwitcherSettingsWindow		Даступныя раскладкі:
 Copyright © 1999-2003 Stas Maximov.\n	SwitcherDeskView		Copyright © 1999-2003 Стас Максімаў\n
 Copyright © 2008-2010 Haiku, Inc.\n	SwitcherDeskView		Copyright © 2008-2010 Haiku\n
-Disable	SwitcherDeskView		Адключыць
 Exit	SwitcherSettingsWindow		Выйсці
 Hotkey:	SwitcherSettingsWindow		Пераключальнік:
 Install in Deskbar	SwitcherSettingsWindow		Усталяваць у Дэскбар
@@ -20,11 +19,11 @@ OK	SwitcherSettingsWindow		ОК
 Okay	SwitcherDeskView		Добра
 Original notice from Stas Maximov:\n	SwitcherDeskView		Зыходная інафа ад Стаса Максімава:\n
 Quit	SwitcherDeskView		Выхад
-Remap shortcuts to %KEYMAP% keymap	SwitcherSettingsWindow		Выкарыстаць раскладку %KEYMAP% для скаротаў
 Revert	SwitcherSettingsWindow		Вярнуць
 Selected keymaps:	SwitcherSettingsWindow		Абраныя раскладкі:
 Settings…	SwitcherDeskView		Наладкі…
 Special thanks to all BeOS users, whether they use this app or not - they're keeping BeOS alive!\n\n	SwitcherDeskView		Асаблівыя падзякі ўсім заўзятарам BeOS, карыстаюцца яны гэтай праграмай ці не - яны падтрымліваюць BeOS жывой!\n\n
+Substitute shortcuts with %KEYMAP%'s ones	SwitcherSettingsWindow		Падменяць клавіятурныя скароты з %KEYMAP%-скімі
 System	SwitcherSettingsWindow		Сістэмныя
 Tested and inspired by\n\tSergey \"fyysik\" Dolgov,\n\tMaxim \"baza\" Bazarov,\n\tDenis Korotkov,\n\tNur Nazmetdinov and others.\n\n	SwitcherDeskView		Тэставанне ды інспірацыя\n\tСяргей \"fyysik\" Далгоў,\n\tМаксім \"baza\" Базараў,\n\tДзяніс Караткоў,\n\tНур Назметдынаў і іншыя.\n\n
 Thanks to Pierre Raynaud-Richard and Robert Polic for BeOS tips.\n\n	SwitcherDeskView		Падзякі Pierre Raynaud-Richard і Robert Polic за парады пра BeOS.\n\n

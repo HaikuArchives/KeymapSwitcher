@@ -1,14 +1,13 @@
-1	ukrainian	x-vnd.Nexus-KeymapSwitcher	4128661695
+1	ukrainian	x-vnd.Nexus-KeymapSwitcher	450140831
  (system)	SwitcherSettingsWindow		 (системна)
  (user)	SwitcherSettingsWindow		 (користувач)
 About	SwitcherDeskView		Про
 About…	SwitcherDeskView		Про…
-Activate shortcuts remapping	SwitcherSettingsWindow		Активувати підміну горячих клавіш
+Activate shortcuts substitution	SwitcherSettingsWindow		Активувати підміну горячих клавіш
 Apply	SwitcherSettingsWindow		Прийняти
 Available keymaps:	SwitcherSettingsWindow		Доступні розкладки:
 Copyright © 1999-2003 Stas Maximov.\n	SwitcherDeskView		Copyright © 1999-2003 Стас Максимов.\n
 Copyright © 2008-2010 Haiku, Inc.\n	SwitcherDeskView		Copyright © 2008-2010 Haiku, Inc.\n
-Disable	SwitcherDeskView		Скасувати
 Exit	SwitcherSettingsWindow		Вийти.
 Hotkey:	SwitcherSettingsWindow		Горячі клавіші:
 Install in Deskbar	SwitcherSettingsWindow		Встановити в Deskbar
@@ -20,11 +19,11 @@ OK	SwitcherSettingsWindow		Гаразд
 Okay	SwitcherDeskView		Гаразд
 Original notice from Stas Maximov:\n	SwitcherDeskView		Авторська примітка від Стаса Максимова:\n
 Quit	SwitcherDeskView		Вийти
-Remap shortcuts to %KEYMAP% keymap	SwitcherSettingsWindow		Підмінити горячі клавіші для %KEYMAP% розкладки
 Revert	SwitcherSettingsWindow		Повернути
 Selected keymaps:	SwitcherSettingsWindow		Вибрані розкладки:
 Settings…	SwitcherDeskView		Настройки…
 Special thanks to all BeOS users, whether they use this app or not - they're keeping BeOS alive!\n\n	SwitcherDeskView		Особлива подяка всім користувачам BeOS , незалежно від того чи використовують вони додаток чи ні - завдяки їм  BeOS завжди живий!\n\n
+Substitute shortcuts with %KEYMAP%'s ones	SwitcherSettingsWindow		Підмінити горячі клавіші з %KEYMAP%-ської  розкладки
 System	SwitcherSettingsWindow		Системні
 Tested and inspired by\n\tSergey \"fyysik\" Dolgov,\n\tMaxim \"baza\" Bazarov,\n\tDenis Korotkov,\n\tNur Nazmetdinov and others.\n\n	SwitcherDeskView		Тестування і надхнення від\n\tСергія \"fyysik\" Долгова ,\n\tМаксима \"baza\" Базарова,\n\tДениса Короткова,\n\tНур Мухаметдинова і інших.\n\n
 Thanks to Pierre Raynaud-Richard and Robert Polic for BeOS tips.\n\n	SwitcherDeskView		Подяка для Pierre Raynaud-Richard і Robert Polic за підказки для BeOS .\n\n

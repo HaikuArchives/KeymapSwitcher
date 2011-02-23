@@ -53,6 +53,10 @@ const float fXSpacing = 5.;
 const float kBmpBtnX = 17.;
 const float kBmpBtnY = 16.;
 
+const char* remapLabel0 = B_TRANSLATE("Activate shortcuts substitution");
+const char* remapLabel1	= B_TRANSLATE("Substitute shortcuts with %KEYMAP%'s ones");
+
+
 //  construct main window
 SettingsWindow::SettingsWindow(bool fromDeskbar) 
 				: 
@@ -217,7 +221,7 @@ SettingsWindow::SettingsWindow(bool fromDeskbar)
 	buttonOK->SetEnabled(!AlreadyInDeskbar());
 	buttonCancel->SetEnabled(!AlreadyInDeskbar());
 	
-	BString strRemap(B_TRANSLATE("Remap shortcuts to %KEYMAP% keymap"));
+	BString strRemap(remapLabel1);
 	strRemap.ReplaceAll("%KEYMAP%", "US-International");
 	checkRemap = new RemapCheckBox(rc, "check_remap", strRemap,
 			   new BMessage(MSG_CHECK_REMAP), B_FOLLOW_LEFT | B_FOLLOW_BOTTOM);
@@ -499,8 +503,7 @@ void SettingsWindow::AdjustRemapCheck(bool next_index)
 
 	index %= selected_list->CountItems() + 1;
 	checkRemap->SetIndex(index);
-	BString str(index <= 0 ? B_TRANSLATE("Activate shortcuts remapping")
-			: B_TRANSLATE("Remap shortcuts to %KEYMAP% keymap"));
+	BString str(index <= 0 ? remapLabel0 : remapLabel1 );
 	if (index > 0) {
 		KeymapItem *item = (KeymapItem*)selected_list->ItemAt(index - 1);
 		str.ReplaceAll("%KEYMAP%", item->RealName());

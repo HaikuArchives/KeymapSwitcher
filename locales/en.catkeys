@@ -1,4 +1,4 @@
-1	english	x-vnd.Nexus-KeymapSwitcher	4128661695
+1	english	x-vnd.Nexus-KeymapSwitcher	450140831
 KeymapSwitcher options:\n\t--deskbar\tautomatically add replicant to Deskbar\n\t--help\t\tprint this info and exit\n	SwitcherApplication		KeymapSwitcher options:\n\t--deskbar\tautomatically add replicant to Deskbar\n\t--help\t\tprint this info and exit\n
  (system)	SwitcherSettingsWindow		 (system)
 Copyright © 2008-2010 Haiku, Inc.\n	SwitcherDeskView		Copyright © 2008-2010 Haiku, Inc.\n
@@ -8,6 +8,7 @@ About…	SwitcherDeskView		About…
 Unable to install keymap indicator. Deskbar application is not running.	SwitcherSettingsWindow		Unable to install keymap indicator. Deskbar application is not running.
 Hotkey:	SwitcherSettingsWindow		Hotkey:
 Settings…	SwitcherDeskView		Settings…
+Substitute shortcuts with %KEYMAP%'s ones	SwitcherSettingsWindow		Substitute shortcuts with %KEYMAP%'s ones
 System	SwitcherSettingsWindow		System
 Thanks to Pierre Raynaud-Richard and Robert Polic for BeOS tips.\n\n	SwitcherDeskView		Thanks to Pierre Raynaud-Richard and Robert Polic for BeOS tips.\n\n
 Original notice from Stas Maximov:\n	SwitcherDeskView		Original notice from Stas Maximov:\n
@@ -18,18 +19,16 @@ OK	SwitcherApplication		OK
 Apply	SwitcherSettingsWindow		Apply
 About	SwitcherDeskView		About
 Revert	SwitcherSettingsWindow		Revert
-Activate shortcuts remapping	SwitcherSettingsWindow		Activate shortcuts remapping
  (user)	SwitcherSettingsWindow		 (user)
 Copyright © 1999-2003 Stas Maximov.\n	SwitcherDeskView		Copyright © 1999-2003 Stas Maximov.\n
-Disable	SwitcherDeskView		Disable
 Keymap Switcher	SwitcherSettingsWindow		Keymap Switcher
 Okay	SwitcherDeskView		Okay
 Exit	SwitcherSettingsWindow		Exit
 Available keymaps:	SwitcherSettingsWindow		Available keymaps:
 Version  %VERSION \n\n	SwitcherDeskView		Version  %VERSION \n\n
-Remap shortcuts to %KEYMAP% keymap	SwitcherSettingsWindow		Remap shortcuts to %KEYMAP% keymap
 Selected keymaps:	SwitcherSettingsWindow		Selected keymaps:
 Unable to create Settings configuration window.	SwitcherApplication		Unable to create Settings configuration window.
 Keymap Switcher\n\n	SwitcherDeskView		Keymap Switcher\n\n
 Tested and inspired by\n\tSergey \"fyysik\" Dolgov,\n\tMaxim \"baza\" Bazarov,\n\tDenis Korotkov,\n\tNur Nazmetdinov and others.\n\n	SwitcherDeskView		Tested and inspired by\n\tSergey \"fyysik\" Dolgov,\n\tMaxim \"baza\" Bazarov,\n\tDenis Korotkov,\n\tNur Nazmetdinov and others.\n\n
 User	SwitcherSettingsWindow		User
+Activate shortcuts substitution	SwitcherSettingsWindow		Activate shortcuts substitution
