@@ -1,6 +1,7 @@
 #ifndef __Settings_h
 #define __Settings_h
 
+
 #include <Path.h>
 #include <Message.h>
 #include <String.h>
@@ -13,11 +14,12 @@ const int32 KEY_SHIFT_SHIFT = 0x2003;
 const int32 KEY_CAPS_LOCK   = 0x2004;
 const int32 KEY_SCROLL_LOCK = 0x2005;
 
+
 class Settings : public BMessage {
 public:
 	Settings(const char *filename);
 	~Settings();
-	status_t InitCheck();
+	status_t InitCheck() { return status; }
 	status_t Reload();
 	status_t SetDefaults();
 	status_t Save();
@@ -33,19 +35,12 @@ public:
 	status_t SetRect(const char *name, BRect r);
 	status_t SetMessage(const char *name, const BMessage *message);
 	status_t SetFlat(const char *name, const BFlattenable *obj);
-	BString GetPath();	
+	BString GetPath() { return path.Path(); }
 private:
 	BPath 	path;
 	status_t status;
 	bool dirty;
 };
 
-inline status_t Settings::InitCheck(void) {
-	return status;
-}
-
-inline BString Settings::GetPath() {
-	return path.Path();
-}
-
 #endif
+

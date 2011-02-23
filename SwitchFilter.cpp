@@ -3,27 +3,21 @@
 // All rights reserved
 // Version 1.0.4
 
+
+#include "SwitchFilter.h"
+
 #include <stdio.h>
-#include <List.h>
-#include <View.h>
-#include <OS.h>
-#include <Roster.h>
-#include <SupportDefs.h>
-#include <MessageFilter.h>
-#include <Message.h>
-#include <Beep.h>
-#include <File.h>
-#include <Directory.h>
-#include <FindDirectory.h>
-#include <NodeMonitor.h>
+#include <syslog.h>
+
 #include <Entry.h>
 #include <InputServerDevice.h>
-#include "SwitchFilter.h"
-#include "KeymapSwitcher.h"
-#include "Settings.h"
-#include <InputServerFilter.h>
 #include <Locker.h>
-#include <syslog.h>
+#include <NodeMonitor.h>
+#include <Roster.h>
+#include <View.h>
+
+#include "KeymapSwitcher.h"
+
 
 const int32 key_table[][2] = {
 {41,101},
@@ -63,59 +57,11 @@ enum __msgs {
 	MSG_CHANGEKEYMAP = 0x400, // thats for Indicator, don't change it
 }; 
 
-//#define DESKBAR_SIGNATURE "application/x-vnd.Be-TSKB"
-//#define INDICATOR_SIGNATURE "application/x-vnd.KeymapSwitcher"
-
 #if 0 //def NDEBUG
 #define trace(x...) syslog(LOG_DEBUG, x);
 #else
 #define trace(s) ((void)0)  
 #endif
-
-SettingsMonitor::SettingsMonitor(const char *name, Settings *settings) : BLooper(name) {
-	trace("creating monitor");
-	this->settings = settings; // copy pointer
-
-	BLocker lock;
-	lock.Lock();
-	node_ref nref;
-	BEntry entry(settings->GetPath().String(), false);
-	if(B_OK != entry.InitCheck())
-		trace("entry is invalid!");
-	entry.GetNodeRef(&nref);
-	watch_node(&nref, B_WATCH_STAT | B_WATCH_NAME, this);
-	lock.Unlock();
-	trace("created");
-}
-
-SettingsMonitor::~SettingsMonitor() {
-	trace("killing");
-	BLocker lock;
-	lock.Lock();
-	node_ref nref;
-	BEntry entry(settings->GetPath().String(), false);
-	if(B_OK != entry.InitCheck())
-		trace("entry is invalid!");
-	entry.GetNodeRef(&nref);
-	watch_node(&nref, B_STOP_WATCHING, this);
-	lock.Unlock();
-	trace("killed");
-}
-
-void SettingsMonitor::MessageReceived(BMessage *message) {
-	trace("start");
-	switch (message->what) {
-		case B_NODE_MONITOR: {
-			BLocker lock;
-			lock.Lock();
-			settings->Reload();
-			lock.Unlock();
-			return; // message handled
-		}
-	}
-	BLooper::MessageReceived(message);
-	trace("end");
-}
 
 
 BInputServerFilter* instantiate_input_filter() {
@@ -526,5 +472,50 @@ status_t SwitchFilter::GetReplicantView(BMessenger target, int32 uid, BMessage *
 		return err ? err : e;
 	
 	return B_OK;
+}
+
+SwitchFilter::SettingsMonitor::SettingsMonitor(const char *name, Settings *settings) : BLooper(name) {
+	trace("creating monitor");
+	this->settings = settings; // copy pointer
+
+	BLocker lock;
+	lock.Lock();
+	node_ref nref;
+	BEntry entry(settings->GetPath().String(), false);
+	if(B_OK != entry.InitCheck())
+		trace("entry is invalid!");
+	entry.GetNodeRef(&nref);
+	watch_node(&nref, B_WATCH_STAT | B_WATCH_NAME, this);
+	lock.Unlock();
+	trace("created");
+}
+
+SwitchFilter::SettingsMonitor::~SettingsMonitor() {
+	trace("killing");
+	BLocker lock;
+	lock.Lock();
+	node_ref nref;
+	BEntry entry(settings->GetPath().String(), false);
+	if(B_OK != entry.InitCheck())
+		trace("entry is invalid!");
+	entry.GetNodeRef(&nref);
+	watch_node(&nref, B_STOP_WATCHING, this);
+	lock.Unlock();
+	trace("killed");
+}
+
+void SwitchFilter::SettingsMonitor::MessageReceived(BMessage *message) {
+	trace("start");
+	switch (message->what) {
+		case B_NODE_MONITOR: {
+			BLocker lock;
+			lock.Lock();
+			settings->Reload();
+			lock.Unlock();
+			return; // message handled
+		}
+	}
+	BLooper::MessageReceived(message);
+	trace("end");
 }
 

@@ -2,39 +2,36 @@
 // Copyright © 1999-2003 by Stas Maximov
 // All rights reserved
 
-#include <Window.h>
-#include <Path.h>
-#include <FindDirectory.h>
-#include <Box.h>
-#include <MenuItem.h>
-#include <PopUpMenu.h>
-#include <MenuField.h>
-#include <Menu.h>
-#include <Directory.h>
-#include <Entry.h>
-#include <CheckBox.h>
-#include <Roster.h>
-#include <Button.h>
-#include <StringView.h>
-#include <ScrollView.h>
-#include <TextView.h>
-#include <ListView.h>
-#include <OutlineListView.h>
-#include <Resources.h>
-#include <Bitmap.h>
-#include <DataIO.h>
-#include <Alert.h>
+
+#include "SettingsWindow.h"
+
 #include <stdio.h>
 #include <syslog.h>
-#include <Catalog.h>
-#include <Locale.h>
 
-#include "Settings.h"
-#include "SettingsWindow.h"
+#include <Alert.h>
+#include <Bitmap.h>
+#include <Box.h>
+#include <Button.h>
+#include <Catalog.h>
+#include <Directory.h>
+#include <Entry.h>
+#include <FindDirectory.h>
+#include <Locale.h>
+#include <Menu.h>
+#include <MenuField.h>
+#include <MenuItem.h>
+#include <Path.h>
+#include <PopUpMenu.h>
+#include <Roster.h>
+#include <ScrollView.h>
+#include <StringView.h>
+#include <TextView.h>
+
 #include "DeskView.h"
 #include "KeymapSwitcher.h"
 #include "Replicator.h"
 #include "Resource.h"
+#include "Settings.h"
 
 #undef B_TRANSLATE_CONTEXT
 #define B_TRANSLATE_CONTEXT "SwitcherSettingsWindow"
@@ -77,106 +74,6 @@ enum {
 	MSG_BUTTON_ADD_ITEM,
 	MSG_BUTTON_REMOVE_ITEM
 };
-
-KeymapItem::KeymapItem(KeymapItem *item) : BStringItem(((KeymapItem*) item)->Text()){
-	dir = (int32) item->Dir();
-	real_name = item->RealName();
-}
-
-KeymapItem::KeymapItem(const char *text, const char *real_name, int32 dir) : BStringItem(text) {
-	this->dir = dir;
-	this->real_name = real_name;
-}
-
-KeymapListView::KeymapListView(BRect r, const char *name)
-				: 
-				BListView(r, name, B_SINGLE_SELECTION_LIST,
-					   	B_FOLLOW_ALL_SIDES/* | B_FOLLOW_TOP | B_FOLLOW_RIGHT*/) 
-{
-}
-
-bool KeymapListView::InitiateDrag(BPoint point, int32 index, bool wasSelected) {
-	BListView::InitiateDrag(point, index, wasSelected);
-	BMessage message(MSG_ACTIVE_ITEM_DRAGGED);
-	message.AddInt32("index", index);
-	DragMessage(&message, ItemFrame(index));
-	return true;
-}
-
-void KeymapListView::MessageReceived(BMessage *message) {
-	switch (message->what) {
-		// new item arrived
-		case MSG_ITEM_DRAGGED: {
-			BMessage notify(MSG_KEYMAPS_CHANGED);
-			Window()->PostMessage(&notify);
-			KeymapItem *item;
-			message->FindPointer("keymap_item", (void **)&item);
-			DeselectAll();
-			int index = -1;
-			index = IndexOf(ConvertFromScreen(message->DropPoint()));
-			KeymapItem *new_item = new KeymapItem(item);
-			BString name = new_item->Text();
-			if(B_BEOS_DATA_DIRECTORY == new_item->Dir())
-				name += B_TRANSLATE(" (System)");
-			else
-				name += B_TRANSLATE(" (User)");
-			new_item->SetText(name.String());
-			if(0 > index) {
-				AddItem(new_item);
-				index = IndexOf(new_item);
-			} else AddItem(new_item, index);
-			Select(index);
-			//trace(index);
-			ScrollToSelection();
-			break;
-		}
-		// item dropped somewhere out there, remove it 
-		case MSG_REMOVE_ACTIVE_ITEM: {
-			BMessage notify(MSG_KEYMAPS_CHANGED);
-			Window()->PostMessage(&notify);
-			int32 index = -1;
-			message->FindInt32("index", &index);
-			delete (dynamic_cast<KeymapItem*> (RemoveItem(index)));
-			break;
-		}
-		// item dropped inside, rearrange items
-		case MSG_ACTIVE_ITEM_DRAGGED: {
-			BMessage notify(MSG_KEYMAPS_CHANGED);
-			Window()->PostMessage(&notify);
-			int32 draggedIndex = -1;
-			message->FindInt32("index", &draggedIndex);
-			int32 index = -1;
-			index = IndexOf(ConvertFromScreen(message->DropPoint()));
-			DeselectAll();
-			if (0>index) 
-				index = CountItems() - 1;
-			MoveItem(draggedIndex, index);
-			Select(index);
-			ScrollToSelection();
-			//trace(index);
-			return;						
-		}
-	}
-	BListView::MessageReceived(message);
-}
-	
-KeymapOutlineListView::KeymapOutlineListView(BRect r, const char *name) 
-						: 
-						BOutlineListView(r, name, B_SINGLE_SELECTION_LIST, 
-								B_FOLLOW_ALL_SIDES) 
-{
-}
-
-bool KeymapOutlineListView::InitiateDrag(BPoint point, int32 index, bool wasSelected) {
-	BOutlineListView::InitiateDrag(point, index, wasSelected);
-	BMessage message(MSG_ITEM_DRAGGED);
-	message.AddInt32("index", index);
-	message.AddPointer("keymap_item", ItemAt(index));
-	if (NULL != Superitem(ItemAt(index)))
-		DragMessage(&message, ItemFrame(index));
-	else return false;
-	return true;
-}
 
 //  construct main window
 SettingsWindow::SettingsWindow() 
@@ -307,9 +204,9 @@ SettingsWindow::SettingsWindow()
 
 		BString display_name(name);
 		if(dir == B_BEOS_DATA_DIRECTORY)
-			display_name += B_TRANSLATE(" (System)");
+			display_name += B_TRANSLATE(" (system)");
 		else
-			display_name += B_TRANSLATE(" (User)");
+			display_name += B_TRANSLATE(" (user)");
 		selected_list->AddItem(new KeymapItem(display_name.String(), name.String(), dir));
 	}
 
@@ -582,7 +479,7 @@ void SettingsWindow::MessageReceived(BMessage *msg) {
 		trace("settings saved!");
 		settings->Save();
 		delete settings; // we save settings in its destructor
-		::UpdateIndicator(MSG_UPDATESETTINGS);
+		::UpdateIndicator(DeskView::MSG_UPDATESETTINGS);
 		Close();
 		break;
 	}
@@ -632,13 +529,121 @@ void SettingsWindow::ShowAboutWindow()  {
 }
 
 // process quit message
-bool SettingsWindow::QuitRequested() {
+bool
+SettingsWindow::QuitRequested()
+{
 	return BWindow::QuitRequested(); // cause otherwise it will kill Deskbar
+}
+
+SettingsWindow::KeymapItem::KeymapItem(KeymapItem *item) : BStringItem(((KeymapItem*) item)->Text())
+{
+	dir = (int32) item->Dir();
+	real_name = item->RealName();
+}
+
+SettingsWindow::KeymapItem::KeymapItem(const char *text, const char *real_name, int32 dir) : BStringItem(text)
+{
+	this->dir = dir;
+	this->real_name = real_name;
+}
+
+SettingsWindow::KeymapListView::KeymapListView(BRect r, const char *name)
+				: 
+				BListView(r, name, B_SINGLE_SELECTION_LIST,
+					   	B_FOLLOW_ALL_SIDES/* | B_FOLLOW_TOP | B_FOLLOW_RIGHT*/) 
+{
+}
+
+bool
+SettingsWindow::KeymapListView::InitiateDrag(BPoint point, int32 index, bool wasSelected)
+{
+	BListView::InitiateDrag(point, index, wasSelected);
+	BMessage message(MSG_ACTIVE_ITEM_DRAGGED);
+	message.AddInt32("index", index);
+	DragMessage(&message, ItemFrame(index));
+	return true;
+}
+
+void
+SettingsWindow::KeymapListView::MessageReceived(BMessage *message)
+{
+	switch (message->what) {
+		// new item arrived
+		case MSG_ITEM_DRAGGED: {
+			BMessage notify(MSG_KEYMAPS_CHANGED);
+			Window()->PostMessage(&notify);
+			KeymapItem *item;
+			message->FindPointer("keymap_item", (void **)&item);
+			DeselectAll();
+			int index = -1;
+			index = IndexOf(ConvertFromScreen(message->DropPoint()));
+			KeymapItem *new_item = new KeymapItem(item);
+			BString name = new_item->Text();
+			if(B_BEOS_DATA_DIRECTORY == new_item->Dir())
+				name += B_TRANSLATE(" (system)");
+			else
+				name += B_TRANSLATE(" (user)");
+			new_item->SetText(name.String());
+			if(0 > index) {
+				AddItem(new_item);
+				index = IndexOf(new_item);
+			} else AddItem(new_item, index);
+			Select(index);
+			//trace(index);
+			ScrollToSelection();
+			break;
+		}
+		// item dropped somewhere out there, remove it 
+		case MSG_REMOVE_ACTIVE_ITEM: {
+			BMessage notify(MSG_KEYMAPS_CHANGED);
+			Window()->PostMessage(&notify);
+			int32 index = -1;
+			message->FindInt32("index", &index);
+			delete (dynamic_cast<KeymapItem*> (RemoveItem(index)));
+			break;
+		}
+		// item dropped inside, rearrange items
+		case MSG_ACTIVE_ITEM_DRAGGED: {
+			BMessage notify(MSG_KEYMAPS_CHANGED);
+			Window()->PostMessage(&notify);
+			int32 draggedIndex = -1;
+			message->FindInt32("index", &draggedIndex);
+			int32 index = -1;
+			index = IndexOf(ConvertFromScreen(message->DropPoint()));
+			DeselectAll();
+			if (0>index) 
+				index = CountItems() - 1;
+			MoveItem(draggedIndex, index);
+			Select(index);
+			ScrollToSelection();
+			//trace(index);
+			return;						
+		}
+	}
+	BListView::MessageReceived(message);
+}
+	
+SettingsWindow::KeymapOutlineListView::KeymapOutlineListView(BRect r, const char *name) 
+				:
+				BOutlineListView(r, name, B_SINGLE_SELECTION_LIST, B_FOLLOW_ALL_SIDES) 
+{
+}
+
+bool
+SettingsWindow::KeymapOutlineListView::InitiateDrag(BPoint point, int32 index, bool wasSelected) {
+	BOutlineListView::InitiateDrag(point, index, wasSelected);
+	BMessage message(MSG_ITEM_DRAGGED);
+	message.AddInt32("index", index);
+	message.AddPointer("keymap_item", ItemAt(index));
+	if (NULL != Superitem(ItemAt(index)))
+		DragMessage(&message, ItemFrame(index));
+	else return false;
+	return true;
 }
 
 static BPicture sPicture;
 
-BMoveButton::BMoveButton(BRect 		frame, const char *name,  
+SettingsWindow::BMoveButton::BMoveButton(BRect 		frame, const char *name,  
 						uint32		resIdOff, uint32 resIdOn, uint32 resIdDisabled,
 						BMessage	*message,
 						uint32		behavior		/*= B_ONE_STATE_BUTTON*/,
@@ -649,11 +654,12 @@ BMoveButton::BMoveButton(BRect 		frame, const char *name,
 {
 }
 
-BMoveButton::~BMoveButton()
+SettingsWindow::BMoveButton::~BMoveButton()
 {
 }
 
-void BMoveButton::AttachedToWindow()
+void
+SettingsWindow::BMoveButton::AttachedToWindow()
 {
 	//	debugger("app");
 	entry_ref ref;
@@ -675,13 +681,15 @@ void BMoveButton::AttachedToWindow()
 }
 
 
-void BMoveButton::GetPreferredSize(float *width, float *height)
+void
+SettingsWindow::BMoveButton::GetPreferredSize(float *width, float *height)
 {
 	*width  = 17.;
 	*height = 16.;
 }
 
-status_t BMoveButton::LoadPicture(BResources *resFrom, BPicture *picTo, uint32 resId)
+status_t
+SettingsWindow::BMoveButton::LoadPicture(BResources *resFrom, BPicture *picTo, uint32 resId)
 {
 	size_t size = 0;
 	const void *data = resFrom->LoadResource(B_MESSAGE_TYPE, resId, &size);

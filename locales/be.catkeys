@@ -1,17 +1,17 @@
-1	belarusian	x-vnd.KeymapSwitcher	313153088
- (System)	SwitcherSettingsWindow		 (Сістэмная)
- (User)	SwitcherSettingsWindow		 (Карыстальніцкая)
+1	belarusian	x-vnd.KeymapSwitcher	2836720256
+ (system)	SwitcherSettingsWindow		 (Сістэмная)
+ (user)	SwitcherSettingsWindow		 (Карыстальніцкая)
 About	SwitcherSettingsWindow		Пра Праграму
 About…	SwitcherSettingsWindow		Пра Праграму…
 Apply	SwitcherSettingsWindow		Прымяніць
 Available keymaps:	SwitcherSettingsWindow		Даступныя раскладкі:
 Beep setup…	SwitcherSettingsWindow		Наладкі сігнала…
-Hotkey:	SwitcherSettingsWindow		Пераключальнік:
 Copyright © 1999-2003 Stas Maximov.\n	SwitcherSettingsWindow		Copyright © 1999-2003 Стас Максімаў\n
 Copyright © 2008-2010 Haiku, Inc.\n	SwitcherSettingsWindow		Copyright © 2008-2010 Haiku\n
 Disable	SwitcherDeskView		Адключыць
+Hotkey:	SwitcherSettingsWindow		Пераключальнік:
 Keymap Switcher	SwitcherSettingsWindow		Пераключальнік Клавіятуры
-Keymap Switcher\n\n	SwitcherSettingsWindow		Keymap Switcher\n\n
+Keymap Switcher\n\n	SwitcherSettingsWindow		Пераключальнік Клавіятуры\n\n
 Okay	SwitcherSettingsWindow		Добра
 Original notice from Stas Maximov:\n	SwitcherSettingsWindow		Зыходная інафа ад Стаса Максімава:\n
 Quit	SwitcherDeskView		Выхад

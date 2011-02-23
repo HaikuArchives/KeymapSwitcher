@@ -2,30 +2,31 @@
 // Copyright © 1999-2001 Stas Maximov
 // All rights reserved
 // Version 1.0.4
-
 #ifndef __SWITCHFILTER_H
 #define __SWITCHFILTER_H
 
+
 #include <add-ons/input_server/InputServerFilter.h>
-#include <FindDirectory.h>
-#include <Path.h>
 #include <Looper.h>
 
 #include "Settings.h"
 
+
 // export this for the input_server
 extern "C" _EXPORT BInputServerFilter* instantiate_input_filter();
 
-class SettingsMonitor : public BLooper {
-public:
-	SettingsMonitor(const char *name, Settings *settings);
-	~SettingsMonitor();
-	virtual void MessageReceived(BMessage *msg);
-private:
-	Settings *settings;
-};
 
-class SwitchFilter: public BInputServerFilter {
+class SwitchFilter: public BInputServerFilter 
+{
+	class SettingsMonitor : public BLooper {
+	public:
+		SettingsMonitor(const char *name, Settings *settings);
+		~SettingsMonitor();
+		virtual void MessageReceived(BMessage *msg);
+	private:
+		Settings *settings;
+	};
+
 public:
 	SwitchFilter();
 	virtual ~SwitchFilter();
@@ -46,3 +47,4 @@ private:
 };
 
 #endif	//	__SWITCHFILTER_H
+

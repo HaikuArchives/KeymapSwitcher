@@ -1,16 +1,16 @@
-1	russian	x-vnd.KeymapSwitcher	313153088
- (System)	SwitcherSettingsWindow		 (Системная)
- (User)	SwitcherSettingsWindow		 (Пользовательская)
+1	russian	x-vnd.KeymapSwitcher	2836720256
+ (system)	SwitcherSettingsWindow		 (системная)
+ (user)	SwitcherSettingsWindow		 (пользовательская)
 About	SwitcherSettingsWindow		О программе
 About…	SwitcherSettingsWindow		О программе…
 Apply	SwitcherSettingsWindow		Применить
-Hotkey:	SwitcherSettingsWindow		Переключатель:
 Available keymaps:	SwitcherSettingsWindow		Доступные раскладки:
 Beep setup…	SwitcherSettingsWindow		Настройка звука…
 Copyright © 1999-2003 Stas Maximov.\n	SwitcherSettingsWindow		Copyright © 1999-2003 Стас Максимов.\n
 Copyright © 2008-2010 Haiku, Inc.\n	SwitcherSettingsWindow		Copyright © 2008-2010 Haiku, Inc.\n
 Disable	SwitcherDeskView		Отключить
-Keymap Switcher	SwitcherSettingsWindow		Переключать раскладок
+Hotkey:	SwitcherSettingsWindow		Переключатель:
+Keymap Switcher	SwitcherSettingsWindow		Переключатель раскладок
 Keymap Switcher\n\n	SwitcherSettingsWindow		Keymap Switcher\n\n
 Okay	SwitcherSettingsWindow		Хорошо
 Original notice from Stas Maximov:\n	SwitcherSettingsWindow		Первоначальное сообщение Стаса Максимова:\n

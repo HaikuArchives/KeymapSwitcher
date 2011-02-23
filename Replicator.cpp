@@ -1,7 +1,11 @@
-#include <Application.h>
-#include <cstring>
-#include "KeymapSwitcher.h"
+
 #include "Replicator.h"
+
+#include <cstring>
+
+#include <Application.h>
+
+#include "KeymapSwitcher.h"
 
 status_t GetReplicantView(BMessenger target, int32 uid, BMessage *reply);
 status_t GetReplicantName(BMessenger target, int32 uid, BMessage *reply);
@@ -138,3 +142,4 @@ status_t GetReplicantView(BMessenger target, int32 uid, BMessage *reply)
 	
 	return B_OK;
 }
+

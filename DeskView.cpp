@@ -3,31 +3,24 @@
 // Created by Stas Maximov
 // All rights reserved
 
-#include <Application.h>
-#include <Bitmap.h>
-#include <Button.h>
-#include <Debug.h>
+
+#include "DeskView.h"
+
+#include <Beep.h>
+#include <Catalog.h>
+#include <Deskbar.h>
 #include <Dragger.h>
+#include <FindDirectory.h>
+#include <InputServerDevice.h>
+#include <Locale.h>
 #include <MenuItem.h>
 #include <PopUpMenu.h>
-#include <Window.h>
-#include <View.h>
 #include <Roster.h>
-#include <Directory.h>
-#include <FindDirectory.h>
-#include <Beep.h>
-#include <Deskbar.h>
-#include <InputServerDevice.h>
-#include <iostream>
-#include <File.h>
-#include <Catalog.h>
-#include <Locale.h>
 
-#include "SettingsWindow.h"
-#include "Settings.h"
-#include "DeskView.h"
 #include "KeymapSwitcher.h"
 #include "Resource.h"
+#include "SettingsWindow.h"
+
 
 #undef B_TRANSLATE_CONTEXT
 #define B_TRANSLATE_CONTEXT "SwitcherDeskView"

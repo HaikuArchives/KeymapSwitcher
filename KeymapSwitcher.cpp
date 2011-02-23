@@ -9,23 +9,29 @@
  *		Stas Maximov
  *		Siarzhuk Zharski
  */
-#include <Application.h>
-#include <Alert.h>
-#include <String.h>
-#include <FindDirectory.h>
-#include <Deskbar.h>
-#include <OS.h>
-#include <Roster.h>
-#include <stdlib.h>
-#include <stdio.h>
-#include <Beep.h>
+
 
 #include "KeymapSwitcher.h"
-#include "SettingsWindow.h"
+
+#include <stdio.h>
+#include <stdlib.h>
+
+#include <Alert.h>
+#include <Application.h>
+#include <Beep.h>
+#include <Deskbar.h>
+#include <FindDirectory.h>
+#include <OS.h>
+#include <Roster.h>
+#include <String.h>
+
 #include "DeskView.h"
 #include "Resource.h"
+#include "SettingsWindow.h"
 
-int main(int argc, char *argv[])  {
+
+int main(int argc, char *argv[])
+{
 	add_system_beep_event(BEEP_NAME);
 	BDeskbar deskbar;
 	entry_ref ref;

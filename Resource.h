@@ -20,3 +20,4 @@ enum {
 #define VersionBuild  0
 
 #endif //_Resource_h_
+

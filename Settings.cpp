@@ -1,12 +1,11 @@
-#include <Message.h>
-#include <Messenger.h>
+
+#include "Settings.h"
+
 #include <File.h>
 #include <FindDirectory.h>
-#include <KernelExport.h>
-#include "Settings.h"
+
 #include "KeymapSwitcher.h"
-#include <stdio.h>
-#include <syslog.h>
+
 
 #if 0 //def NDEBUG
 #define trace(x...) syslog(0, x); 
@@ -166,3 +165,4 @@ status_t Settings::SetFlat(const char *name, const BFlattenable *obj) {
 	}
 	return AddFlat(name, (BFlattenable *) obj);
 }
+
