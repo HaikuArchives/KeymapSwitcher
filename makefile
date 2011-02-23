@@ -1,7 +1,8 @@
 ##
 ##
 ##
-OBJ_DIR := objects.x86-*
+CC_VER = $(word 1, $(subst -, , $(subst ., , $(shell $(CC) -dumpversion))))
+OBJ_DIR := objects.x86-gcc$(CC_VER)-*
 APP := KeymapSwitcher
 ADDON := keymap_switcher
 DIST_DIR := dist
@@ -10,7 +11,6 @@ APP_DEST := $(DIST_DIR)/common/bin/
 CATALOGS_DEST := $(DIST_DIR)/common/data/locale/catalogs/
 APP_MIME_SIG := x-vnd.Nexus-KeymapSwitcher
 VERSION := 1.2.6
-CC_VER = $(word 1, $(subst -, , $(subst ., , $(shell $(CC) -dumpversion))))
 DATE := `date +%F`
 PACKAGE_NAME := KeymapSwitcher-$(VERSION)-x86-gcc$(CC_VER)-$(DATE)
 
@@ -58,4 +58,5 @@ package: $(OBJ_DIR)/$(APP) $(APP_DEST) $(ADDON_DEST) $(CATALOGS_DEST)
 	echo "unzip -o $(PACKAGE_NAME).zip -d /boot" >> $(DIST_DIR)/update-$(PACKAGE_NAME).sh
 	echo "/boot/system/Deskbar &" >> $(DIST_DIR)/update-$(PACKAGE_NAME).sh
 	echo "/boot/system/servers/input_server &" >> $(DIST_DIR)/update-$(PACKAGE_NAME).sh
+	echo "/boot/common/bin/KeymapSwitcher --deskbar" >> $(DIST_DIR)/update-$(PACKAGE_NAME).sh
 	chmod 700 $(DIST_DIR)/update-$(PACKAGE_NAME).sh

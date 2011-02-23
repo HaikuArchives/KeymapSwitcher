@@ -23,7 +23,6 @@
 #include <TextView.h>
 
 #include "KeymapSwitcher.h"
-//#include "SettingsWindow.h"
 
 
 #undef B_TRANSLATE_CONTEXT
@@ -35,7 +34,11 @@
 
 extern void _restore_key_map_(); // magic undoc function :))
 
+#if 1
 #define trace(s) ((void) 0)
+#else
+#define trace(s) ((void) 0)
+#endif
 
 const float fIconX = 21;
 const float fIconY = 15;

@@ -20,7 +20,6 @@
 #include <Entry.h>
 #include <Locale.h>
 #include <Menu.h>
-#include <MenuBar.h> //XXX
 #include <MenuItem.h>
 #include <Path.h>
 #include <PopUpMenu.h>
@@ -37,8 +36,11 @@
 #undef B_TRANSLATE_CONTEXT
 #define B_TRANSLATE_CONTEXT "SwitcherSettingsWindow"
 
-//#define trace(x...) (void(0)) // syslog(0, x);
+#if 1
+#define trace(x...) (void(0))
+#else
 #define trace(x...) printf(x);
+#endif
 
 // the initial dimensions of the window.
 const float WINDOW_X      = 100;
@@ -86,7 +88,7 @@ SettingsWindow::SettingsWindow(bool fromDeskbar)
 	BRect rc(RC.LeftTop(), RC.LeftTop());
 	// create hot-key selector
 	BStringView* selectorLabel = new BStringView(rc, "string1",
-								B_TRANSLATE("Hotkey:")/*, B_FOLLOW_RIGHT*/);
+								B_TRANSLATE("Hotkey:"));
 	box->AddChild(selectorLabel);
 	
 	float fLineHeight = 0.f;
@@ -101,11 +103,11 @@ SettingsWindow::SettingsWindow(bool fromDeskbar)
 		int32		hotkey;
 		const char*	name;
 	} a[] = {
-		{ KEY_LCTRL_SHIFT,	"Ctrl+Shift" },
-		{ KEY_ALT_SHIFT,	"Alt+Shift" },
-		{ KEY_SHIFT_SHIFT,	"Shift+Shift" },
-		{ KEY_CAPS_LOCK,	"Caps Lock" },
-		{ KEY_SCROLL_LOCK,	"Scroll Lock" }
+		{ KEY_LCTRL_SHIFT,	B_TRANSLATE("Ctrl+Shift") },
+		{ KEY_ALT_SHIFT,	B_TRANSLATE("Cmd+Shift") },
+		{ KEY_SHIFT_SHIFT,	B_TRANSLATE("Shift+Shift") },
+		{ KEY_CAPS_LOCK,	B_TRANSLATE("Caps Lock") },
+		{ KEY_SCROLL_LOCK,	B_TRANSLATE("Scroll Lock") }
 	};
 
 	const char* menuName = "none";
@@ -121,7 +123,7 @@ SettingsWindow::SettingsWindow(bool fromDeskbar)
 		pop_key->AddItem(new BMenuItem(a[i].name, msg));
 	}
 	
-	menuField = new BMenuField(rc, "HotKey", NULL, pop_key/*, B_FOLLOW_RIGHT*/);
+	menuField = new BMenuField(rc, "HotKey", NULL, pop_key);
 	menuField->SetDivider(0);
 	
 	box->AddChild(menuField);
@@ -130,7 +132,6 @@ SettingsWindow::SettingsWindow(bool fromDeskbar)
 	menuField->GetPreferredSize(&pt.x, &pt.y);
 	fMaxButtonsWidth += pt.x + fXSpacing;
 	float fSelectorHeight = fmax(fLineHeight, pt.y);
-//	float fSelectorWidth = pt.x;
 
 	// create top divider
 	BBox* dividerTop = new BBox(rc, B_EMPTY_STRING, B_FOLLOW_LEFT_RIGHT, B_WILL_DRAW, B_FANCY_BORDER);
@@ -225,7 +226,7 @@ SettingsWindow::SettingsWindow(bool fromDeskbar)
 	buttonCancel->SetEnabled(!AlreadyInDeskbar());
 	
 	BString strRemap(remapLabel1);
-	strRemap.ReplaceAll("%KEYMAP%", "US-International");
+	strRemap.ReplaceAll("%KEYMAP%", "American");
 	checkRemap = new RemapCheckBox(rc, "check_remap", strRemap,
 			   new BMessage(MSG_CHECK_REMAP), B_FOLLOW_LEFT | B_FOLLOW_BOTTOM);
 	box->AddChild(checkRemap);
@@ -247,20 +248,10 @@ SettingsWindow::SettingsWindow(bool fromDeskbar)
 	// reposition of "lists column" controls
 	BPoint ptOrg(RC.LeftTop());
 	selectorLabel->ResizeToPreferred();
-//	menuField->MoveTo(ptOrg.x + selectorLabel->Bounds().Width() + fXSpacing, ptOrg.y);
-//	selectorLabel->MoveTo(ptOrg.x,
-//		   ptOrg.y + (fSelectorHeight - selectorLabel->Bounds().Height()) / 2);
-#if 0
-	BPoint ptSelectorOrg(ptOrg);
-	ptSelectorOrg.x = fMaxWindowWidth - X_INSET - fSelectorWidth;
-	menuField->MoveTo(ptSelectorOrg);
-	ptSelectorOrg.x -= selectorLabel->Bounds().Width() + fYSpacing;
-	ptSelectorOrg.y += (fSelectorHeight - selectorLabel->Bounds().Height()) / 2;
-	selectorLabel->MoveTo(ptSelectorOrg);
-#else
-	selectorLabel->MoveTo(ptOrg.x, ptOrg.y + (fSelectorHeight - selectorLabel->Bounds().Height()) / 2);
+	
+	selectorLabel->MoveTo(ptOrg.x,
+		   ptOrg.y + (fSelectorHeight - selectorLabel->Bounds().Height()) / 2);
 	menuField->MoveTo(ptOrg.x + selectorLabel->Bounds().Width() + fXSpacing, ptOrg.y);
-#endif	
 	ptOrg.y += fSelectorHeight + Y_INSET;
 
 	dividerTop->MoveTo(ptOrg);
@@ -342,7 +333,7 @@ SettingsWindow::SettingsWindow(bool fromDeskbar)
 	box->SetResizingMode(B_FOLLOW_ALL_SIDES);
 	
 	// resize a bit from minimal layout - controls will follow!
-	ResizeTo(fMaxWindowWidth * 1.1f, fMaxWindowHeight * 1.1f);
+	//ResizeTo(fMaxWindowWidth * 1.1f, fMaxWindowHeight * 1.1f);
 
 	BScreen screen(this);
 	BRect rcScreen(0, 0, 640, 480);
@@ -493,27 +484,18 @@ void SettingsWindow::MessageReceived(BMessage *msg) {
 
 		trace("settings saved!");
 		settings->Save();
-//		delete settings; // we save settings in its destructor
-
 		::UpdateIndicator(MSG_UPDATESETTINGS);
-		/*if(!from_deskbar) {
-			be_app->PostMessage(B_QUIT_REQUESTED);
-		} else
-			Close();*/
 		break;
 	}
 	case MSG_CLOSE:
 		if(!from_deskbar && !AlreadyInDeskbar()) {
 			be_app->PostMessage(B_QUIT_REQUESTED);
 		} else {
-			//Close();
 			// perform "Revert" functionality
 			*settings = *settingsOrg;
 
 			selected_list->ResetKeymapsList(settings);
 
-			//while(0 < available_list->CountItems())
-			//	delete (dynamic_cast<KeymapItem*> (available_list->RemoveItem(0L)));
 			settings->Save();
 			::UpdateIndicator(MSG_UPDATESETTINGS);
 			

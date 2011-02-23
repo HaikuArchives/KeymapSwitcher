@@ -1,4 +1,4 @@
-1	swedish	x-vnd.Nexus-KeymapSwitcher	4126449138
+1	swedish	x-vnd.Nexus-KeymapSwitcher	3524379678
  (system)	SwitcherSettingsWindow		 (systeminstallerad)
  (user)	SwitcherSettingsWindow		 (användarspecifik)
 About	SwitcherDeskView		Om
@@ -6,8 +6,11 @@ About…	SwitcherDeskView		Om…
 Activate shortcuts substitution	SwitcherSettingsWindow		Aktivera snabbtangentsersättning
 Apply	SwitcherSettingsWindow		Använd
 Available keymaps:	SwitcherSettingsWindow		Valbara tangentbordslayouter:
+Caps Lock	SwitcherSettingsWindow		Caps Lock
+Cmd+Shift	SwitcherSettingsWindow		Cmd+Shift
 Copyright © 1999-2003 Stas Maximov.\n	SwitcherDeskView		Copyright © 1999-2003 Stas Maximov.\n
 Copyright © 2008-2010 Haiku, Inc.\n	SwitcherDeskView		Copyright © 2008-2010 Haiku, Inc.\n
+Ctrl+Shift	SwitcherSettingsWindow		Ctrl+Shift
 Exit	SwitcherSettingsWindow		Avsluta
 Hotkey:	SwitcherSettingsWindow		Snabbtangent:
 Install in Deskbar	SwitcherSettingsWindow		Lägg till i Deskbar
@@ -20,8 +23,10 @@ Okay	SwitcherDeskView		Okej
 Original notice from Stas Maximov:\n	SwitcherDeskView		Ursprungsmeddelande från Stas Maximov:\n
 Quit	SwitcherDeskView		Avsluta
 Revert	SwitcherSettingsWindow		Återgå
+Scroll Lock	SwitcherSettingsWindow		Scroll Lock
 Selected keymaps:	SwitcherSettingsWindow		Valda layouter:
 Settings…	SwitcherDeskView		Inställningar…
+Shift+Shift	SwitcherSettingsWindow		Shift+Shift
 Special thanks to all BeOS users, whether they use this app or not - they're keeping BeOS alive!\n\n	SwitcherDeskView		Tack till alla BeOS-användare, oavsett om ni använder det här programmet eller inte - ni håller BeOS levande!\n\n
 Start Deskbar	SwitcherSettingsWindow		Starta Deskbar
 Substitute shortcuts with %KEYMAP%'s ones	SwitcherSettingsWindow		Ersätt snabbtangenter med dem ur %KEYMAP%
@@ -31,5 +36,6 @@ Thanks to Pierre Raynaud-Richard and Robert Polic for BeOS tips.\n\n	SwitcherDes
 Unable to create Settings configuration window.	SwitcherApplication		Kunde inte skapa fönstret för med inställningsfunktionerna.
 Unable to install keymap indicator. Deskbar application is not running.	SwitcherApplication		Kunde inte lägga till layoutindikatorn eftersom Deskbar inte kör.
 Unable to install keymap indicator. Deskbar application is not running.	SwitcherSettingsWindow		Kunde inte lägga till layoutindikatorn eftersom Deskbar inte kör.
+Unable to start Deskbar application. Keymap indicator was not installed.	SwitcherSettingsWindow		Kunde inte starta Deskbar. Installation av layoutindikatorn misslyckades.
 User	SwitcherSettingsWindow		Användaren
 Version  %VERSION \n\n	SwitcherDeskView		Version  %VERSION \n\n

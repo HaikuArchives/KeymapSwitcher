@@ -76,7 +76,7 @@ enum __msgs {
 	MSG_CHANGEKEYMAP = 0x400, // thats for Indicator, don't change it
 }; */
 
-#if 1 //def NDEBUG
+#if 0 //def NDEBUG
 #define trace(x...) syslog(LOG_DEBUG, x);
 #else
 #define trace(x...) ((void)0)  
