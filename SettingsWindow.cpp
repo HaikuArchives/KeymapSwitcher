@@ -557,7 +557,7 @@ SettingsWindow::KeymapListView::ReadKeymapsList(Settings* settings)
 //			UpdateRemapTable(settings, item->Dir(), item->RealName());
 	}
 }
-
+/*
 void
 SettingsWindow::KeymapListView::UpdateRemapTable(Settings* settings, int32 dir, const char* RealName)
 {
@@ -628,7 +628,7 @@ SettingsWindow::KeymapListView::UpdateRemapTable(Settings* settings, int32 dir, 
 		alert->Go();
 	}
 }
-
+*/
 void
 SettingsWindow::KeymapListView::MessageReceived(BMessage *message)
 {

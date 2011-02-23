@@ -52,7 +52,7 @@ class SettingsWindow: public BWindow {
 
 		void ResetKeymapsList(const Settings* settings);
 		void ReadKeymapsList(Settings* settings);
-		void UpdateRemapTable(Settings* settings, int32 which, const char* RealName);
+//		void UpdateRemapTable(Settings* settings, int32 which, const char* RealName);
 	};
 
 	class KeymapOutlineListView : public BOutlineListView {

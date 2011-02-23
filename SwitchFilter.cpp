@@ -10,6 +10,8 @@
 #include <syslog.h>
 
 #include <Entry.h>
+#include <File.h>
+#include <FindDirectory.h>
 #include <InputServerDevice.h>
 #include <Locker.h>
 #include <NodeMonitor.h>
@@ -67,14 +69,14 @@ union SwitchFilter::_key defaultRemapKeys[] = {
 /*x68*/ {   0 }, {   0 },  {   0 },  {   0 },  {   0 },  {   0 },  {   0 },  {   0 }, 
 };
 
-const int32 remapKeysCount = sizeof(defaultRemapKeys)/sizeof(defaultRemapKeys[0]);
+const uint32 remapKeysCount = sizeof(defaultRemapKeys)/sizeof(defaultRemapKeys[0]);
 
 /*		
 enum __msgs {
 	MSG_CHANGEKEYMAP = 0x400, // thats for Indicator, don't change it
 }; */
 
-#if 0 //def NDEBUG
+#if 1 //def NDEBUG
 #define trace(x...) syslog(LOG_DEBUG, x);
 #else
 #define trace(x...) ((void)0)  
@@ -140,6 +142,9 @@ SwitchFilter::~SwitchFilter() {
 status_t SwitchFilter::InitCheck() {
 	trace("init check");
 	settings = new Settings("Switcher");
+
+	UpdateRemapTable();
+
 	//monitor = new SettingsMonitor(INDICATOR_SIGNATURE, settings);
 	monitor = new SettingsMonitor(APP_SIGNATURE, this);
 	monitor->Run();
@@ -315,7 +320,7 @@ filter_result SwitchFilter::Filter(BMessage *message, BList *outList) {
 			break; // only Cmd-based are mapped
 		}
 			
-		int32 key = message->FindInt32("key");
+		uint32 key = message->FindInt32("key");
 		
 		// continue processing "modifiered" key
 		app_info appinfo;
@@ -329,7 +334,7 @@ filter_result SwitchFilter::Filter(BMessage *message, BList *outList) {
 			message->ReplaceInt32("raw_char", mappedKey->byte);
 			message->RemoveName("bytes");
 			message->AddString("bytes", (const char *)(mappedKey->bytes));
-			for (int i = 0; i < 3; i++)
+			for (int i = 0; i < maxCharBytes; i++)
 				message->ReplaceInt8("byte", i, mappedKey->bytes[i]);
 		}
 
@@ -343,7 +348,7 @@ filter_result SwitchFilter::Filter(BMessage *message, BList *outList) {
 }
 
 
-SwitchFilter::_key* SwitchFilter::RemapKey(int index)
+SwitchFilter::_key* SwitchFilter::RemapKey(uint32 index)
 {
 	if (index < 0 || index > remapKeysCount)
 		return 0;
@@ -353,6 +358,103 @@ SwitchFilter::_key* SwitchFilter::RemapKey(int index)
 	}
 
 	return &defaultRemapKeys[index];
+}
+
+void
+SwitchFilter::UpdateRemapTable()
+{
+	delete[] remapKeys;
+	remapKeys = 0;
+
+	int32 keymaps = 0;
+	settings->FindInt32("keymaps", &keymaps);
+	if(keymaps <= 0)
+		return; // settings are empty - default mapping will be used.
+
+	status_t st = B_OK;
+	directory_which dir;
+	if((st = settings->FindInt32("d0", (int32*)&dir)) != B_OK) {
+		trace("dir not found: %#x (%s)", st, strerror(st));
+		return;
+	}
+
+	BString strRealName;
+	if((st = settings->FindString("n0", &strRealName)) != B_OK) {
+		trace("name not found: %#x (%s)", st, strerror(st));
+		return;
+	}
+
+	key_map KM = { 0 };
+
+	BPath path;
+	find_directory((directory_which)dir, &path);
+	if(dir == B_BEOS_DATA_DIRECTORY)
+		path.Append("Keymaps");
+	else
+		path.Append("Keymap");
+	path.Append(strRealName);
+
+	BFile file(path.Path(), B_READ_ONLY);
+	if(file.Read(&KM, sizeof(key_map)) < (ssize_t)sizeof(key_map)) {
+		trace("Cannot read the key_map header.");
+		return;
+	}
+
+	for (size_t i = 0; i < sizeof(key_map); i += sizeof(uint32)) {
+		uint32* p = (uint32*)(((uint8*)&KM) + i);
+		*p = B_BENDIAN_TO_HOST_INT32(*p);
+	}
+
+	if(KM.version != 3) {
+		trace("Keympa version mismatch:%d", KM.version);
+		return;
+	}
+
+	uint32 charsSize = 0;
+	if(file.Read(&charsSize, sizeof(uint32)) < (ssize_t)sizeof(uint32)) {
+		trace("Cannot read size of chars buffer.");
+		return;
+	}
+
+	charsSize = B_BENDIAN_TO_HOST_INT32(charsSize);
+
+	char* chars = new char[charsSize];
+
+	if (file.Read(chars, charsSize) >= (ssize_t)charsSize) {
+
+		remapKeys = new _key[remapKeysCount]; 
+		memset(remapKeys, 0, remapKeysCount * sizeof(_key));
+
+		size_t count = min_c(sizeof(KM.normal_map)/sizeof(KM.normal_map[0]), remapKeysCount);
+		for(size_t i = 0; i < count; i++) {
+
+			if(0 == defaultRemapKeys[i].byte)
+				continue; // ignore not-remapped in default table.
+
+			int offset = KM.normal_map[i];
+			char bytes = chars[offset];
+			switch(bytes) {
+				case 3: remapKeys[i].bytes[2] = chars[offset + 3]; // fall through
+				case 2: remapKeys[i].bytes[1] = chars[offset + 2]; // fall through
+				case 1: remapKeys[i].bytes[0] = chars[offset + 1];
+					trace("off:%#x -> %s", i, remapKeys[i].bytes);
+					break;
+				case 0:
+					break; // not mapped at all - silently skip
+				default:
+					{
+						char* b = new char[bytes + 1];
+						memcpy(b, &chars[offset + 1], bytes);
+						b[int(bytes)] = '\0';
+						trace("too long (%d bytes) char ignored:%s", bytes, b);
+						delete[] b;
+					}
+					break;
+			}
+		}
+	}
+
+	delete[] chars;
 }
 
 // Gets Indicator's BMessenger
@@ -500,6 +602,7 @@ status_t SwitchFilter::GetReplicantView(BMessenger target, int32 uid, BMessage *
 void SwitchFilter::MonitorEvent()
 {
 	settings->Reload();
+	UpdateRemapTable();
 	trace("monitor event!");
 }
 

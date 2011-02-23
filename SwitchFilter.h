@@ -15,6 +15,7 @@
 // export this for the input_server
 extern "C" _EXPORT BInputServerFilter* instantiate_input_filter();
 
+const int maxCharBytes = 3;
 
 class SwitchFilter: public BInputServerFilter 
 {
@@ -30,12 +31,13 @@ class SwitchFilter: public BInputServerFilter
 	};
 
 	void MonitorEvent();
+	void UpdateRemapTable();
 
 public:
 	
 	union _key {
 		char byte;
-		int8 bytes[3];
+		int8 bytes[maxCharBytes + 1];
 	};
 
 	SwitchFilter();
@@ -52,7 +54,7 @@ private:
 	int32 GetReplicantAt(BMessenger target, int32 index) const;
 	BMessenger *GetIndicatorMessenger();
 
-	_key* RemapKey(int index);
+	_key* RemapKey(uint32 index);
 
 	Settings *settings;
 	bool switch_on_hold;
