@@ -105,7 +105,9 @@ SwitchFilter::~SwitchFilter() {
 	if (NULL != settings) {
 		trace("killing settings now");
 		settings->Reload(); // we need to load new settings first
+		settings->Save();
 		delete settings; // cause destructor saves settings here <g>
+		settings = 0;
 	}
 	trace("end");
 

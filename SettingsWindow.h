@@ -57,6 +57,8 @@ class SettingsWindow: public BWindow {
 	public:
 		KeymapOutlineListView(BRect r, const char *name);
 		virtual bool InitiateDrag(BPoint point, int32 index, bool wasSelected);
+
+		void PopulateTheTree();
 	};
 
 	class BMoveButton : public BPictureButton {
@@ -80,7 +82,7 @@ class SettingsWindow: public BWindow {
 		virtual void GetPreferredSize(float *width, float *height);
 	};
 
-	void ShowAboutWindow();
+	//void ShowAboutWindow();
 	bool AlreadyInDeskbar();
 
 public:

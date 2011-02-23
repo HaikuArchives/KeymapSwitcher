@@ -3,7 +3,7 @@
 resource(1, "BEOS:APP_SIG") #'MIMS' APP_SIGNATURE;
 resource(1, "BEOS:FILE_TYPES") message { };
 
-resource app_flags B_SINGLE_LAUNCH | B_BACKGROUND_APP;
+resource app_flags B_SINGLE_LAUNCH /*| B_BACKGROUND_APP*/;
 
 resource app_version {
 	major  = VersionMajor,

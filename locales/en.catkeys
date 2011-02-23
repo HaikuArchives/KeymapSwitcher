@@ -1,32 +1,32 @@
-1	english	x-vnd.Nexus-KeymapSwitcher	3001723760
+1	english	x-vnd.Nexus-KeymapSwitcher	2407497108
  (system)	SwitcherSettingsWindow		 (system)
-Beep setup…	SwitcherSettingsWindow		Beep setup…
-Keymap Switcher\n\n	SwitcherSettingsWindow		Keymap Switcher\n\n
+Copyright © 2008-2010 Haiku, Inc.\n	SwitcherDeskView		Copyright © 2008-2010 Haiku, Inc.\n
+Beep setup…	SwitcherDeskView		Beep setup…
 Quit	SwitcherDeskView		Quit
 OK	SwitcherSettingsWindow		OK
-Copyright © 2008-2010 Haiku, Inc.\n	SwitcherSettingsWindow		Copyright © 2008-2010 Haiku, Inc.\n
+About…	SwitcherDeskView		About…
 Unable to install keymap indicator. Deskbar application is not running.	SwitcherSettingsWindow		Unable to install keymap indicator. Deskbar application is not running.
 Hotkey:	SwitcherSettingsWindow		Hotkey:
 Settings…	SwitcherDeskView		Settings…
 System	SwitcherSettingsWindow		System
-No, thanks. Exit	SwitcherSettingsWindow		No, thanks. Exit
-Special thanks to all BeOS users, whether they use this app or not - they're keeping BeOS alive!\n\n	SwitcherSettingsWindow		Special thanks to all BeOS users, whether they use this app or not - they're keeping BeOS alive!\n\n
-Tested and inspired by\n\tSergey \"fyysik\" Dolgov,\n\tMaxim \"baza\" Bazarov,\n\tDenis Korotkov,\n\tNur Nazmetdinov and others.\n\n	SwitcherSettingsWindow		Tested and inspired by\n\tSergey \"fyysik\" Dolgov,\n\tMaxim \"baza\" Bazarov,\n\tDenis Korotkov,\n\tNur Nazmetdinov and others.\n\n
+Thanks to Pierre Raynaud-Richard and Robert Polic for BeOS tips.\n\n	SwitcherDeskView		Thanks to Pierre Raynaud-Richard and Robert Polic for BeOS tips.\n\n
+Original notice from Stas Maximov:\n	SwitcherDeskView		Original notice from Stas Maximov:\n
 Install in Deskbar	SwitcherSettingsWindow		Install in Deskbar
-Version  %VERSION \n\n	SwitcherSettingsWindow		Version  %VERSION \n\n
-Original notice from Stas Maximov:\n	SwitcherSettingsWindow		Original notice from Stas Maximov:\n
+Special thanks to all BeOS users, whether they use this app or not - they're keeping BeOS alive!\n\n	SwitcherDeskView		Special thanks to all BeOS users, whether they use this app or not - they're keeping BeOS alive!\n\n
 OK	SwitcherApplication		OK
 Apply	SwitcherSettingsWindow		Apply
+About	SwitcherDeskView		About
 Revert	SwitcherSettingsWindow		Revert
  (user)	SwitcherSettingsWindow		 (user)
+Copyright © 1999-2003 Stas Maximov.\n	SwitcherDeskView		Copyright © 1999-2003 Stas Maximov.\n
 Disable	SwitcherDeskView		Disable
-About…	SwitcherSettingsWindow		About…
 Keymap Switcher	SwitcherSettingsWindow		Keymap Switcher
-Thanks to Pierre Raynaud-Richard and Robert Polic for BeOS tips.\n\n	SwitcherSettingsWindow		Thanks to Pierre Raynaud-Richard and Robert Polic for BeOS tips.\n\n
+Okay	SwitcherDeskView		Okay
+Exit	SwitcherSettingsWindow		Exit
 Available keymaps:	SwitcherSettingsWindow		Available keymaps:
-Okay	SwitcherSettingsWindow		Okay
-About	SwitcherSettingsWindow		About
+Version  %VERSION \n\n	SwitcherDeskView		Version  %VERSION \n\n
 Selected keymaps:	SwitcherSettingsWindow		Selected keymaps:
 Unable to create Settings configuration window.	SwitcherApplication		Unable to create Settings configuration window.
-Copyright © 1999-2003 Stas Maximov.\n	SwitcherSettingsWindow		Copyright © 1999-2003 Stas Maximov.\n
+Keymap Switcher\n\n	SwitcherDeskView		Keymap Switcher\n\n
+Tested and inspired by\n\tSergey \"fyysik\" Dolgov,\n\tMaxim \"baza\" Bazarov,\n\tDenis Korotkov,\n\tNur Nazmetdinov and others.\n\n	SwitcherDeskView		Tested and inspired by\n\tSergey \"fyysik\" Dolgov,\n\tMaxim \"baza\" Bazarov,\n\tDenis Korotkov,\n\tNur Nazmetdinov and others.\n\n
 User	SwitcherSettingsWindow		User

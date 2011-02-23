@@ -67,7 +67,7 @@ status_t Settings::Save() {
 }
 
 Settings::~Settings() {
-	Save(); // autosave on destruction
+	//Save(); // autosave on destruction
 }
 
 status_t Settings::SetBool(const char *name, bool b) {

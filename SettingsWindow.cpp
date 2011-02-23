@@ -29,7 +29,6 @@
 #include <Screen.h>
 #include <ScrollView.h>
 #include <StringView.h>
-#include <TextView.h>
 
 #include "DeskView.h"
 #include "KeymapSwitcher.h"
@@ -84,166 +83,13 @@ SettingsWindow::SettingsWindow(bool fromDeskbar)
 	BRect RC = box->Bounds();
 	RC.InsetBy(X_INSET, Y_INSET);
 
-	// create labels
 	BRect rc(RC.LeftTop(), RC.LeftTop());
-	BStringView* selMapsLabel = new BStringView(rc, "string0",
-										B_TRANSLATE("Selected keymaps:"));
-	box->AddChild(selMapsLabel);
-	selMapsLabel->ResizeToPreferred();
-
-	BStringView* allMapsLabel = new BStringView(rc, "string1",
-										B_TRANSLATE("Available keymaps:"));
-	box->AddChild(allMapsLabel);
-	allMapsLabel->ResizeToPreferred();
-
-	// create add/del button
-	BRect rcBtn(RC);
-	rcBtn.right  = rcBtn.left + kBmpBtnX;
-	rcBtn.bottom = rcBtn.top  + kBmpBtnY;
-	BMoveButton* addButton = new BMoveButton(rcBtn, "add_keymap_button", 
-					R_ResAddButton, R_ResAddButtonPressed, R_ResAddButtonDisabled,
-		new BMessage(MSG_BUTTON_ADD_ITEM), B_ONE_STATE_BUTTON, B_FOLLOW_RIGHT);
-	box->AddChild(addButton);
-	addButton->SetTarget(this);
-	
-	BMoveButton* delButton = new BMoveButton(rcBtn, "remove_keymap_button",
-					R_ResRemoveButton, R_ResRemoveButtonPressed, R_ResRemoveButtonDisabled, 
-		new BMessage(MSG_BUTTON_REMOVE_ITEM), B_ONE_STATE_BUTTON, B_FOLLOW_RIGHT);
-	box->AddChild(delButton);
-	delButton->SetTarget(this);
-
-	// calculate the layout of "lists column" of controls
-	float fLineHeight = 0.f;
-	float fMaxListsWidth = 0.f;
-	selMapsLabel->GetPreferredSize(&fMaxListsWidth, &fLineHeight);
-	
-	float fAllLabelWidth = 0.;
-	allMapsLabel->GetPreferredSize(&fAllLabelWidth, &fLineHeight);
-	fMaxListsWidth = fmax(fMaxListsWidth, fAllLabelWidth + (kBmpBtnX + fYSpacing) * 2);
-
-	selected_list = new KeymapListView(rc, "selected_list");
-	BScrollView* scrollViewSel =  new BScrollView("scroll_selected", selected_list, 
-		B_FOLLOW_LEFT_RIGHT, 0, false, true);
-	box->AddChild(scrollViewSel);
-	
-	float fScrollBarWidth = scrollViewSel->Bounds().right - selected_list->Bounds().right;
-	float fScrollYInset = scrollViewSel->Bounds().Height() - selected_list->Bounds().Height();
-
-	fMaxListsWidth += fScrollBarWidth;
-
-	available_list = new KeymapOutlineListView(rc, "selected_list");
-	BScrollView* scrollViewAll = new BScrollView("scroll_available", available_list, 
-		B_FOLLOW_ALL_SIDES, 0, false, true);
-	box->AddChild(scrollViewAll);
-	
-	// reposition of "lists column" controls
-	BPoint ptOrg(RC.LeftTop());
-	selMapsLabel->ResizeToPreferred();
-	selMapsLabel->MoveTo(ptOrg.x, ptOrg.y);
-
-	ptOrg.y += selMapsLabel->Bounds().Height() + fYSpacing;
-	scrollViewSel->MoveTo(ptOrg.x, ptOrg.y);
-	scrollViewSel->ResizeTo(fMaxListsWidth, fLineHeight * 4 + fScrollYInset);
-
-	ptOrg.y += scrollViewSel->Bounds().Height() + fYSpacing;
-	BPoint ptBtnOrg(ptOrg);
-	allMapsLabel->ResizeToPreferred();
-	ptOrg.y += kBmpBtnY - allMapsLabel->Bounds().Height();
-	allMapsLabel->MoveTo(ptOrg);
-
-	// buttons
-	ptBtnOrg.x += fAllLabelWidth + fXSpacing;
-	addButton->MoveTo(ptBtnOrg);
-	ptBtnOrg.x += kBmpBtnX + fXSpacing;
-	delButton->MoveTo(ptBtnOrg);
-
-	// and finally the all keymaps list
-	ptOrg.y += allMapsLabel->Bounds().Height() + fYSpacing;
-	scrollViewAll->MoveTo(ptOrg.x, ptOrg.y);
-	scrollViewAll->ResizeTo(fMaxListsWidth, fLineHeight * 8 + fScrollYInset);
-
-	float fMaxWindowHeight = ptOrg.y + scrollViewAll->Bounds().Height() + Y_INSET;
-
-	// populate selected keymaps list
-/*	int32 count = 0;
-	settings->FindInt32("keymaps", &count); // retrieve keymaps number
-	// read all the keymaps
-	for (int32 i = 0; i<count; i++) {
-		BString param("n");
-		param << i;
-		
-		BString name;
-		settings->FindString(param.String(), &name);
-
-		param = "d";
-	   	param << i;
-		int32 dir = 0;
-		settings->FindInt32(param.String(), &dir);
-
-		BPath path;
-		find_directory((directory_which)dir, &path);
-		if(dir == B_BEOS_DATA_DIRECTORY)
-			path.Append("Keymaps");
-		else
-			path.Append("Keymap");
-		path.Append(name.String());
-
-		BString display_name(name);
-		if(dir == B_BEOS_DATA_DIRECTORY)
-			display_name += B_TRANSLATE(" (system)");
-		else
-			display_name += B_TRANSLATE(" (user)");
-		selected_list->AddItem(new KeymapItem(display_name.String(), name.String(), dir));
-	} */
-	selected_list->ResetKeymapsList(settings);
-
-	// populate all available keymaps list - system keymaps
-	struct _d {
-		directory_which which;
-		const char* subDir;
-		const char* name;
-	} d[] = {
-		{ B_BEOS_DATA_DIRECTORY,	 "Keymaps", B_TRANSLATE("System") },
-		{ B_USER_SETTINGS_DIRECTORY, "Keymap",  B_TRANSLATE("User")   }
-	};
-
-	for (size_t i = 0; i < sizeof(d)/sizeof(d[0]); i++) {
-		BPath path;
-		find_directory(d[i].which, &path);
-		path.Append(d[i].subDir);
-
-		BDirectory dir(path.Path());
-		long count = dir.CountEntries();
-		if(count <= 0)
-			continue;
-
-		KeymapItem *keymap_node = new KeymapItem(d[i].name, NULL, 0);
-		available_list->AddItem(keymap_node);
-
-		BEntry entry;
-		BList list;
-		for (int i = 0; i < count; i++) {
-			dir.GetNextEntry(&entry);
-			struct stat st;
-			entry.GetStat(&st);
-			if(S_ISDIR(st.st_mode))
-				continue;
-
-			entry_ref ref;
-			entry.GetRef(&ref);
-			list.AddItem(new KeymapItem(ref.name, ref.name, (int32)d[i].which ), 0);
-		}
-
-		for (int i = 0; i < list.CountItems(); i++) {
-			available_list->AddUnder((KeymapItem*) list.ItemAt(i), keymap_node);
-		}
-	}
-
 	// create hot-key selector
 	BStringView* selectorLabel = new BStringView(rc, "string1",
 								B_TRANSLATE("Hotkey:"), B_FOLLOW_RIGHT);
 	box->AddChild(selectorLabel);
 	
+	float fLineHeight = 0.f;
 	float fMaxButtonsWidth = 0.f;
 	selectorLabel->GetPreferredSize(&fMaxButtonsWidth, &fLineHeight);
 
@@ -282,7 +128,60 @@ SettingsWindow::SettingsWindow(bool fromDeskbar)
 
 	BPoint pt(0, 0);
 	menuField->GetPreferredSize(&pt.x, &pt.y);
-	fMaxButtonsWidth = fmax(fMaxButtonsWidth, pt.x);
+	fMaxButtonsWidth += pt.x + fXSpacing;
+	float fSelectorHeight = fmax(fLineHeight, pt.y);
+
+	// create labels
+	BStringView* selMapsLabel = new BStringView(rc, "string0",
+										B_TRANSLATE("Selected keymaps:"));
+	box->AddChild(selMapsLabel);
+	selMapsLabel->ResizeToPreferred();
+
+	BStringView* allMapsLabel = new BStringView(rc, "string1",
+										B_TRANSLATE("Available keymaps:"));
+	box->AddChild(allMapsLabel);
+	allMapsLabel->ResizeToPreferred();
+
+	// create add/del button
+	BRect rcBtn(RC);
+	rcBtn.right  = rcBtn.left + kBmpBtnX;
+	rcBtn.bottom = rcBtn.top  + kBmpBtnY;
+	BMoveButton* addButton = new BMoveButton(rcBtn, "add_keymap_button", 
+					R_ResAddButton, R_ResAddButtonPressed, R_ResAddButtonDisabled,
+		new BMessage(MSG_BUTTON_ADD_ITEM), B_ONE_STATE_BUTTON, B_FOLLOW_RIGHT);
+	box->AddChild(addButton);
+	addButton->SetTarget(this);
+	
+	BMoveButton* delButton = new BMoveButton(rcBtn, "remove_keymap_button",
+					R_ResRemoveButton, R_ResRemoveButtonPressed, R_ResRemoveButtonDisabled, 
+		new BMessage(MSG_BUTTON_REMOVE_ITEM), B_ONE_STATE_BUTTON, B_FOLLOW_RIGHT);
+	box->AddChild(delButton);
+	delButton->SetTarget(this);
+
+	// calculate the layout of "lists column" of controls
+	float fMaxListsWidth = 0.f;
+	selMapsLabel->GetPreferredSize(&fMaxListsWidth, &fLineHeight);
+	
+	float fAllLabelWidth = 0.;
+	allMapsLabel->GetPreferredSize(&fAllLabelWidth, &fLineHeight);
+	fMaxListsWidth = fmax(fMaxListsWidth, fAllLabelWidth + (kBmpBtnX + fYSpacing) * 2);
+
+	selected_list = new KeymapListView(rc, "selected_list");
+	BScrollView* scrollViewSel =  new BScrollView("scroll_selected", selected_list, 
+		B_FOLLOW_LEFT_RIGHT, 0, false, true);
+	box->AddChild(scrollViewSel);
+	
+	float fScrollBarWidth = scrollViewSel->Bounds().right - selected_list->Bounds().right;
+	float fScrollYInset = scrollViewSel->Bounds().Height() - selected_list->Bounds().Height();
+
+	fMaxListsWidth += fScrollBarWidth;
+	
+	available_list = new KeymapOutlineListView(rc, "selected_list");
+	BScrollView* scrollViewAll = new BScrollView("scroll_available", available_list, 
+		B_FOLLOW_ALL_SIDES, 0, false, true);
+	box->AddChild(scrollViewAll);
+
+	fMaxListsWidth = fmax(fMaxListsWidth, fMaxButtonsWidth);
 
 	// create buttons
 	struct _button {
@@ -293,14 +192,10 @@ SettingsWindow::SettingsWindow(bool fromDeskbar)
 		BButton*	button;
 		BPoint		pt;
 	} b[] = {
-		{ "beep_button", B_TRANSLATE("Beep setup" B_UTF8_ELLIPSIS),
-					MSG_BEEP_SETUP, B_FOLLOW_RIGHT, NULL },
-		{ "about_button", B_TRANSLATE("About" B_UTF8_ELLIPSIS),
-					MSG_ABOUT, B_FOLLOW_RIGHT, NULL },
 		{ "save_button", !AlreadyInDeskbar() ? B_TRANSLATE("Install in Deskbar")
 									: B_TRANSLATE("Apply"),
 					MSG_SAVE_SETTINGS, B_FOLLOW_BOTTOM | B_FOLLOW_RIGHT, NULL },
-		{ "close_button", !AlreadyInDeskbar() ? B_TRANSLATE("No, thanks. Exit")
+		{ "close_button", !AlreadyInDeskbar() ? B_TRANSLATE("Exit")
 									: B_TRANSLATE("Revert"),
 					MSG_CLOSE, B_FOLLOW_BOTTOM | B_FOLLOW_RIGHT, NULL },
 	};
@@ -314,48 +209,119 @@ SettingsWindow::SettingsWindow(bool fromDeskbar)
 		fMaxButtonsWidth = fmax(fMaxButtonsWidth, b[i].pt.x);
 	}
 
-	b[2].button->MakeDefault(TRUE);
-	b[2].pt.y += fYSpacing;
-
 	// remember them for later using
-	buttonOK = b[2].button;
-	buttonCancel = b[3].button;
+	buttonOK = b[0].button;
+	buttonCancel = b[1].button;
 
 	buttonOK->SetEnabled(!AlreadyInDeskbar());
 	buttonCancel->SetEnabled(!AlreadyInDeskbar());
+	
+	float fMaxWindowWidth =  X_INSET * 2 
+					+ fmax(fMaxListsWidth, b[0].pt.x + b[1].pt.x + fXSpacing);
 
-	ptOrg = RC.LeftTop();
-	ptOrg.x += fMaxListsWidth + X_INSET;
+	fMaxListsWidth = fMaxWindowWidth - X_INSET * 2;
+
+	// reposition of "lists column" controls
+	BPoint ptOrg(RC.LeftTop());
 	selectorLabel->ResizeToPreferred();
-	selectorLabel->MoveTo(ptOrg);
+	menuField->MoveTo(ptOrg.x + selectorLabel->Bounds().Width() + fXSpacing, ptOrg.y);
+	selectorLabel->MoveTo(ptOrg.x,
+		   ptOrg.y + (fSelectorHeight - selectorLabel->Bounds().Height()) / 2);
+	ptOrg.y += fSelectorHeight + Y_INSET/*fYSpacing*/;
 
-	ptOrg.y += selectorLabel->Bounds().Height() + fYSpacing;
-	BPoint ptSelector(ptOrg);
-	menuField->ResizeToPreferred();
-	menuField->MoveTo(ptSelector);
+	// other
+	selMapsLabel->ResizeToPreferred();
+	selMapsLabel->MoveTo(ptOrg);
+
+	ptOrg.y += selMapsLabel->Bounds().Height() + fYSpacing;
+	scrollViewSel->MoveTo(ptOrg.x, ptOrg.y);
+	scrollViewSel->ResizeTo(fMaxListsWidth, fLineHeight * 4 + fScrollYInset);
+
+	ptOrg.y += scrollViewSel->Bounds().Height() + fYSpacing;
+	BPoint ptBtnOrg(ptOrg);
+	allMapsLabel->ResizeToPreferred();
+	ptOrg.y += kBmpBtnY - allMapsLabel->Bounds().Height();
+	allMapsLabel->MoveTo(ptOrg);
+
+	// buttons
+	ptBtnOrg.x += fAllLabelWidth + fXSpacing;
+	addButton->MoveTo(ptBtnOrg);
+	ptBtnOrg.x += kBmpBtnX + fXSpacing;
+	delButton->MoveTo(ptBtnOrg);
+
+	// and finally the all keymaps list
+	ptOrg.y += allMapsLabel->Bounds().Height() + fYSpacing;
+	scrollViewAll->MoveTo(ptOrg.x, ptOrg.y);
+	scrollViewAll->ResizeTo(fMaxListsWidth, fLineHeight * 8 + fScrollYInset);
+
+	ptOrg.y += scrollViewAll->Bounds().Height() + fYSpacing;
+
+	// populate selected keymaps list
+	selected_list->ResetKeymapsList(settings);
+
+	// populate all available keymaps list - system keymaps
+	/*struct _d {
+		directory_which which;
+		const char* subDir;
+		const char* name;
+	} ad[] = {
+		{ B_BEOS_DATA_DIRECTORY,	 "Keymaps", B_TRANSLATE("System") },
+		{ B_USER_SETTINGS_DIRECTORY, "Keymap",  B_TRANSLATE("User")   }
+	};
+
+	for (size_t d = 0; d < sizeof(ad)/sizeof(ad[0]); d++) {
+		BPath path;
+		find_directory(ad[d].which, &path);
+		path.Append(ad[d].subDir);
+
+		BDirectory dir(path.Path());
+		long count = dir.CountEntries();
+		if(count <= 0)
+			continue;
+
+		KeymapItem *keymap_node = new KeymapItem(ad[d].name, NULL, 0);
+		available_list->AddItem(keymap_node);
+
+		BEntry entry;
+		BList list;
+		for (int i = 0; i < count; i++) {
+			dir.GetNextEntry(&entry);
+			struct stat st;
+			entry.GetStat(&st);
+			if(S_ISDIR(st.st_mode))
+				continue;
+
+			entry_ref ref;
+			entry.GetRef(&ref);
+			list.AddItem(new KeymapItem(ref.name, ref.name, (int32)ad[d].which ), 0);
+		}
+
+		for (int i = 0; i < list.CountItems(); i++) {
+			available_list->AddUnder((KeymapItem*) list.ItemAt(i), keymap_node);
+		}
+	} */
+
+	available_list->PopulateTheTree();
+
+
+	//fMaxWindowHeight = fmax(fMaxWindowHeight,
+	//						Y_INSET + fYSpacing * 2 + b[0].pt.y + b[1].pt.y);
+	//
+	float fMaxWindowHeight = ptOrg.y + fmax(b[0].pt.y, b[1].pt.y) + Y_INSET;
 	
-	ptOrg.y += menuField->Bounds().Height() + fYSpacing * 5;
 
-	b[0].button->MoveTo(ptOrg);
-	ptOrg.y += b[0].pt.y + fYSpacing;
+	
+	ptOrg.x = fMaxWindowWidth - X_INSET - b[1].pt.x;
 	b[1].button->MoveTo(ptOrg);
-	ptOrg.y += b[1].pt.y + fYSpacing;
+	ptOrg.x -= fXSpacing + b[0].pt.x;
+	b[0].button->MoveTo(ptOrg);
 	
-	fMaxWindowHeight = fmax(fMaxWindowHeight,
-							Y_INSET + fYSpacing * 2 + b[2].pt.y + b[3].pt.y);
+//	for (size_t i = 0; i < sizeof(b)/sizeof(b[0]); i++)
+//		b[i].button->ResizeTo(fMaxButtonsWidth, b[i].pt.y); 
 
-	ptOrg.y = fMaxWindowHeight - Y_INSET - b[3].pt.y;
-	b[3].button->MoveTo(ptOrg);
-	ptOrg.y -= b[2].pt.y + fYSpacing;
-	b[2].button->MoveTo(ptOrg);
+//	ptSelector.x += fMaxButtonsWidth - menuField->Bounds().Width();
+//	menuField->MoveTo(ptSelector);
 
-	for (size_t i = 0; i < sizeof(b)/sizeof(b[0]); i++)
-		b[i].button->ResizeTo(fMaxButtonsWidth, b[i].pt.y); 
-
-	ptSelector.x += fMaxButtonsWidth - menuField->Bounds().Width();
-	menuField->MoveTo(ptSelector);
-
-	float fMaxWindowWidth = fMaxListsWidth + fMaxButtonsWidth + X_INSET * 3;
 
 	// set resize/zoom policy
 	float fwMin, fwMax, fhMin, fhMax;
@@ -449,10 +415,10 @@ void SettingsWindow::MessageReceived(BMessage *msg) {
 		hotkey_changed = true;
 		break;
 	}
-	case MSG_BEEP_SETUP: {
+/*	case MSG_BEEP_SETUP: {
 		be_roster->Launch(SOUNDS_PREF_SIGNATURE);
 		break;
-	}
+	}*/
 	case MSG_SAVE_SETTINGS: {
 		if (!AlreadyInDeskbar()) {
 			add_system_beep_event(BEEP_NAME);
@@ -462,6 +428,12 @@ void SettingsWindow::MessageReceived(BMessage *msg) {
 				entry_ref ref;
 				be_roster->FindApp(APP_SIGNATURE, &ref);
 				deskbar.AddItem(&ref);
+
+				buttonOK->SetLabel(B_TRANSLATE("Apply"));
+				buttonCancel->SetLabel(B_TRANSLATE("Revert"));
+				buttonOK->SetEnabled(false);
+				buttonCancel->SetEnabled(false);
+
 			} else {
 				BAlert* alert = new BAlert("Error",
 					   B_TRANSLATE("Unable to install keymap indicator. "
@@ -470,10 +442,6 @@ void SettingsWindow::MessageReceived(BMessage *msg) {
 				alert->Go();
 			}
 
-			buttonOK->SetLabel(B_TRANSLATE("Apply"));
-			buttonCancel->SetLabel(B_TRANSLATE("Revert"));
-			buttonOK->SetEnabled(false);
-			buttonCancel->SetEnabled(false);
 		}
 
 		// delete all keymaps from settings
@@ -540,14 +508,14 @@ void SettingsWindow::MessageReceived(BMessage *msg) {
 		break;
 		
 	case MSG_ABOUT:
-		ShowAboutWindow();
+	//	ShowAboutWindow();
 		break;
 	default:
 		break;
 	}
 	BWindow::MessageReceived(msg);
 }
-
+/*
 void SettingsWindow::ShowAboutWindow()  {
 	BString str(B_TRANSLATE("Keymap Switcher\n\n"));
 	int nameLen = str.Length();
@@ -579,7 +547,7 @@ void SettingsWindow::ShowAboutWindow()  {
 
 	alert->Go();
 }
-
+*/
 bool SettingsWindow::AlreadyInDeskbar()
 {
 	if (from_deskbar)
@@ -682,9 +650,11 @@ SettingsWindow::KeymapListView::ReadKeymapsList(Settings* settings)
 		param = "";
 		param << "d" << i;
 		settings->RemoveName(param.String());
+//		fprintf(stderr, "del:%s ", param.String());
 		param = "";
 		param << "n" << i;
 		settings->RemoveName(param.String());
+//		fprintf(stderr, "%s\n", param.String());
 	}
 	// after this save new set of keymaps
 	settings->SetInt32("keymaps", /*selected_list->*/CountItems());
@@ -694,9 +664,11 @@ SettingsWindow::KeymapListView::ReadKeymapsList(Settings* settings)
 		param = "";
 		param << "d" << i;
 		settings->SetInt32(param.String(), item->Dir());
+//		fprintf(stderr, "add:%s (%ld) ", param.String(), item->Dir());
 		param = "";
 		param << "n" << i;
 		settings->SetString(param.String(), item->RealName());	
+//		fprintf(stderr, "%s (%s)\n", param.String(), item->RealName());
 	}
 }
 
@@ -710,7 +682,11 @@ SettingsWindow::KeymapListView::MessageReceived(BMessage *message)
 			Window()->PostMessage(&notify);
 			KeymapItem *item;
 			message->FindPointer("keymap_item", (void **)&item);
+
+			fprintf(stderr, "arrived: %s (%ld)\n", item->RealName(), item->Dir());
+			
 			DeselectAll();
+			
 			int index = -1;
 			index = IndexOf(ConvertFromScreen(message->DropPoint()));
 			KeymapItem *new_item = new KeymapItem(item);
@@ -720,15 +696,19 @@ SettingsWindow::KeymapListView::MessageReceived(BMessage *message)
 			else
 				name += B_TRANSLATE(" (user)");
 			new_item->SetText(name.String());
+			
 			if(0 > index) {
 				AddItem(new_item);
 				index = IndexOf(new_item);
-			} else AddItem(new_item, index);
+			} else 
+				AddItem(new_item, index);
+
 			Select(index);
 			//trace(index);
 			ScrollToSelection();
 			break;
 		}
+
 		// item dropped somewhere out there, remove it 
 		case MSG_REMOVE_ACTIVE_ITEM: {
 			BMessage notify(MSG_KEYMAPS_CHANGED);
@@ -738,6 +718,7 @@ SettingsWindow::KeymapListView::MessageReceived(BMessage *message)
 			delete (dynamic_cast<KeymapItem*> (RemoveItem(index)));
 			break;
 		}
+
 		// item dropped inside, rearrange items
 		case MSG_ACTIVE_ITEM_DRAGGED: {
 			BMessage notify(MSG_KEYMAPS_CHANGED);
@@ -765,8 +746,54 @@ SettingsWindow::KeymapOutlineListView::KeymapOutlineListView(BRect r, const char
 {
 }
 
+void
+SettingsWindow::KeymapOutlineListView::PopulateTheTree()
+{
+	struct _d {
+		directory_which which;
+		const char* subDir;
+		const char* name;
+	} ad[] = {
+		{ B_BEOS_DATA_DIRECTORY,	 "Keymaps", B_TRANSLATE("System") },
+		{ B_USER_SETTINGS_DIRECTORY, "Keymap",  B_TRANSLATE("User")   }
+	};
+
+	for (size_t d = 0; d < sizeof(ad)/sizeof(ad[0]); d++) {
+		BPath path;
+		find_directory(ad[d].which, &path);
+		path.Append(ad[d].subDir);
+
+		BDirectory dir(path.Path());
+		long count = dir.CountEntries();
+		if(count <= 0)
+			continue;
+
+		KeymapItem *keymap_node = new KeymapItem(ad[d].name, NULL, 0);
+		/*available_list->*/AddItem(keymap_node);
+
+		BEntry entry;
+		BList list;
+		for (int i = 0; i < count; i++) {
+			dir.GetNextEntry(&entry);
+			struct stat st;
+			entry.GetStat(&st);
+			if(S_ISDIR(st.st_mode))
+				continue;
+
+			entry_ref ref;
+			entry.GetRef(&ref);
+			list.AddItem(new KeymapItem(ref.name, ref.name, (int32)ad[d].which ), 0);
+		}
+
+		for (int i = 0; i < list.CountItems(); i++) {
+			/*available_list->*/AddUnder((KeymapItem*) list.ItemAt(i), keymap_node);
+		}
+	}
+}
+
 bool
-SettingsWindow::KeymapOutlineListView::InitiateDrag(BPoint point, int32 index, bool wasSelected) {
+SettingsWindow::KeymapOutlineListView::InitiateDrag(BPoint point, int32 index, bool wasSelected)
+{
 	BOutlineListView::InitiateDrag(point, index, wasSelected);
 	BMessage message(MSG_ITEM_DRAGGED);
 	message.AddInt32("index", index);

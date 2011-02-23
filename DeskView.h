@@ -53,6 +53,7 @@ private:
 	void ChangeKeyMapSilent(int32);
 	void Init();
 	int32 FindApp(int32 team);
+	void ShowAboutWindow();
 private:
 	Settings *settings; 
 	bool disabled;

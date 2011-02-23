@@ -1,32 +1,32 @@
-1	ukrainian	x-vnd.Nexus-KeymapSwitcher	3001723760
+1	ukrainian	x-vnd.Nexus-KeymapSwitcher	2407497108
  (system)	SwitcherSettingsWindow		 (системна)
  (user)	SwitcherSettingsWindow		 (користувач)
-About	SwitcherSettingsWindow		Про
-About…	SwitcherSettingsWindow		Про…
+About	SwitcherDeskView		Про
+About…	SwitcherDeskView		Про…
 Apply	SwitcherSettingsWindow		Прийняти
 Available keymaps:	SwitcherSettingsWindow		Доступні розкладки:
-Beep setup…	SwitcherSettingsWindow		Встановити звук…
-Copyright © 1999-2003 Stas Maximov.\n	SwitcherSettingsWindow		Copyright © 1999-2003 Стас Максимов.\n
-Copyright © 2008-2010 Haiku, Inc.\n	SwitcherSettingsWindow		Copyright © 2008-2010 Haiku, Inc.\n
+Beep setup…	SwitcherDeskView		Встановити звук…
+Copyright © 1999-2003 Stas Maximov.\n	SwitcherDeskView		Copyright © 1999-2003 Стас Максимов.\n
+Copyright © 2008-2010 Haiku, Inc.\n	SwitcherDeskView		Copyright © 2008-2010 Haiku, Inc.\n
 Disable	SwitcherDeskView		Скасувати
+Exit	SwitcherSettingsWindow		Вийти.
 Hotkey:	SwitcherSettingsWindow		Горячі клавіші:
 Install in Deskbar	SwitcherSettingsWindow		Встановити в Deskbar
 Keymap Switcher	SwitcherSettingsWindow		Перемикач розкладок
-Keymap Switcher\n\n	SwitcherSettingsWindow		Перемикач розкладок\n\n
-No, thanks. Exit	SwitcherSettingsWindow		Ні дякую. Вийти.
+Keymap Switcher\n\n	SwitcherDeskView		Перемикач розкладок\n\n
 OK	SwitcherApplication		Гаразд
 OK	SwitcherSettingsWindow		Гаразд
-Okay	SwitcherSettingsWindow		Гаразд
-Original notice from Stas Maximov:\n	SwitcherSettingsWindow		Авторська примітка від Стаса Максимова:\n
+Okay	SwitcherDeskView		Гаразд
+Original notice from Stas Maximov:\n	SwitcherDeskView		Авторська примітка від Стаса Максимова:\n
 Quit	SwitcherDeskView		Вийти
 Revert	SwitcherSettingsWindow		Повернути
 Selected keymaps:	SwitcherSettingsWindow		Вибрані розкладки:
 Settings…	SwitcherDeskView		Настройки…
-Special thanks to all BeOS users, whether they use this app or not - they're keeping BeOS alive!\n\n	SwitcherSettingsWindow		Особлива подяка всім користувачам BeOS , незалежно від того чи використовують вони додаток чи ні - завдяки їм  BeOS завжди живий!\n\n
+Special thanks to all BeOS users, whether they use this app or not - they're keeping BeOS alive!\n\n	SwitcherDeskView		Особлива подяка всім користувачам BeOS , незалежно від того чи використовують вони додаток чи ні - завдяки їм  BeOS завжди живий!\n\n
 System	SwitcherSettingsWindow		Системні
-Tested and inspired by\n\tSergey \"fyysik\" Dolgov,\n\tMaxim \"baza\" Bazarov,\n\tDenis Korotkov,\n\tNur Nazmetdinov and others.\n\n	SwitcherSettingsWindow		Тестування і надхнення від\n\tСергія \"fyysik\" Долгова ,\n\tМаксима \"baza\" Базарова,\n\tДениса Короткова,\n\tНур Мухаметдинова і інших.\n\n
-Thanks to Pierre Raynaud-Richard and Robert Polic for BeOS tips.\n\n	SwitcherSettingsWindow		Подяка для Pierre Raynaud-Richard і Robert Polic за підказки для BeOS .\n\n
+Tested and inspired by\n\tSergey \"fyysik\" Dolgov,\n\tMaxim \"baza\" Bazarov,\n\tDenis Korotkov,\n\tNur Nazmetdinov and others.\n\n	SwitcherDeskView		Тестування і надхнення від\n\tСергія \"fyysik\" Долгова ,\n\tМаксима \"baza\" Базарова,\n\tДениса Короткова,\n\tНур Мухаметдинова і інших.\n\n
+Thanks to Pierre Raynaud-Richard and Robert Polic for BeOS tips.\n\n	SwitcherDeskView		Подяка для Pierre Raynaud-Richard і Robert Polic за підказки для BeOS .\n\n
 Unable to create Settings configuration window.	SwitcherApplication		Неможливо створити вікно конфігурації Настройок . 
 Unable to install keymap indicator. Deskbar application is not running.	SwitcherSettingsWindow		Неможливо встановити індикатор розкладок.Додаток Deskbar не запущено.
 User	SwitcherSettingsWindow		Користувацькі
-Version  %VERSION \n\n	SwitcherSettingsWindow		Версія  %VERSION \n\n
+Version  %VERSION \n\n	SwitcherDeskView		Версія  %VERSION \n\n

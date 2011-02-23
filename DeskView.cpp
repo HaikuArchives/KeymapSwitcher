@@ -6,6 +6,7 @@
 
 #include "DeskView.h"
 
+#include <Alert.h>
 #include <Beep.h>
 #include <Catalog.h>
 #include <Deskbar.h>
@@ -16,6 +17,7 @@
 #include <MenuItem.h>
 #include <PopUpMenu.h>
 #include <Roster.h>
+#include <TextView.h>
 
 #include "KeymapSwitcher.h"
 #include "SettingsWindow.h"
@@ -57,6 +59,8 @@ extern void _restore_key_map_(); // magic undoc function :))
 
 const uint32	kChangeKeymap = 'CChK';
 const uint32	kSettings = 'CSet';
+const uint32	kAbout = 'CAbt';
+const uint32	kBeepSettings = 'CBSt';
 const uint32	kUnloadNow = 'CUnl';
 const uint32	kDisableNow = 'CDis';
 
@@ -227,6 +231,12 @@ void DeskView::Draw(BRect rect) {
 
 	// get keymap name from the keymap path
 	BString *keymap = (BString *)keymaps->ItemAt(active_keymap); 
+	if(keymap == 0) {
+		keymap = (BString *)keymaps->ItemAt(0);
+		if (keymap == 0)
+			return;
+	}
+
 	BPath path(keymap->String());
 	map_name = path.Leaf();
 
@@ -258,6 +268,14 @@ void DeskView::MessageReceived(BMessage *message) {
 		SettingsWindow *settingsWnd = new SettingsWindow(true);
 		if(settingsWnd == NULL)
 			trace("Unable to create SettingsWindow");
+		break;
+	}
+	case kBeepSettings: {
+		be_roster->Launch(SOUNDS_PREF_SIGNATURE);
+		break;
+	}
+	case kAbout: {
+		ShowAboutWindow();
 		break;
 	}
 	case kUnloadNow: {
@@ -447,9 +465,19 @@ void DeskView::ShowContextMenu(BPoint where) {
 		if(disabled) item->SetEnabled(false);
 		menu->AddItem(item);
 	}
+	
+	menu->AddSeparatorItem();
+	menu->AddItem(item = new BMenuItem(B_TRANSLATE("About" B_UTF8_ELLIPSIS), new BMessage(kAbout)));
+	item->SetTarget(this);
+
 	menu->AddSeparatorItem();
 
 	menu->AddItem(item = new BMenuItem(B_TRANSLATE("Settings" B_UTF8_ELLIPSIS), new BMessage(kSettings)));
+	item->SetTarget(this);
+
+	menu->AddSeparatorItem();
+	
+	menu->AddItem(item = new BMenuItem(B_TRANSLATE("Beep setup" B_UTF8_ELLIPSIS), new BMessage(kBeepSettings)));
 	item->SetTarget(this);
 
 	menu->AddSeparatorItem();
@@ -550,3 +578,34 @@ void DeskView::ChangeKeyMapSilent(int32 change_to) {
 	Pulse();
 }
 
+void DeskView::ShowAboutWindow()  {
+	BString str(B_TRANSLATE("Keymap Switcher\n\n"));
+	int nameLen = str.Length();
+	str << B_TRANSLATE("Copyright " B_UTF8_COPYRIGHT " 1999-2003 Stas Maximov.\n");
+	str << B_TRANSLATE("Copyright " B_UTF8_COPYRIGHT " 2008-2010 Haiku, Inc.\n");
+	str << B_TRANSLATE("Version  %VERSION \n\n");
+	str << B_TRANSLATE("Original notice from Stas Maximov:\n");
+	str << B_TRANSLATE("Tested and inspired by"
+			"\n\tSergey \"fyysik\" Dolgov,"
+			"\n\tMaxim \"baza\" Bazarov,"
+			"\n\tDenis Korotkov,"
+			"\n\tNur Nazmetdinov and others.\n\n");
+	str << B_TRANSLATE("Thanks to Pierre Raynaud-Richard and "
+			"Robert Polic for BeOS tips.\n\n");
+	str << B_TRANSLATE("Special thanks to all BeOS users, "
+			"whether they use this app or not"
+			" - they're keeping BeOS alive!\n\n");
+	str.ReplaceAll("%VERSION", VERSION);
+	BAlert *alert = new BAlert(B_TRANSLATE("About"), str,
+			B_TRANSLATE("Okay"), 0, 0, B_WIDTH_AS_USUAL, B_IDEA_ALERT);
+
+	BTextView *view = alert->TextView();
+	view->SetStylable(true);
+	BFont font;
+	view->GetFont(&font);
+	font.SetSize(font.Size() * 1.5);
+	font.SetFace(B_BOLD_FACE);
+	view->SetFontAndColor(0, nameLen, &font);
+
+	alert->Go();
+}
