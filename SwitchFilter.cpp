@@ -347,7 +347,6 @@ BMessenger* SwitchFilter::GetIndicatorMessenger() {
 //	request.AddSpecifier("View", REPLICANT_NAME);
 	request.AddSpecifier("View", "Status");
 	request.AddSpecifier("Window", "Deskbar");
-	//to = BMessenger("application/x-vnd.Be-TSKB", -1);
 	to = BMessenger(DESKBAR_SIGNATURE, -1);
 	
 	BMessage	reply;

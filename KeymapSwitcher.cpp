@@ -26,7 +26,6 @@
 #include <String.h>
 
 #include "DeskView.h"
-#include "Resource.h"
 #include "SettingsWindow.h"
 
 

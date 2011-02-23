@@ -18,7 +18,6 @@
 #include <Roster.h>
 
 #include "KeymapSwitcher.h"
-#include "Resource.h"
 #include "SettingsWindow.h"
 
 
@@ -28,7 +27,6 @@
 #define NEXT_KEYMAP(index, total) ((++index)==total?0:index)
 
 #define DELETE(p) {if (0 != p) { delete p; p = 0; } }
-//#define DESKBAR_SIGNATURE "application/x-vnd.Be-TSKB"
 
 extern void _restore_key_map_(); // magic undoc function :))
 

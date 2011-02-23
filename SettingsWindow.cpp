@@ -31,7 +31,6 @@
 #include "DeskView.h"
 #include "KeymapSwitcher.h"
 #include "Replicator.h"
-#include "Resource.h"
 #include "Settings.h"
 
 #undef B_TRANSLATE_CONTEXT
@@ -435,7 +434,6 @@ void SettingsWindow::MessageReceived(BMessage *msg) {
 		break;
 	}
 	case MSG_BEEP_SETUP: {
-		//be_roster->Launch("application/x-vnd.Haiku-Sounds");
 		be_roster->Launch(SOUNDS_PREF_SIGNATURE);
 		break;
 	}
