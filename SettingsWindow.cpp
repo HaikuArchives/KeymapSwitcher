@@ -128,6 +128,10 @@ SettingsWindow::SettingsWindow(bool fromDeskbar)
 	fMaxButtonsWidth += pt.x + fXSpacing;
 	float fSelectorHeight = fmax(fLineHeight, pt.y);
 
+	// create divider
+	BBox* divider = new BBox(rc, B_EMPTY_STRING, B_FOLLOW_LEFT_RIGHT, B_WILL_DRAW, B_FANCY_BORDER);
+	box->AddChild(divider);
+
 	// create labels
 	BStringView* selMapsLabel = new BStringView(rc, "string0",
 										B_TRANSLATE("Selected keymaps:"));
@@ -225,6 +229,11 @@ SettingsWindow::SettingsWindow(bool fromDeskbar)
 	selectorLabel->MoveTo(ptOrg.x,
 		   ptOrg.y + (fSelectorHeight - selectorLabel->Bounds().Height()) / 2);
 	ptOrg.y += fSelectorHeight + Y_INSET/*fYSpacing*/;
+
+	divider->MoveTo(ptOrg);
+	divider->ResizeTo(fMaxListsWidth, 1);
+	
+	ptOrg.y += Y_INSET;
 
 	// other
 	selMapsLabel->ResizeToPreferred();
