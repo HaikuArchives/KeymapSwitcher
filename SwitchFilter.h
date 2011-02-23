@@ -6,7 +6,7 @@
 #define __SWITCHFILTER_H
 
 
-#include <add-ons/input_server/InputServerFilter.h>
+#include <InputServerFilter.h>
 #include <Looper.h>
 
 #include "Settings.h"

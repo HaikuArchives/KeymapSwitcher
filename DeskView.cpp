@@ -6,8 +6,6 @@
 
 #include "DeskView.h"
 
-#include <stdio.h>
-
 #include <Alert.h>
 #include <Beep.h>
 #include <Catalog.h>
@@ -29,7 +27,7 @@
 #undef B_TRANSLATE_CONTEXT
 #define B_TRANSLATE_CONTEXT "SwitcherDeskView"
 
-#define NEXT_KEYMAP(index, total) ((++index) >= total ? 0 : index)
+#define NEXT_KEYMAP(index, total) ((++index)==total?0:index)
 
 #define DELETE(p) {if (0 != p) { delete p; p = 0; } }
 
@@ -601,7 +599,6 @@ void DeskView::ShowContextMenu(BPoint where) {
 
 // change keymap, when user changed keymap with mouse on deskbar or via hotkey.
 void DeskView::ChangeKeyMap(int32 change_to) {
-	fprintf(stderr, "change to:%ld\n", change_to);
 	ChangeKeyMapSilent(change_to);
 	bool should_beep = false;
 	settings->FindBool("beep", &should_beep);

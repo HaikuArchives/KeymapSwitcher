@@ -6,6 +6,8 @@
 #define __SETTINGSWINDOW_H
 
 
+#include <stdio.h>
+
 #include <CheckBox.h>
 #include <FindDirectory.h>
 #include <ListView.h>
@@ -15,7 +17,6 @@
 #include <Window.h>
 
 #include "Settings.h"
-#include <stdio.h>
 
 class SettingsWindow: public BWindow {
 

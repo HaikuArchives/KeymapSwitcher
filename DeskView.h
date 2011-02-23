@@ -6,16 +6,16 @@
 #define __DeskView__
 
 
-#include <View.h>
-
 #include "Settings.h"
+
+#include <StringView.h>
 
 
 // the dragger part has to be exported
 class _EXPORT DeskView;
 extern "C" _EXPORT BView *instantiate_deskbar_item();
 
-class DeskView : public BView
+class DeskView : public BStringView
 {
 	typedef struct {
 		team_id	team;
@@ -37,10 +37,10 @@ public:
 
 	virtual void MouseDown(BPoint);
 	virtual void Pulse();
-	virtual void Draw(BRect );
+//	virtual void Draw(BRect );
 	virtual void MessageReceived(BMessage *);
     void     AttachedToWindow();
-    void     DetachedFromWindow();
+//    void     DetachedFromWindow();
 
 private:
 	void ShowContextMenu(BPoint where);
@@ -49,9 +49,11 @@ private:
 	void Init();
 	int32 FindApp(int32 team);
 	void ShowAboutWindow();
+	void UpdateViewColors();
+	void UpdateText();
 private:
 	Settings *settings; 
-	bool disabled;
+//	bool disabled;
 	bool watching;
 	BPath cur_map_path;
 	int32 active_keymap;

@@ -3,7 +3,7 @@
  (user)	SwitcherSettingsWindow		 (користувач)
 About	SwitcherDeskView		Про
 About…	SwitcherDeskView		Про…
-Activate shortcuts remapping	SwitcherSettingsWindow		Activate shortcuts remapping
+Activate shortcuts remapping	SwitcherSettingsWindow		Активувати підміну горячих клавіш
 Apply	SwitcherSettingsWindow		Прийняти
 Available keymaps:	SwitcherSettingsWindow		Доступні розкладки:
 Copyright © 1999-2003 Stas Maximov.\n	SwitcherDeskView		Copyright © 1999-2003 Стас Максимов.\n
@@ -14,13 +14,13 @@ Hotkey:	SwitcherSettingsWindow		Горячі клавіші:
 Install in Deskbar	SwitcherSettingsWindow		Встановити в Deskbar
 Keymap Switcher	SwitcherSettingsWindow		Перемикач розкладок
 Keymap Switcher\n\n	SwitcherDeskView		Перемикач розкладок\n\n
-KeymapSwitcher options:\n\t--deskbar\tautomatically add replicant to Deskbar\n\t--help\t\tprint this info and exit\n	SwitcherApplication		Настройки Перемикача розкладок:\n\t--deskbar\автоматично додавати реплікант в Deskbar\n\t--help\t\надрукувати це повідомлення і вийти\n
+KeymapSwitcher options:\n\t--deskbar\tautomatically add replicant to Deskbar\n\t--help\t\tprint this info and exit\n	SwitcherApplication		Настройки Перемикача розкладок:\n\t--deskbar\автоматично додавати реплікант в Deskbar\n\t--help\t\надрукувати цю довідку і вийти\n
 OK	SwitcherApplication		Гаразд
 OK	SwitcherSettingsWindow		Гаразд
 Okay	SwitcherDeskView		Гаразд
 Original notice from Stas Maximov:\n	SwitcherDeskView		Авторська примітка від Стаса Максимова:\n
 Quit	SwitcherDeskView		Вийти
-Remap shortcuts to %KEYMAP% keymap	SwitcherSettingsWindow		Remap shortcuts to %KEYMAP% keymap
+Remap shortcuts to %KEYMAP% keymap	SwitcherSettingsWindow		Підмінити горячі клавіші для %KEYMAP% розкладки
 Revert	SwitcherSettingsWindow		Повернути
 Selected keymaps:	SwitcherSettingsWindow		Вибрані розкладки:
 Settings…	SwitcherDeskView		Настройки…
