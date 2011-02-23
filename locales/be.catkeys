@@ -1,9 +1,11 @@
-1	belarusian	x-vnd.Nexus-KeymapSwitcher	3964042630
+1	belarusian	x-vnd.Nexus-KeymapSwitcher	3301068710
  (system)	SwitcherSettingsWindow		 (сістэмная)
  (user)	SwitcherSettingsWindow		 (карыстальніцкая)
 About	SwitcherDeskView		Пра Праграму
 About…	SwitcherDeskView		Пра Праграму…
+Activate shortcuts arrangement	SwitcherSettingsWindow		Уключыць падстройку скаротаў
 Apply	SwitcherSettingsWindow		Прымяніць
+Arrange shortcuts to %KEYMAP% keymap	SwitcherSettingsWindow		Падстройваць скароты на раскладку %KEYMAP%
 Available keymaps:	SwitcherSettingsWindow		Даступныя раскладкі:
 Beep setup…	SwitcherDeskView		Наладкі сігнала…
 Copyright © 1999-2003 Stas Maximov.\n	SwitcherDeskView		Copyright © 1999-2003 Стас Максімаў\n

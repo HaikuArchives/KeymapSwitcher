@@ -82,7 +82,7 @@ SettingsWindow::SettingsWindow(bool fromDeskbar)
 	BRect rc(RC.LeftTop(), RC.LeftTop());
 	// create hot-key selector
 	BStringView* selectorLabel = new BStringView(rc, "string1",
-								B_TRANSLATE("Hotkey:"), B_FOLLOW_RIGHT);
+								B_TRANSLATE("Hotkey:")/*, B_FOLLOW_RIGHT*/);
 	box->AddChild(selectorLabel);
 	
 	float fLineHeight = 0.f;
@@ -117,7 +117,7 @@ SettingsWindow::SettingsWindow(bool fromDeskbar)
 		pop_key->AddItem(new BMenuItem(a[i].name, msg));
 	}
 	
-	BMenuField * menuField = new BMenuField(rc, "HotKey", NULL, pop_key, B_FOLLOW_RIGHT);
+	BMenuField * menuField = new BMenuField(rc, "HotKey", NULL, pop_key/*, B_FOLLOW_RIGHT*/);
 	menuField->SetDivider(0);
 	
 	box->AddChild(menuField);
@@ -126,6 +126,7 @@ SettingsWindow::SettingsWindow(bool fromDeskbar)
 	menuField->GetPreferredSize(&pt.x, &pt.y);
 	fMaxButtonsWidth += pt.x + fXSpacing;
 	float fSelectorHeight = fmax(fLineHeight, pt.y);
+//	float fSelectorWidth = pt.x;
 
 	// create top divider
 	BBox* dividerTop = new BBox(rc, B_EMPTY_STRING, B_FOLLOW_LEFT_RIGHT, B_WILL_DRAW, B_FANCY_BORDER);
@@ -137,7 +138,7 @@ SettingsWindow::SettingsWindow(bool fromDeskbar)
 	box->AddChild(selMapsLabel);
 	selMapsLabel->ResizeToPreferred();
 
-	BStringView* allMapsLabel = new BStringView(rc, "string1",
+	BStringView* allMapsLabel = new BStringView(rc, "string2",
 										B_TRANSLATE("Available keymaps:"));
 	box->AddChild(allMapsLabel);
 	allMapsLabel->ResizeToPreferred();
@@ -216,7 +217,7 @@ SettingsWindow::SettingsWindow(bool fromDeskbar)
 	buttonOK->SetEnabled(!AlreadyInDeskbar());
 	buttonCancel->SetEnabled(!AlreadyInDeskbar());
 	
-	BString strRemap(B_TRANSLATE("Use %KEYMAP% keymap for shortcuts."));
+	BString strRemap(B_TRANSLATE("Arrange shortcuts to %KEYMAP% keymap"));
 	strRemap.ReplaceAll("%KEYMAP%", "US-International");
 	checkRemap = new RemapCheckBox(rc, "check_remap", strRemap,
 			   new BMessage(MSG_CHECK_REMAP), B_FOLLOW_LEFT | B_FOLLOW_BOTTOM);
@@ -239,10 +240,21 @@ SettingsWindow::SettingsWindow(bool fromDeskbar)
 	// reposition of "lists column" controls
 	BPoint ptOrg(RC.LeftTop());
 	selectorLabel->ResizeToPreferred();
+//	menuField->MoveTo(ptOrg.x + selectorLabel->Bounds().Width() + fXSpacing, ptOrg.y);
+//	selectorLabel->MoveTo(ptOrg.x,
+//		   ptOrg.y + (fSelectorHeight - selectorLabel->Bounds().Height()) / 2);
+#if 0
+	BPoint ptSelectorOrg(ptOrg);
+	ptSelectorOrg.x = fMaxWindowWidth - X_INSET - fSelectorWidth;
+	menuField->MoveTo(ptSelectorOrg);
+	ptSelectorOrg.x -= selectorLabel->Bounds().Width() + fYSpacing;
+	ptSelectorOrg.y += (fSelectorHeight - selectorLabel->Bounds().Height()) / 2;
+	selectorLabel->MoveTo(ptSelectorOrg);
+#else
+	selectorLabel->MoveTo(ptOrg.x, ptOrg.y + (fSelectorHeight - selectorLabel->Bounds().Height()) / 2);
 	menuField->MoveTo(ptOrg.x + selectorLabel->Bounds().Width() + fXSpacing, ptOrg.y);
-	selectorLabel->MoveTo(ptOrg.x,
-		   ptOrg.y + (fSelectorHeight - selectorLabel->Bounds().Height()) / 2);
-	ptOrg.y += fSelectorHeight + Y_INSET/*fYSpacing*/;
+#endif	
+	ptOrg.y += fSelectorHeight + Y_INSET;
 
 	dividerTop->MoveTo(ptOrg);
 	dividerTop->ResizeTo(fMaxListsWidth, 1);
@@ -264,10 +276,10 @@ SettingsWindow::SettingsWindow(bool fromDeskbar)
 	allMapsLabel->MoveTo(ptOrg);
 
 	// buttons
-	ptBtnOrg.x += fAllLabelWidth + fXSpacing;
-	addButton->MoveTo(ptBtnOrg);
-	ptBtnOrg.x += kBmpBtnX + fXSpacing;
+	ptBtnOrg.x = fMaxWindowWidth - X_INSET - kBmpBtnX - fScrollBarWidth;
 	delButton->MoveTo(ptBtnOrg);
+	ptBtnOrg.x -= kBmpBtnX + fXSpacing;
+	addButton->MoveTo(ptBtnOrg);
 
 	// and finally the all keymaps list
 	ptOrg.y += allMapsLabel->Bounds().Height() + fYSpacing;
@@ -487,8 +499,8 @@ void SettingsWindow::AdjustRemapCheck(bool next_index)
 
 	index %= selected_list->CountItems() + 1;
 	checkRemap->SetIndex(index);
-	BString str(index <= 0 ? B_TRANSLATE("Use shortcuts remapping.")
-			: B_TRANSLATE("Use %KEYMAP% keymap for shortcuts."));
+	BString str(index <= 0 ? B_TRANSLATE("Activate shortcuts arrangement")
+			: B_TRANSLATE("Arrange shortcuts to %KEYMAP% keymap"));
 	if (index > 0) {
 		KeymapItem *item = (KeymapItem*)selected_list->ItemAt(index - 1);
 		str.ReplaceAll("%KEYMAP%", item->RealName());

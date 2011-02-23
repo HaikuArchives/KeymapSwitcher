@@ -1,9 +1,11 @@
-1	ukrainian	x-vnd.Nexus-KeymapSwitcher	3964042630
+1	ukrainian	x-vnd.Nexus-KeymapSwitcher	3301068710
  (system)	SwitcherSettingsWindow		 (системна)
  (user)	SwitcherSettingsWindow		 (користувач)
 About	SwitcherDeskView		Про
 About…	SwitcherDeskView		Про…
+Activate shortcuts arrangement	SwitcherSettingsWindow		Activate shortcuts arrangement
 Apply	SwitcherSettingsWindow		Прийняти
+Arrange shortcuts to %KEYMAP% keymap	SwitcherSettingsWindow		Arrange shortcuts to %KEYMAP% keymap
 Available keymaps:	SwitcherSettingsWindow		Доступні розкладки:
 Beep setup…	SwitcherDeskView		Встановити звук…
 Copyright © 1999-2003 Stas Maximov.\n	SwitcherDeskView		Copyright © 1999-2003 Стас Максимов.\n
