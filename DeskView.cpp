@@ -6,6 +6,8 @@
 
 #include "DeskView.h"
 
+#include <stdio.h>
+
 #include <Alert.h>
 #include <Beep.h>
 #include <Catalog.h>
@@ -27,7 +29,7 @@
 #undef B_TRANSLATE_CONTEXT
 #define B_TRANSLATE_CONTEXT "SwitcherDeskView"
 
-#define NEXT_KEYMAP(index, total) ((++index)==total?0:index)
+#define NEXT_KEYMAP(index, total) ((++index) >= total ? 0 : index)
 
 #define DELETE(p) {if (0 != p) { delete p; p = 0; } }
 
@@ -102,7 +104,7 @@ DeskView::DeskView(BMessage *message) :
 {
 	//SetViewColor(B_TRANSPARENT_COLOR);
 	BFont font;
-	font.SetSize(13.f);
+	font.SetSize(12.f);
 	//font.SetFace(B_BOLD_FACE);
 	SetFont(&font);
 	SetAlignment(B_ALIGN_CENTER);
@@ -208,10 +210,8 @@ status_t DeskView::Archive(BMessage *data, bool deep) const {
 }
 
 //
-void DeskView::AttachedToWindow(void) {
-	//SetViewColor(Parent()->ViewColor());
-	//SetDrawingMode( B_OP_ALPHA );
-	//
+void DeskView::AttachedToWindow(void)
+{
 	BStringView::AttachedToWindow();
 
 	UpdateViewColors();
@@ -219,72 +219,13 @@ void DeskView::AttachedToWindow(void) {
 
 	BPoint pt;
 	GetPreferredSize(&pt.x, &pt.y);
-	ResizeTo(pt.x + 2, fIconY); // let some place for better look
+	ResizeTo(pt.x/* + 2*/, fIconY); // let some place for better look
 }
-
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/*void DeskView::DetachedFromWindow(void) 
-{
-}*/
-
-//
-/* 
-void DeskView::Draw(BRect rect)
-{
-	BPoint pt = PenLocation();
-	MovePenTo(pt.x, Bounds().bottom);
-
-	BStringView::Draw(rect);
-/ *	
-	SetDrawingMode(B_OP_COPY);
-	rgb_color color = ui_color(B_MENU_SELECTED_BACKGROUND_COLOR);
-	rgb_color gray_color = make_color(128, 128, 128);
-
-	// draw rect
-	SetLowColor(ui_color(B_MENU_BACKGROUND_COLOR)); // Deskbar's status pane color
-	if(disabled)
-		SetHighColor(gray_color); // Disabled grey
-	else {
-		SetHighColor(color);
-	}
-	FillRect(rect);	  
-
-	BString map_name(":(");
-	// get keymap name from the keymap path
-	BString *keymap = (BString *)keymaps->ItemAt(active_keymap); 
-	if(keymap == 0) {
-		keymap = (BString *)keymaps->ItemAt(0);
-	}
-
-	if (keymap != 0) {
-		BPath path(keymap->String());
-		map_name = path.Leaf();
-	}
-
-	if(map_name.Length() == 0)
-		map_name << ":(";
-
-	if(disabled)
-		SetLowColor(gray_color);
-	else
-		SetLowColor(color);
-	SetHighColor(255,255,255);
-	float width = fIconX;
-
-	float stringWidth = StringWidth(map_name.String(),2);
-
-	MovePenTo((width - stringWidth)/2,13);
-	DrawString(map_name.String(), 2);
-* /	
-}
-*/
 
 void DeskView::UpdateViewColors()
 {
-	rgb_color low = /*disabled ?
-		make_color(128, 128, 128) :*/ ui_color(B_MENU_SELECTED_BACKGROUND_COLOR);
-	rgb_color high = /*disabled ?
-		make_color(0, 0, 0) :*/ make_color(255, 255, 255, 255);
+	rgb_color low = ui_color(B_DESKTOP_COLOR);
+	rgb_color high = make_color(255, 255, 255, 255);
 
 	SetViewColor(low);
 	SetLowColor(low);
@@ -599,6 +540,7 @@ void DeskView::ShowContextMenu(BPoint where) {
 
 // change keymap, when user changed keymap with mouse on deskbar or via hotkey.
 void DeskView::ChangeKeyMap(int32 change_to) {
+	fprintf(stderr, "change to:%ld\n", change_to);
 	ChangeKeyMapSilent(change_to);
 	bool should_beep = false;
 	settings->FindBool("beep", &should_beep);

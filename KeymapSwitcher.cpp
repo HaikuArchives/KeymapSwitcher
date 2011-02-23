@@ -115,13 +115,6 @@ int main(int argc, char *argv[])
 {
 	SwitcherApplication* theApp = new SwitcherApplication();
 	theApp->Run();
-/*
-	add_system_beep_event(BEEP_NAME);
-	BDeskbar deskbar;
-	entry_ref ref;
-	be_roster->FindApp(APP_SIGNATURE, &ref);
-	deskbar.AddItem(&ref);
-*/
 	return B_OK;
 }
 

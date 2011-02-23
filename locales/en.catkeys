@@ -1,4 +1,4 @@
-1	english	x-vnd.Nexus-KeymapSwitcher	4126449138
+1	english	x-vnd.Nexus-KeymapSwitcher	1553714983
  (system)	SwitcherSettingsWindow		 (system)
  (user)	SwitcherSettingsWindow		 (user)
 About	SwitcherDeskView		About
@@ -31,5 +31,6 @@ Thanks to Pierre Raynaud-Richard and Robert Polic for BeOS tips.\n\n	SwitcherDes
 Unable to create Settings configuration window.	SwitcherApplication		Unable to create Settings configuration window.
 Unable to install keymap indicator. Deskbar application is not running.	SwitcherApplication		Unable to install keymap indicator. Deskbar application is not running.
 Unable to install keymap indicator. Deskbar application is not running.	SwitcherSettingsWindow		Unable to install keymap indicator. Deskbar application is not running.
+Unable to start Deskbar application. Keymap indicator was not installed.	SwitcherSettingsWindow		Unable to start Deskbar application. Keymap indicator was not installed.
 User	SwitcherSettingsWindow		User
 Version  %VERSION \n\n	SwitcherDeskView		Version  %VERSION \n\n

@@ -11,6 +11,7 @@
 #include <CheckBox.h>
 #include <FindDirectory.h>
 #include <ListView.h>
+#include <MenuField.h>
 #include <OutlineListView.h>
 #include <PictureButton.h>
 #include <Resources.h>
@@ -33,7 +34,8 @@ class SettingsWindow: public BWindow {
 		MSG_REMOVE_ACTIVE_ITEM,
 		MSG_BUTTON_ADD_ITEM = 0x100e,
 		MSG_BUTTON_REMOVE_ITEM,
-		MSG_CHECK_REMAP
+		MSG_CHECK_REMAP,
+		MSG_LIST_SEL_CHANGE
 	};
 
 	class KeymapItem : public BStringItem {
@@ -55,6 +57,7 @@ class SettingsWindow: public BWindow {
 
 		void ResetKeymapsList(const Settings* settings);
 		void ReadKeymapsList(Settings* settings);
+		virtual void SelectionChanged();
 	};
 
 	class KeymapOutlineListView : public BOutlineListView {
@@ -63,6 +66,7 @@ class SettingsWindow: public BWindow {
 		virtual bool InitiateDrag(BPoint point, int32 index, bool wasSelected);
 
 		void PopulateTheTree();
+		virtual void SelectionChanged();
 	};
 
 	class MoveButton : public BPictureButton {
@@ -116,9 +120,12 @@ private:
 	bool hotkey_changed;
 	bool keymaps_changed;
 	bool from_deskbar;
+	BMenuField* menuField;
 	KeymapListView *selected_list;
 	KeymapOutlineListView *available_list;
 	BView *parent;
+	MoveButton* addButton;
+	MoveButton* delButton;
 	BButton* buttonOK;
 	BButton* buttonCancel;
 	RemapCheckBox* checkRemap;

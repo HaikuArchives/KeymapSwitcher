@@ -20,7 +20,7 @@
 #include <Entry.h>
 #include <Locale.h>
 #include <Menu.h>
-#include <MenuField.h>
+#include <MenuBar.h> //XXX
 #include <MenuItem.h>
 #include <Path.h>
 #include <PopUpMenu.h>
@@ -116,12 +116,12 @@ SettingsWindow::SettingsWindow(bool fromDeskbar)
 	BPopUpMenu *pop_key = new BPopUpMenu(menuName);
 
 	for (size_t i = 0; i < sizeof(a)/sizeof(a[0]); i++) {
-		BMessage *msg = new BMessage(MSG_HOTKEY_CHANGED);
+		BMessage *msg = new BMessage(MSG_HOTKEY_CHANGED + a[i].hotkey);
 		msg->AddInt32("hotkey", a[i].hotkey);
 		pop_key->AddItem(new BMenuItem(a[i].name, msg));
 	}
 	
-	BMenuField * menuField = new BMenuField(rc, "HotKey", NULL, pop_key/*, B_FOLLOW_RIGHT*/);
+	menuField = new BMenuField(rc, "HotKey", NULL, pop_key/*, B_FOLLOW_RIGHT*/);
 	menuField->SetDivider(0);
 	
 	box->AddChild(menuField);
@@ -151,17 +151,20 @@ SettingsWindow::SettingsWindow(bool fromDeskbar)
 	BRect rcBtn(RC);
 	rcBtn.right  = rcBtn.left + kBmpBtnX;
 	rcBtn.bottom = rcBtn.top  + kBmpBtnY;
-	MoveButton* addButton = new MoveButton(rcBtn, "add_keymap_button", 
+	addButton = new MoveButton(rcBtn, "add_keymap_button", 
 					R_ResAddButton, R_ResAddButtonPressed, R_ResAddButtonDisabled,
 		new BMessage(MSG_BUTTON_ADD_ITEM), B_ONE_STATE_BUTTON, B_FOLLOW_RIGHT);
 	box->AddChild(addButton);
 	addButton->SetTarget(this);
 	
-	MoveButton* delButton = new MoveButton(rcBtn, "remove_keymap_button",
+	delButton = new MoveButton(rcBtn, "remove_keymap_button",
 					R_ResRemoveButton, R_ResRemoveButtonPressed, R_ResRemoveButtonDisabled, 
 		new BMessage(MSG_BUTTON_REMOVE_ITEM), B_ONE_STATE_BUTTON, B_FOLLOW_RIGHT);
 	box->AddChild(delButton);
 	delButton->SetTarget(this);
+
+	addButton->SetEnabled(false);
+	delButton->SetEnabled(false);
 
 	// calculate the layout of "lists column" of controls
 	float fMaxListsWidth = 0.f;
@@ -401,11 +404,16 @@ void SettingsWindow::MessageReceived(BMessage *msg) {
 		}
 		AdjustRemapCheck(false);
 		break;
-	case MSG_HOTKEY_CHANGED: {
+	case MSG_HOTKEY_CHANGED + KEY_LCTRL_SHIFT:
+	case MSG_HOTKEY_CHANGED + KEY_ALT_SHIFT:
+	case MSG_HOTKEY_CHANGED + KEY_SHIFT_SHIFT:
+	case MSG_HOTKEY_CHANGED + KEY_CAPS_LOCK:
+	case MSG_HOTKEY_CHANGED + KEY_SCROLL_LOCK: {
 		int32 temp = 0;
 		if (B_OK==msg->FindInt32("hotkey",&temp))
 			settings->SetInt32("hotkey", temp);
 		hotkey_changed = true;
+		buttonOK->SetEnabled(true);
 		break;
 	}
 	case MSG_CHECK_REMAP: {
@@ -416,12 +424,44 @@ void SettingsWindow::MessageReceived(BMessage *msg) {
 		AdjustRemapCheck(true);
 		break;
 	}
+	case MSG_LIST_SEL_CHANGE: {
+		addButton->SetEnabled(available_list->CurrentSelection() != -1);
+		delButton->SetEnabled(selected_list->CurrentSelection() != -1);
+		break;
+	}
 	case MSG_SAVE_SETTINGS: {
 		if (!AlreadyInDeskbar()) {
 			add_system_beep_event(BEEP_NAME);
 
-			BDeskbar deskbar;
-			if(deskbar.IsRunning()) {
+			bool isRunning = true;
+			{
+				BDeskbar deskbar;
+				isRunning = deskbar.IsRunning();
+				if (!isRunning) {
+					BAlert* alert = new BAlert("Error",
+					   B_TRANSLATE("Unable to install keymap indicator. "
+									"Deskbar application is not running."),
+				   	   B_TRANSLATE("Start Deskbar"), B_TRANSLATE("OK"),
+					   0, B_WIDTH_AS_USUAL, B_STOP_ALERT);
+
+					if (0 == alert->Go()) {
+						be_roster->Launch(DESKBAR_SIGNATURE);
+					}
+				}
+			}
+
+			int tries = 10;
+			while (!isRunning && --tries) {
+				BDeskbar deskbar;
+				isRunning = deskbar.IsRunning();
+				if (!isRunning) {
+					snooze(1000000);
+				}
+			}
+
+			if (isRunning) {
+				BDeskbar deskbar;
+
 				entry_ref ref;
 				be_roster->FindApp(APP_SIGNATURE, &ref);
 				deskbar.AddItem(&ref);
@@ -430,22 +470,20 @@ void SettingsWindow::MessageReceived(BMessage *msg) {
 				buttonCancel->SetLabel(B_TRANSLATE("Revert"));
 				buttonOK->SetEnabled(false);
 				buttonCancel->SetEnabled(false);
-
 			} else {
 				BAlert* alert = new BAlert("Error",
-					   B_TRANSLATE("Unable to install keymap indicator. "
-									"Deskbar application is not running."),
-				   	   B_TRANSLATE("Start Deskbar"), B_TRANSLATE("OK"),
-					   0, B_WIDTH_AS_USUAL, B_STOP_ALERT);
+				   B_TRANSLATE("Unable to start Deskbar application."
+								" Keymap indicator was not installed."),
+				   B_TRANSLATE("OK"), 0, 0, B_WIDTH_AS_USUAL, B_STOP_ALERT);
 				alert->Go();
 			}
-
 		}
 
 		// delete all keymaps from settings
-		if(keymaps_changed) {
+		if(keymaps_changed || hotkey_changed) {
 			selected_list->ReadKeymapsList(settings);
 			keymaps_changed = false;
+			hotkey_changed = false;
 
 			buttonOK->SetEnabled(false);
 			buttonCancel->SetEnabled(true);
@@ -484,9 +522,14 @@ void SettingsWindow::MessageReceived(BMessage *msg) {
 
 			checkRemap->SetIndex(settings->FindInt32("remap"));
 			AdjustRemapCheck(false);
-		}
+
+			int32 hotkey = 0;
+			settings->FindInt32("hotkey", &hotkey);
+			BMenuItem* item = menuField->Menu()->FindItem(MSG_HOTKEY_CHANGED + hotkey);
+			if (item != 0) 
+				item->SetMarked(true);
 		break;
-		
+		}
 	case MSG_ABOUT:
 	//	ShowAboutWindow();
 		break;
@@ -676,6 +719,11 @@ SettingsWindow::KeymapListView::MessageReceived(BMessage *message)
 			int32 index = -1;
 			message->FindInt32("index", &index);
 			delete (dynamic_cast<KeymapItem*> (RemoveItem(index)));
+
+			// restore selection after delete
+			int32 count = CountItems();
+			int32 new_index = (index >= count) ? count - 1 : index ;
+			Select(max_c(0, new_index));
 			break;
 		}
 
@@ -698,6 +746,13 @@ SettingsWindow::KeymapListView::MessageReceived(BMessage *message)
 		}
 	}
 	BListView::MessageReceived(message);
+}
+
+void
+SettingsWindow::KeymapListView::SelectionChanged()
+{
+	BMessage message(MSG_LIST_SEL_CHANGE);
+	Window()->PostMessage(&message);
 }
 	
 SettingsWindow::KeymapOutlineListView::KeymapOutlineListView(BRect r, const char *name) 
@@ -837,3 +892,10 @@ SettingsWindow::MoveButton::LoadPicture(BResources *resFrom, BPicture *picTo, ui
 	return B_OK;
 }
 
+void
+SettingsWindow::KeymapOutlineListView::SelectionChanged()
+{
+	BMessage message(MSG_LIST_SEL_CHANGE);
+	Window()->PostMessage(&message);
+}
+	
