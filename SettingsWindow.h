@@ -48,6 +48,9 @@ class SettingsWindow: public BWindow {
 		KeymapListView(BRect r, const char *name);
 		virtual bool InitiateDrag(BPoint pt, int32 index, bool wasSelected);
 		virtual void MessageReceived(BMessage *message);
+
+		void ResetKeymapsList(const Settings* settings);
+		void ReadKeymapsList(Settings* settings);
 	};
 
 	class KeymapOutlineListView : public BOutlineListView {
@@ -88,12 +91,15 @@ public:
 	
 private:
 	Settings *settings;
+	Settings *settingsOrg;
 	bool hotkey_changed;
 	bool keymaps_changed;
 	bool from_deskbar;
 	KeymapListView *selected_list;
 	KeymapOutlineListView *available_list;
 	BView *parent;
+	BButton* buttonOK;
+	BButton* buttonCancel;
 };
 
 

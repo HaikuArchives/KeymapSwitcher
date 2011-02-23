@@ -9,9 +9,8 @@
 #define APP_SIGNATURE "application/x-vnd.Nexus-KeymapSwitcher"
 #define DESKBAR_SIGNATURE "application/x-vnd.Be-TSKB"
 #define REPLICANT_NAME "Switcher/Deskbar"
-#define BEEP_NAME "Keymap Switch"
+#define BEEP_NAME "Keymap switch"
 #define SOUNDS_PREF_SIGNATURE "application/x-vnd.Haiku-Sounds"
-//#define INDICATOR_SIGNATURE "application/x-vnd.KeymapSwitcher"
 
 // add/remove keymap buttons ids 
 enum {
@@ -27,14 +26,15 @@ enum {
 #define	VersionMajor  1
 #define	VersionMiddle 2
 #define	VersionMinor  6
-#define VersionBuild  0
+#define VersionBuild  1
 
 #define _NUM2STR(_x) #_x
 #define NUM2STR(_x) _NUM2STR(_x)
 
 #define VERSION NUM2STR(VersionMajor) "." \
 		NUM2STR(VersionMiddle) "." \
-		NUM2STR(VersionMinor)
+		NUM2STR(VersionMinor) "." \
+		NUM2STR(VersionBuild)
 
 
 #endif // __KeymapSwitcher_H

@@ -68,6 +68,7 @@ SettingsWindow::SettingsWindow(bool fromDeskbar)
 {
 	trace("read settings");
 	settings = new Settings("Switcher");
+	settingsOrg = new Settings("Switcher");
 	keymaps_changed = false;
 	from_deskbar = fromDeskbar;
 
@@ -164,7 +165,7 @@ SettingsWindow::SettingsWindow(bool fromDeskbar)
 	float fMaxWindowHeight = ptOrg.y + scrollViewAll->Bounds().Height() + Y_INSET;
 
 	// populate selected keymaps list
-	int32 count = 0;
+/*	int32 count = 0;
 	settings->FindInt32("keymaps", &count); // retrieve keymaps number
 	// read all the keymaps
 	for (int32 i = 0; i<count; i++) {
@@ -193,7 +194,8 @@ SettingsWindow::SettingsWindow(bool fromDeskbar)
 		else
 			display_name += B_TRANSLATE(" (user)");
 		selected_list->AddItem(new KeymapItem(display_name.String(), name.String(), dir));
-	}
+	} */
+	selected_list->ResetKeymapsList(settings);
 
 	// populate all available keymaps list - system keymaps
 	struct _d {
@@ -299,8 +301,7 @@ SettingsWindow::SettingsWindow(bool fromDeskbar)
 									: B_TRANSLATE("Apply"),
 					MSG_SAVE_SETTINGS, B_FOLLOW_BOTTOM | B_FOLLOW_RIGHT, NULL },
 		{ "close_button", !AlreadyInDeskbar() ? B_TRANSLATE("No, thanks. Exit")
-									: (from_deskbar) ? B_TRANSLATE("Cancel")
-												: B_TRANSLATE("Exit"),
+									: B_TRANSLATE("Revert"),
 					MSG_CLOSE, B_FOLLOW_BOTTOM | B_FOLLOW_RIGHT, NULL },
 	};
 
@@ -315,6 +316,13 @@ SettingsWindow::SettingsWindow(bool fromDeskbar)
 
 	b[2].button->MakeDefault(TRUE);
 	b[2].pt.y += fYSpacing;
+
+	// remember them for later using
+	buttonOK = b[2].button;
+	buttonCancel = b[3].button;
+
+	buttonOK->SetEnabled(!AlreadyInDeskbar());
+	buttonCancel->SetEnabled(!AlreadyInDeskbar());
 
 	ptOrg = RC.LeftTop();
 	ptOrg.x += fMaxListsWidth + X_INSET;
@@ -389,6 +397,8 @@ SettingsWindow::~SettingsWindow() {
 		delete (dynamic_cast<KeymapItem*> (available_list->RemoveItem(0L)));
 	while(0 < selected_list->CountItems())
 		delete (dynamic_cast<KeymapItem*> (selected_list->RemoveItem(0L)));
+	delete settings;
+	delete settingsOrg;
 }
 
 // process message
@@ -402,8 +412,6 @@ void SettingsWindow::MessageReceived(BMessage *msg) {
 	}
 	case MSG_BUTTON_ADD_ITEM: {
 		int32 index = available_list->CurrentSelection(0);
-		//int32 i = 0, z = 6;
-		//index *= z/i;
 		if(index >= 0) {
 			BMessage message(MSG_ITEM_DRAGGED);
 			message.AddInt32("index", index);
@@ -414,19 +422,19 @@ void SettingsWindow::MessageReceived(BMessage *msg) {
 	break;
 	case MSG_BUTTON_REMOVE_ITEM: {
 		int32 index = selected_list->CurrentSelection(0);
-		//int32 i = 0, z = 6;
-		//index *= z/i;
 		if(index >= 0) {
 			BMessage message(MSG_REMOVE_ACTIVE_ITEM);
 			message.AddInt32("index", index);
-		//	message.AddPointer("keymap_item", selected_list->ItemAt(index));
 			PostMessage(&message, selected_list);
 		}
 	}
 	break;
 	case MSG_KEYMAPS_CHANGED:
 		trace("keymaps changed");
-		keymaps_changed = true;
+		if (!keymaps_changed) {
+			buttonOK->SetEnabled(true);
+			keymaps_changed = true;
+		}
 		break;
 	/*case MSG_BEEP_CHECKBOX_TOGGLED: {
 		bool beep;		
@@ -450,13 +458,27 @@ void SettingsWindow::MessageReceived(BMessage *msg) {
 			add_system_beep_event(BEEP_NAME);
 
 			BDeskbar deskbar;
-			entry_ref ref;
-			be_roster->FindApp(APP_SIGNATURE, &ref);
-			deskbar.AddItem(&ref);
+			if(deskbar.IsRunning()) {
+				entry_ref ref;
+				be_roster->FindApp(APP_SIGNATURE, &ref);
+				deskbar.AddItem(&ref);
+			} else {
+				BAlert* alert = new BAlert("Error",
+					   B_TRANSLATE("Unable to install keymap indicator. "
+									"Deskbar application is not running."),
+				   	   B_TRANSLATE("OK"), 0, 0, B_WIDTH_AS_USUAL, B_STOP_ALERT);
+				alert->Go();
+			}
+
+			buttonOK->SetLabel(B_TRANSLATE("Apply"));
+			buttonCancel->SetLabel(B_TRANSLATE("Revert"));
+			buttonOK->SetEnabled(false);
+			buttonCancel->SetEnabled(false);
 		}
+
 		// delete all keymaps from settings
 		if(keymaps_changed) {
-			int32 keymaps = 0;
+/*			int32 keymaps = 0;
 			settings->FindInt32("keymaps", &keymaps);
 			BString param;
 			for (int i=0; i<keymaps; i++) {
@@ -478,23 +500,43 @@ void SettingsWindow::MessageReceived(BMessage *msg) {
 				param = "";
 				param << "n" << i;
 				settings->SetString(param.String(), item->RealName());	
-			}
+			} */
+			selected_list->ReadKeymapsList(settings);
+			keymaps_changed = false;
+
+			buttonOK->SetEnabled(false);
+			buttonCancel->SetEnabled(true);
 		}
+
 		trace("settings saved!");
 		settings->Save();
-		delete settings; // we save settings in its destructor
+//		delete settings; // we save settings in its destructor
+
 		::UpdateIndicator(DeskView::MSG_UPDATESETTINGS);
-		if(!from_deskbar) {
+		/*if(!from_deskbar) {
 			be_app->PostMessage(B_QUIT_REQUESTED);
 		} else
-			Close();
+			Close();*/
 		break;
 	}
 	case MSG_CLOSE:
-		if(!from_deskbar) {
+		if(!from_deskbar && !AlreadyInDeskbar()) {
 			be_app->PostMessage(B_QUIT_REQUESTED);
-		} else
-			Close();
+		} else {
+			//Close();
+			// perform "Revert" functionality
+			*settings = *settingsOrg;
+
+			selected_list->ResetKeymapsList(settings);
+
+			//while(0 < available_list->CountItems())
+			//	delete (dynamic_cast<KeymapItem*> (available_list->RemoveItem(0L)));
+			settings->Save();
+			::UpdateIndicator(DeskView::MSG_UPDATESETTINGS);
+			
+			buttonOK->SetEnabled(false);
+			buttonCancel->SetEnabled(false);
+		}
 		break;
 		
 	case MSG_ABOUT:
@@ -584,6 +626,78 @@ SettingsWindow::KeymapListView::InitiateDrag(BPoint point, int32 index, bool was
 	message.AddInt32("index", index);
 	DragMessage(&message, ItemFrame(index));
 	return true;
+}
+
+void 
+SettingsWindow::KeymapListView::ResetKeymapsList(const Settings* settings)
+{
+	if(!IsEmpty()) {
+		// first clean the list
+		while(0 < /*selected_list->*/CountItems())
+			delete (dynamic_cast<KeymapItem*> (/*selected_list->*/RemoveItem(0L)));
+		MakeEmpty();
+	}
+
+	// now populate it with settings
+	int32 count = 0;
+	settings->FindInt32("keymaps", &count); // retrieve keymaps number
+	// read all the keymaps
+	for (int32 i = 0; i<count; i++) {
+		BString param("n");
+		param << i;
+		
+		BString name;
+		settings->FindString(param.String(), &name);
+
+		param = "d";
+	   	param << i;
+		int32 dir = 0;
+		settings->FindInt32(param.String(), &dir);
+
+		BPath path;
+		find_directory((directory_which)dir, &path);
+		if(dir == B_BEOS_DATA_DIRECTORY)
+			path.Append("Keymaps");
+		else
+			path.Append("Keymap");
+		path.Append(name.String());
+
+		BString display_name(name);
+		if(dir == B_BEOS_DATA_DIRECTORY)
+			display_name += B_TRANSLATE(" (system)");
+		else
+			display_name += B_TRANSLATE(" (user)");
+		/*selected_list->*/AddItem(new KeymapItem(display_name.String(), name.String(), dir));
+	}
+}
+
+void 
+SettingsWindow::KeymapListView::ReadKeymapsList(Settings* settings)
+{
+	// remove previous keymaps from settings
+	int32 keymaps = 0;
+	settings->FindInt32("keymaps", &keymaps);
+	BString param;
+	for (int i=0; i<keymaps; i++) {
+		param = "";
+		param << "d" << i;
+		settings->RemoveName(param.String());
+		param = "";
+		param << "n" << i;
+		settings->RemoveName(param.String());
+	}
+	// after this save new set of keymaps
+	settings->SetInt32("keymaps", /*selected_list->*/CountItems());
+	for (int i = 0; i < /*selected_list->*/CountItems(); i++) {
+		KeymapItem *item = (KeymapItem*) /*selected_list->*/ItemAt(i);
+		trace((char*)(item->RealName()));
+		param = "";
+		param << "d" << i;
+		settings->SetInt32(param.String(), item->Dir());
+		param = "";
+		param << "n" << i;
+		settings->SetString(param.String(), item->RealName());	
+	}
 }
 
 void
