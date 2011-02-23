@@ -38,17 +38,14 @@
 #undef B_TRANSLATE_CONTEXT
 #define B_TRANSLATE_CONTEXT "SwitcherSettingsWindow"
 
-//CAUTION
 //#define trace(x...) (void(0)) // syslog(0, x);
 #define trace(x...) printf(x);
-//NO_CAUTION :)
 
 // the initial dimensions of the window.
 const float WINDOW_X      = 100;
 const float WINDOW_Y      = 100;
 const float WINDOW_WIDTH  = 600;
 const float WINDOW_HEIGHT = 600;
-//const float BUTTON_WIDTH  = 140;
 const float X_INSET	= 10;
 const float Y_INSET	= 10;
 
@@ -260,68 +257,15 @@ SettingsWindow::SettingsWindow(bool fromDeskbar)
 	selected_list->ResetKeymapsList(settings);
 
 	// populate all available keymaps list - system keymaps
-	/*struct _d {
-		directory_which which;
-		const char* subDir;
-		const char* name;
-	} ad[] = {
-		{ B_BEOS_DATA_DIRECTORY,	 "Keymaps", B_TRANSLATE("System") },
-		{ B_USER_SETTINGS_DIRECTORY, "Keymap",  B_TRANSLATE("User")   }
-	};
-
-	for (size_t d = 0; d < sizeof(ad)/sizeof(ad[0]); d++) {
-		BPath path;
-		find_directory(ad[d].which, &path);
-		path.Append(ad[d].subDir);
-
-		BDirectory dir(path.Path());
-		long count = dir.CountEntries();
-		if(count <= 0)
-			continue;
-
-		KeymapItem *keymap_node = new KeymapItem(ad[d].name, NULL, 0);
-		available_list->AddItem(keymap_node);
-
-		BEntry entry;
-		BList list;
-		for (int i = 0; i < count; i++) {
-			dir.GetNextEntry(&entry);
-			struct stat st;
-			entry.GetStat(&st);
-			if(S_ISDIR(st.st_mode))
-				continue;
-
-			entry_ref ref;
-			entry.GetRef(&ref);
-			list.AddItem(new KeymapItem(ref.name, ref.name, (int32)ad[d].which ), 0);
-		}
-
-		for (int i = 0; i < list.CountItems(); i++) {
-			available_list->AddUnder((KeymapItem*) list.ItemAt(i), keymap_node);
-		}
-	} */
-
 	available_list->PopulateTheTree();
 
-
-	//fMaxWindowHeight = fmax(fMaxWindowHeight,
-	//						Y_INSET + fYSpacing * 2 + b[0].pt.y + b[1].pt.y);
-	//
 	float fMaxWindowHeight = ptOrg.y + fmax(b[0].pt.y, b[1].pt.y) + Y_INSET;
-	
-
 	
 	ptOrg.x = fMaxWindowWidth - X_INSET - b[1].pt.x;
 	b[1].button->MoveTo(ptOrg);
 	ptOrg.x -= fXSpacing + b[0].pt.x;
 	b[0].button->MoveTo(ptOrg);
 	
-//	for (size_t i = 0; i < sizeof(b)/sizeof(b[0]); i++)
-//		b[i].button->ResizeTo(fMaxButtonsWidth, b[i].pt.y); 
-
-//	ptSelector.x += fMaxButtonsWidth - menuField->Bounds().Width();
-//	menuField->MoveTo(ptSelector);
-
 
 	// set resize/zoom policy
 	float fwMin, fwMax, fhMin, fhMax;
@@ -402,12 +346,6 @@ void SettingsWindow::MessageReceived(BMessage *msg) {
 			keymaps_changed = true;
 		}
 		break;
-	/*case MSG_BEEP_CHECKBOX_TOGGLED: {
-		bool beep;		
-		settings->FindBool("beep", &beep);
-			settings->SetBool("beep", !beep);
-		break;
-	}*/
 	case MSG_HOTKEY_CHANGED: {
 		int32 temp = 0;
 		if (B_OK==msg->FindInt32("hotkey",&temp))
@@ -415,10 +353,6 @@ void SettingsWindow::MessageReceived(BMessage *msg) {
 		hotkey_changed = true;
 		break;
 	}
-/*	case MSG_BEEP_SETUP: {
-		be_roster->Launch(SOUNDS_PREF_SIGNATURE);
-		break;
-	}*/
 	case MSG_SAVE_SETTINGS: {
 		if (!AlreadyInDeskbar()) {
 			add_system_beep_event(BEEP_NAME);
@@ -446,29 +380,6 @@ void SettingsWindow::MessageReceived(BMessage *msg) {
 
 		// delete all keymaps from settings
 		if(keymaps_changed) {
-/*			int32 keymaps = 0;
-			settings->FindInt32("keymaps", &keymaps);
-			BString param;
-			for (int i=0; i<keymaps; i++) {
-				param = "";
-				param << "d" << i;
-				settings->RemoveName(param.String());
-				param = "";
-				param << "n" << i;
-				settings->RemoveName(param.String());
-			}
-			// now save keymaps
-			settings->SetInt32("keymaps", selected_list->CountItems());
-			for (int i=0; i<selected_list->CountItems(); i++) {
-				KeymapItem *item = (KeymapItem*) selected_list->ItemAt(i);
-				trace((char*)(item->RealName()));
-				param = "";
-				param << "d" << i;
-				settings->SetInt32(param.String(), item->Dir());
-				param = "";
-				param << "n" << i;
-				settings->SetString(param.String(), item->RealName());	
-			} */
 			selected_list->ReadKeymapsList(settings);
 			keymaps_changed = false;
 
@@ -515,39 +426,7 @@ void SettingsWindow::MessageReceived(BMessage *msg) {
 	}
 	BWindow::MessageReceived(msg);
 }
-/*
-void SettingsWindow::ShowAboutWindow()  {
-	BString str(B_TRANSLATE("Keymap Switcher\n\n"));
-	int nameLen = str.Length();
-	str << B_TRANSLATE("Copyright " B_UTF8_COPYRIGHT " 1999-2003 Stas Maximov.\n");
-	str << B_TRANSLATE("Copyright " B_UTF8_COPYRIGHT " 2008-2010 Haiku, Inc.\n");
-	str << B_TRANSLATE("Version  %VERSION \n\n");
-	str << B_TRANSLATE("Original notice from Stas Maximov:\n");
-	str << B_TRANSLATE("Tested and inspired by"
-			"\n\tSergey \"fyysik\" Dolgov,"
-			"\n\tMaxim \"baza\" Bazarov,"
-			"\n\tDenis Korotkov,"
-			"\n\tNur Nazmetdinov and others.\n\n");
-	str << B_TRANSLATE("Thanks to Pierre Raynaud-Richard and "
-			"Robert Polic for BeOS tips.\n\n");
-	str << B_TRANSLATE("Special thanks to all BeOS users, "
-			"whether they use this app or not"
-			" - they're keeping BeOS alive!\n\n");
-	str.ReplaceAll("%VERSION", VERSION);
-	BAlert *alert = new BAlert(B_TRANSLATE("About"), str,
-			B_TRANSLATE("Okay"), 0, 0, B_WIDTH_AS_USUAL, B_IDEA_ALERT);
 
-	BTextView *view = alert->TextView();
-	view->SetStylable(true);
-	BFont font;
-	view->GetFont(&font);
-	font.SetSize(font.Size() * 1.5);
-	font.SetFace(B_BOLD_FACE);
-	view->SetFontAndColor(0, nameLen, &font);
-
-	alert->Go();
-}
-*/
 bool SettingsWindow::AlreadyInDeskbar()
 {
 	if (from_deskbar)
@@ -601,8 +480,8 @@ SettingsWindow::KeymapListView::ResetKeymapsList(const Settings* settings)
 {
 	if(!IsEmpty()) {
 		// first clean the list
-		while(0 < /*selected_list->*/CountItems())
-			delete (dynamic_cast<KeymapItem*> (/*selected_list->*/RemoveItem(0L)));
+		while(0 < CountItems())
+			delete (dynamic_cast<KeymapItem*> (RemoveItem(0L)));
 		MakeEmpty();
 	}
 
@@ -635,7 +514,7 @@ SettingsWindow::KeymapListView::ResetKeymapsList(const Settings* settings)
 			display_name += B_TRANSLATE(" (system)");
 		else
 			display_name += B_TRANSLATE(" (user)");
-		/*selected_list->*/AddItem(new KeymapItem(display_name.String(), name.String(), dir));
+		AddItem(new KeymapItem(display_name.String(), name.String(), dir));
 	}
 }
 
@@ -650,25 +529,21 @@ SettingsWindow::KeymapListView::ReadKeymapsList(Settings* settings)
 		param = "";
 		param << "d" << i;
 		settings->RemoveName(param.String());
-//		fprintf(stderr, "del:%s ", param.String());
 		param = "";
 		param << "n" << i;
 		settings->RemoveName(param.String());
-//		fprintf(stderr, "%s\n", param.String());
 	}
 	// after this save new set of keymaps
-	settings->SetInt32("keymaps", /*selected_list->*/CountItems());
-	for (int i = 0; i < /*selected_list->*/CountItems(); i++) {
-		KeymapItem *item = (KeymapItem*) /*selected_list->*/ItemAt(i);
+	settings->SetInt32("keymaps", CountItems());
+	for (int i = 0; i < CountItems(); i++) {
+		KeymapItem *item = (KeymapItem*)ItemAt(i);
 		trace((char*)(item->RealName()));
 		param = "";
 		param << "d" << i;
 		settings->SetInt32(param.String(), item->Dir());
-//		fprintf(stderr, "add:%s (%ld) ", param.String(), item->Dir());
 		param = "";
 		param << "n" << i;
 		settings->SetString(param.String(), item->RealName());	
-//		fprintf(stderr, "%s (%s)\n", param.String(), item->RealName());
 	}
 }
 
@@ -682,9 +557,6 @@ SettingsWindow::KeymapListView::MessageReceived(BMessage *message)
 			Window()->PostMessage(&notify);
 			KeymapItem *item;
 			message->FindPointer("keymap_item", (void **)&item);
-
-			fprintf(stderr, "arrived: %s (%ld)\n", item->RealName(), item->Dir());
-			
 			DeselectAll();
 			
 			int index = -1;

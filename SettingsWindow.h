@@ -82,7 +82,6 @@ class SettingsWindow: public BWindow {
 		virtual void GetPreferredSize(float *width, float *height);
 	};
 
-	//void ShowAboutWindow();
 	bool AlreadyInDeskbar();
 
 public:

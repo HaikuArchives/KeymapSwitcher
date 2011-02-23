@@ -32,9 +32,7 @@
 
 extern void _restore_key_map_(); // magic undoc function :))
 
-//CAUTION
 #define trace(s) ((void) 0)
-//NO_CAUTION :)
 
 #define B_MINI_ICON 16
 
