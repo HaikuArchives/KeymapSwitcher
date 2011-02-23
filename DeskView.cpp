@@ -37,7 +37,7 @@
 #define DELETE(p) {if (0 != p) { delete p; p = 0; } }
 #define DESKBAR_SIGNATURE "application/x-vnd.Be-TSKB"
 
-extern /*_IMPEXP_BE*/ void _restore_key_map_(); // magic undoc function :))
+extern void _restore_key_map_(); // magic undoc function :))
 
 //CAUTION
 #define trace(s) ((void) 0)
@@ -114,14 +114,6 @@ void DeskView::Init() {
 	settings = new Settings("Switcher");
 	if (settings->InitCheck() != B_OK) {
 		// settings do not exist, populate default values
-		/*settings->SetString("version", VERSION);
-			settings->SetInt32("hotkey", KEY_LCTRL_SHIFT);
-			settings->SetBool("beep", true);
-			settings->SetBool("disabled", false);
-			settings->SetInt32("active", 0L);
-			settings->SetInt32("keymaps", 1L);
-			settings->SetString("n0", "American");
-			settings->SetInt32("d0", B_BEOS_DATA_DIRECTORY);  */
 			settings->SetDefaults();
 			settings->Save(); // let Switcher know about new settings
 		}
@@ -220,8 +212,6 @@ void DeskView::Init() {
 	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 	void DeskView::DetachedFromWindow(void) 
 	{
-	//  delete Bitmap;
-	//  delete menu;
 	}
 
 	//
@@ -235,7 +225,6 @@ void DeskView::Init() {
 		if(disabled)
 			SetHighColor(128,128,128); // Disabled grey
 		else {
-	//		SetHighColor(0,0,156); // Blue like "B" in "Be"
 			SetHighColor(color);
 		}
 		FillRect(rect);	  
@@ -252,7 +241,6 @@ void DeskView::Init() {
 			SetLowColor(128,128,128);
 		else
 		SetLowColor(color);
-//		SetLowColor(0,0,156);
 	SetHighColor(255,255,255);
 	float width = B_MINI_ICON+1;
 
@@ -295,9 +283,7 @@ void DeskView::MessageReceived(BMessage *message) {
 		// message from Switcher, change Indicator now!
 		if (disabled)
 			break;
-//		lock.Lock();
 		ChangeKeyMap(NEXT_KEYMAP(active_keymap, keymaps->CountItems()));
-//		lock.Unlock();
 		break;
 
 	case MSG_UPDATESETTINGS: {
@@ -351,7 +337,6 @@ void DeskView::MessageReceived(BMessage *message) {
 			}
 		}
 
-//		ShowContextMenu(BPoint(2,2));
 		break;
 	}			
 	case B_SOME_APP_LAUNCHED: {
@@ -373,17 +358,14 @@ void DeskView::MessageReceived(BMessage *message) {
 	}
 	case B_SOME_APP_QUIT: {
 		int32 team = 0;
-//		lock.Lock();
 		if(B_OK == message->FindInt32("team", &team)) {
 			int32 index = FindApp(team);
 			if (index != -1)
 				app_list->RemoveItem(index);
 		}
-//		lock.Unlock();
 		break;
 	}
 	case B_SOME_APP_ACTIVATED: {
-//		lock.Lock();
 		app_info info;
 		if(B_OK == be_roster->GetActiveAppInfo(&info)) {
 			if((info.flags & B_BACKGROUND_APP) || (0 == strcmp(info.signature, DESKBAR_SIGNATURE))){
@@ -401,7 +383,6 @@ void DeskView::MessageReceived(BMessage *message) {
 				ChangeKeyMapSilent(item->keymap);
 			}
 		}
-//		lock.Unlock();
 		break;
 	}
 		
@@ -459,7 +440,6 @@ void DeskView::ShowContextMenu(BPoint where) {
 	
 	BMessenger messenger(this);
 	BPopUpMenu *menu = new BPopUpMenu("Menu", false, false);
-	//menu->SetFont(be_plain_font);
 
 	// identical to code in pppdeskbar.cpp
  	BMenuItem *item = 0;
@@ -489,9 +469,7 @@ void DeskView::ShowContextMenu(BPoint where) {
 	BRect bounds = Bounds();
 	bounds = ConvertToScreen(bounds);
 	where = ConvertToScreen(where);
-/*
-	menu->Go(where, true, false, true);
-*/
+	
 	async_menu_info *pMI = new async_menu_info;
 	pMI->menu = menu;
 	pMI->where = where; 
@@ -578,3 +556,4 @@ void DeskView::ChangeKeyMapSilent(int32 change_to) {
 	set_keyboard_locks(locks);
 	Pulse();
 }
+

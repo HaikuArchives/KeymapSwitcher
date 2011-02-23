@@ -11,7 +11,9 @@ CATALOGS_DEST := $(DIST_DIR)/common/data/locale/catalogs/
 APP_MIME_SIG := x-vnd.KeymapSwitcher
 VERSION := 1.2.6
 
-default: $(OBJ_DIR)/$(APP)
+default:
+	make -f app.makefile
+	make -f addon.makefile
 
 $(OBJ_DIR)/$(APP): $(OBJ_DIR)/$(ADDON)
 	make -f app.makefile

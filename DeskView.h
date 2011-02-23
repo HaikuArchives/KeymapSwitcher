@@ -54,11 +54,10 @@ private:
 	Settings *settings; 
 	bool disabled;
 	bool watching;
-	BPath cur_map_path;//, main_map_path, alt_map_path; // keymap paths
+	BPath cur_map_path;
 	int32 active_keymap;
 	BList *keymaps;
 	BList *app_list;
-//	BLocker lock;
 };
 
 typedef struct {

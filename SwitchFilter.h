@@ -11,7 +11,7 @@
 #include <Path.h>
 #include <Looper.h>
 
-#include "Settings.h" // from /Common
+#include "Settings.h"
 
 // export this for the input_server
 extern "C" _EXPORT BInputServerFilter* instantiate_input_filter();

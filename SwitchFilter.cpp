@@ -3,7 +3,6 @@
 // All rights reserved
 // Version 1.0.4
 
-//#include <Application.h>
 #include <stdio.h>
 #include <List.h>
 #include <View.h>
@@ -21,16 +20,9 @@
 #include <InputServerDevice.h>
 #include "SwitchFilter.h"
 #include "Settings.h"
-//#include "KeyTable.h"
 #include <InputServerFilter.h>
 #include <Locker.h>
 #include <syslog.h>
-
-// hot-keys
-//const uint32	KEY_LCTRL_SHIFT = 0x2000;
-//const uint32	KEY_OPT_SHIFT = 0x2001;
-//const uint32	KEY_ALT_SHIFT = 0x2002;
-//const uint32	KEY_SHIFT_SHIFT = 0x2003;
 
 const int32 key_table[][2] = {
 {41,101},
@@ -68,31 +60,13 @@ const int32 key_table[][2] = {
 
 enum __msgs {
 	MSG_CHANGEKEYMAP = 0x400, // thats for Indicator, don't change it
-//	MSG_RELOAD_DESKBAR = 0x1000
 }; 
 
-//#undef NDEBUG
 //#define DESKBAR_SIGNATURE "application/x-vnd.Be-TSKB"
 #define INDICATOR_SIGNATURE "application/x-vnd.KeymapSwitcher"
 
 #if 0 //def NDEBUG
-//#define trace(x...) syslog(LOG_DEBUG, __PRETTY_FUNCTION__);\ .
-//					syslog(LOG_DEBUG, x);\ .
-//					syslog(LOG_DEBUG, "\n"); 
-
 #define trace(x...) syslog(LOG_DEBUG, x);
-/*
-//{ \
-//	if (NULL != s) { \
-//		BFile file("/boot/home/Switcher.log", B_CREATE_FILE|B_WRITE_ONLY|B_OPEN_AT_END); \
-//		file.Write(__PRETTY_FUNCTION__, strlen(__PRETTY_FUNCTION__)); \
-//		file.Write(":\t", strlen(":\t")); \
-//		file.Write(s, strlen(s)); \
-//		file.Write("\n", strlen("\n")); \
-//	} \
-//
-*/
-//}
 #else
 #define trace(s) ((void)0)  
 #endif
@@ -137,15 +111,6 @@ void SettingsMonitor::MessageReceived(BMessage *message) {
 			lock.Unlock();
 			return; // message handled
 		}
-	/*	case MSG_RELOAD_DESKBAR: {
-			kill_team(be_roster->TeamFor(DESKBAR_SIGNATURE));
-			while (be_roster->IsRunning(DESKBAR_SIGNATURE)) 
-				snooze(100);
-			be_roster->Launch(DESKBAR_SIGNATURE);
-			while (!be_roster->IsRunning(DESKBAR_SIGNATURE)) 
-				snooze(100);
-			be_roster->Launch(INDICATOR_SIGNATURE);
-		}*/
 	}
 	BLooper::MessageReceived(message);
 	trace("end");
@@ -207,15 +172,6 @@ status_t SwitchFilter::InitCheck() {
 	settings = new Settings("Switcher");
 	monitor = new SettingsMonitor(INDICATOR_SIGNATURE, settings);
 	monitor->Run();
-
-	// check if flag to restart Deskbar is there
-/*	BEntry entry("/boot/home/Switcher.tmp", false);
-	if(entry.Exists()) {
-		// its really nice to do this in different thread to let input_server to get up faster
-		monitor->PostMessage(new BMessage(MSG_RELOAD_DESKBAR));
-		// don't need flag anymore
-		entry.Remove(); 
-	}*/
 	
 	return B_OK;
 }

@@ -14,11 +14,6 @@
 #define trace(x...) 
 #endif
 
-// hot-keys
-//const uint32	KEY_LCTRL_SHIFT = 0x2000;
-//const uint32	KEY_OPT_SHIFT = 0x2001;
-//const uint32	KEY_ALT_SHIFT = 0x2002;
-//const uint32	KEY_SHIFT_SHIFT = 0x2003;
 
 Settings::Settings(const char *filename) : BMessage('pref') {
 	status = find_directory(B_USER_SETTINGS_DIRECTORY, &path);
@@ -62,8 +57,6 @@ status_t Settings::SetDefaults() {
 }
 
 status_t Settings::Save() {
-	//if (!dirty)
-	//	return B_OK;
 	BFile file;
 	
 	status = file.SetTo(path.Path(), B_WRITE_ONLY | B_CREATE_FILE);

@@ -50,12 +50,6 @@
 	const float WINDOW_HEIGHT = 210;
 	const float BUTTON_WIDTH = 140;
 
-	// hot-keys
-//	const uint32	KEY_LCTRL_SHIFT = 0x2000;
-//	const uint32	KEY_OPT_SHIFT = 0x2001;
-//	const uint32	KEY_ALT_SHIFT = 0x2002;
-//	const uint32	KEY_SHIFT_SHIFT = 0x2003;
-
 	// some messages
 	enum {
 		MSG_PRIMARY_MAP = 0x1000,
@@ -350,13 +344,7 @@
 		box->AddChild(menu_field);
 
 		r.OffsetBy(0, 39);
-	/*	BCheckBox *will_beep = new BCheckBox(r,
-					"willbeep", "Beep",
-					new BMessage(MSG_BEEP_CHECKBOX_TOGGLED), B_FOLLOW_LEFT);
-			  
-		will_beep->SetValue((beep?B_CONTROL_ON:B_CONTROL_OFF));
-		box->AddChild(will_beep);
-	*/
+		
 		long lTop = 46;
 		BButton *button = new BButton(BRect((WINDOW_WIDTH-BUTTON_WIDTH)-12,lTop,(WINDOW_WIDTH)-12,1),
 			"beep_button",B_TRANSLATE("Beep setup" B_UTF8_ELLIPSIS),
@@ -365,7 +353,7 @@
 		
 		
 		lTop += 31;
-		/*BButton **/button = new BButton(BRect((WINDOW_WIDTH-BUTTON_WIDTH)-12,lTop,(WINDOW_WIDTH)-12,1),
+		button = new BButton(BRect((WINDOW_WIDTH-BUTTON_WIDTH)-12,lTop,(WINDOW_WIDTH)-12,1),
 			"about_button",B_TRANSLATE("About" B_UTF8_ELLIPSIS),
 			new BMessage(MSG_ABOUT), B_FOLLOW_RIGHT);
 		box->AddChild(button);
@@ -498,8 +486,8 @@
 	}
 
 	void SettingsWindow::ShowAboutWindow()  {
-		//BString strName = "Keymap Switcher";
 		BString str(B_TRANSLATE("Keymap Switcher\n\n"));
+		int nameLen = str.Length();
 		str << B_TRANSLATE("Copyright " B_UTF8_COPYRIGHT " 1999-2003 Stas Maximov.\n");
 		str << B_TRANSLATE("Copyright " B_UTF8_COPYRIGHT " 2008-2010 Haiku, Inc.\n");
 		str << B_TRANSLATE("Version  %VERSION \n\n");
@@ -524,7 +512,7 @@
 	view->GetFont(&font);
 	font.SetSize(font.Size() * 1.5);
 	font.SetFace(B_BOLD_FACE);
-	view->SetFontAndColor(0, 15/*strName.Length()*/, &font);
+	view->SetFontAndColor(0, nameLen, &font);
 	
 	alert->Go();
 }
@@ -553,10 +541,6 @@ BMoveButton::~BMoveButton()
 
 void BMoveButton::AttachedToWindow()
 {
- 	//app_info appInfo;
-	//be_app->GetAppInfo(&appInfo);
-	//BFile appFile;
-	//appFile.SetTo(&appInfo.ref, B_READ_ONLY);
 	//	debugger("app");
 	entry_ref ref;
 	be_roster->FindApp(APP_SIGNATURE, &ref);
@@ -566,8 +550,6 @@ void BMoveButton::AttachedToWindow()
 	BResources appResources;
 	appResources.SetTo(&appFile);
 	
-	//BResources *appResources = be_app->AppResources();
-
 	LoadPicture(&appResources, &fPicOff,      fResIdOff);
 	LoadPicture(&appResources, &fPicOn,       fResIdOn);
 	LoadPicture(&appResources, &fPicDisabled, fResIdDisabled);
