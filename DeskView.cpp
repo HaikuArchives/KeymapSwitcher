@@ -86,7 +86,8 @@ int32 ShowContextMenuAsync(void *pMenuInfo) {
 // General constructor
 DeskView::DeskView(const char *name,
 	uint32 resizeMask, uint32 flags)
-		: BView(BRect(0,0,B_MINI_ICON+1, B_MINI_ICON-1), name, resizeMask, flags) {
+		: BView(BRect(0,0,B_MINI_ICON+1, B_MINI_ICON-1), name, resizeMask, flags)
+{
 	SetViewColor(B_TRANSPARENT_32_BIT);
 	AddChild(new BDragger(BRect(-10, -10, - 10, -10), this));
 	Init();	// Do prepare...
@@ -117,7 +118,7 @@ void DeskView::Init() {
 	disabled = false;
 	settings->FindBool("disabled", &disabled);
 	watching = false;	
-
+	
 	find_directory(B_USER_SETTINGS_DIRECTORY, &cur_map_path);
 	cur_map_path.Append("Key_map");
 	trace(cur_map_path.Path());
@@ -224,19 +225,20 @@ void DeskView::Draw(BRect rect) {
 	}
 	FillRect(rect);	  
 
-
-	BString map_name;
-
+	BString map_name(":(");
 	// get keymap name from the keymap path
 	BString *keymap = (BString *)keymaps->ItemAt(active_keymap); 
 	if(keymap == 0) {
 		keymap = (BString *)keymaps->ItemAt(0);
-		if (keymap == 0)
-			return;
 	}
 
-	BPath path(keymap->String());
-	map_name = path.Leaf();
+	if (keymap != 0) {
+		BPath path(keymap->String());
+		map_name = path.Leaf();
+	}
+
+	if(map_name.Length() == 0)
+		map_name << ":(";
 
 	if(disabled)
 		SetLowColor(128,128,128);
@@ -410,7 +412,9 @@ int32 DeskView::FindApp(int32 team) {
 
 //
 void DeskView::Pulse() {
+
 	Draw(Bounds());
+
 	if(!watching) {
 		if(B_OK == be_roster->StartWatching(this, B_REQUEST_LAUNCHED | B_REQUEST_QUIT | B_REQUEST_ACTIVATED))
 			trace("start watching");
@@ -440,6 +444,10 @@ void DeskView::MouseDown(BPoint where) {
 			ShowContextMenu(where);
 		} else if (buttons & B_PRIMARY_MOUSE_BUTTON && !disabled) {
 			ChangeKeyMap(NEXT_KEYMAP(active_keymap, keymaps->CountItems()));
+		} else if (buttons & B_TERTIARY_MOUSE_BUTTON) {
+			SettingsWindow *settingsWnd = new SettingsWindow(true);
+			if(settingsWnd == NULL)
+				trace("Unable to create SettingsWindow");
 		}
 	}
 }

@@ -36,12 +36,44 @@
 class SwitcherApplication : public BApplication
 {
   public:
-    SwitcherApplication() : BApplication(APP_SIGNATURE)
+    SwitcherApplication() : BApplication(APP_SIGNATURE),
+							fAutoInstallInDeskbar(false),
+							fQuitImmediately(false)
 	{
 	}
 
-    virtual void ReadyToRun(void)
+    virtual void
+	ReadyToRun(void)
 	{
+		if (fQuitImmediately) {
+			Quit();
+			return;
+		}
+
+		if (fAutoInstallInDeskbar) {
+			BDeskbar deskbar;
+			
+			if (deskbar.HasItem(REPLICANT_NAME)) {
+				Quit();
+				return;
+			}
+
+			if(!deskbar.IsRunning()) {
+				fprintf(stderr, B_TRANSLATE("Unable to install keymap indicator. "
+									"Deskbar application is not running."));
+				Quit();
+				return;
+			}
+
+			entry_ref ref;
+			be_roster->FindApp(APP_SIGNATURE, &ref);
+			deskbar.AddItem(&ref);
+
+			Quit();
+			return;
+		}
+		
+		
 		SettingsWindow* win = new SettingsWindow(false);
 		if (win == 0) {
 			BAlert* alert = new BAlert("Error",
@@ -52,6 +84,30 @@ class SwitcherApplication : public BApplication
 		} else
 			win->Show();
 	}
+
+	virtual void
+	ArgvReceived(int32 argc, char** argv)
+	{
+		if (argc <= 1)
+			return;
+
+		if (strcmp(argv[1], "--help") == 0
+			|| strcmp(argv[1], "-h") == 0) {
+			const char* str = B_TRANSLATE("Deskbar options:\n"
+					"\t--deskbar\tautomatically add replicant to Deskbar\n"
+					"\t--help\t\tprint this info and exit\n");
+			printf(str);
+			fQuitImmediately = true;
+			return;
+		}
+
+		if (strcmp(argv[1], "--deskbar") == 0)
+			fAutoInstallInDeskbar = true;
+	}
+
+  private:
+	bool	fAutoInstallInDeskbar;
+	bool	fQuitImmediately;
 };
 
 

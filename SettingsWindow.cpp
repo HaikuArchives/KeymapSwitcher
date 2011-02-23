@@ -270,10 +270,10 @@ SettingsWindow::SettingsWindow(bool fromDeskbar)
 
 	float fMaxWindowHeight = ptOrg.y + fmax(b[0].pt.y, b[1].pt.y) + Y_INSET;
 	
-	ptOrg.x = fMaxWindowWidth - X_INSET - b[1].pt.x;
-	b[1].button->MoveTo(ptOrg);
-	ptOrg.x -= fXSpacing + b[0].pt.x;
+	ptOrg.x = fMaxWindowWidth - X_INSET - b[0].pt.x;
 	b[0].button->MoveTo(ptOrg);
+	ptOrg.x -= fXSpacing + b[1].pt.x;
+	b[1].button->MoveTo(ptOrg);
 	
 
 	// set resize/zoom policy
