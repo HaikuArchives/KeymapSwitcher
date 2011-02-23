@@ -11,6 +11,9 @@ CATALOGS_DEST := $(DIST_DIR)/common/data/locale/catalogs/
 APP_MIME_SIG := x-vnd.Nexus-KeymapSwitcher
 VERSION := 1.2.6
 CC_VER = $(word 1, $(subst -, , $(subst ., , $(shell $(CC) -dumpversion))))
+DATE := `date +%F`
+PACKAGE_NAME := KeymapSwitcher-$(VERSION)-x86-gcc$(CC_VER)-$(DATE)
+
 
 default:
 	make -f app.makefile
@@ -37,7 +40,7 @@ $(CATALOGS_DEST): $(OBJ_DIR)/$(APP_MIME_SIG)
 $(OBJ_DIR)/$(APP_MIME_SIG):
 	make -f app.makefile catalogs
 
-package: $(OBJ_DIR)/$(APP)  $(APP_DEST) $(ADDON_DEST) $(CATALOGS_DEST)
+package: $(OBJ_DIR)/$(APP) $(APP_DEST) $(ADDON_DEST) $(CATALOGS_DEST)
 	-cp $(OBJ_DIR)/$(APP) $(APP_DEST)
 	-cp $(OBJ_DIR)/$(ADDON) $(ADDON_DEST)
 	-cp -r $(OBJ_DIR)/$(APP_MIME_SIG) $(CATALOGS_DEST)
@@ -47,4 +50,11 @@ package: $(OBJ_DIR)/$(APP)  $(APP_DEST) $(ADDON_DEST) $(CATALOGS_DEST)
 	echo "Description: Easy to use Keymap Switcher for Haiku OS." >> $(DIST_DIR)/.OptionalPackageDescription
 	echo "License: BSD/MIT" >> $(DIST_DIR)/.OptionalPackageDescription
 	echo "URL: http://www.sf.net/projects/switcher" >> $(DIST_DIR)/.OptionalPackageDescription
-	cd $(DIST_DIR) && zip -9 -r -y KeymapSwitcher-$(VERSION)-x86-gcc$(CC_VER)-`date +%F`.zip common .OptionalPackageDescription
+	cd $(DIST_DIR) && zip -9 -r -z -y $(PACKAGE_NAME).zip common .OptionalPackageDescription < .OptionalPackageDescription
+	echo "#!/bin/sh" > $(DIST_DIR)/update-$(PACKAGE_NAME).sh
+	echo "hey input_server quit" >> $(DIST_DIR)/update-$(PACKAGE_NAME).sh
+	echo "hey Deskbar quit" >> $(DIST_DIR)/update-$(PACKAGE_NAME).sh
+	echo "unzip $(PACKAGE_NAME).zip -d /boot" >> $(DIST_DIR)/update-$(PACKAGE_NAME).sh
+	echo "/boot/system/Deskbar &" >> $(DIST_DIR)/update-$(PACKAGE_NAME).sh
+	echo "/boot/system/servers/input_server &" >> $(DIST_DIR)/update-$(PACKAGE_NAME).sh
+	chmod 700 $(DIST_DIR)/update-$(PACKAGE_NAME).sh
