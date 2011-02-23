@@ -40,15 +40,20 @@
 #define B_TRANSLATE_CONTEXT "SwitcherSettingsWindow"
 
 //CAUTION
-#define trace(x...) (void(0)) // syslog(0, x);
+//#define trace(x...) (void(0)) // syslog(0, x);
+#define trace(x...) printf(x);
 //NO_CAUTION :)
 
 // the initial dimensions of the window.
 const float WINDOW_X      = 100;
 const float WINDOW_Y      = 100;
-const float WINDOW_WIDTH  = 330 + 60;
-const float WINDOW_HEIGHT = 210;
-const float BUTTON_WIDTH = 140;
+const float WINDOW_WIDTH  = 390;
+const float WINDOW_HEIGHT = 250;
+const float BUTTON_WIDTH  = 140;
+const float X_INSET	= 10;
+const float Y_INSET	= 10;
+
+const float fYSpacing = 5.;
 
 // some messages
 enum {
@@ -80,7 +85,11 @@ KeymapItem::KeymapItem(const char *text, const char *real_name, int32 dir) : BSt
 	this->real_name = real_name;
 }
 
-KeymapListView::KeymapListView(BRect r, const char *name) : BListView(r, name) {
+KeymapListView::KeymapListView(BRect r, const char *name)
+				: 
+				BListView(r, name, B_SINGLE_SELECTION_LIST,
+					   	B_FOLLOW_ALL_SIDES/* | B_FOLLOW_TOP | B_FOLLOW_RIGHT*/) 
+{
 }
 
 bool KeymapListView::InitiateDrag(BPoint point, int32 index, bool wasSelected) {
@@ -148,7 +157,11 @@ void KeymapListView::MessageReceived(BMessage *message) {
 	BListView::MessageReceived(message);
 }
 	
-KeymapOutlineListView::KeymapOutlineListView(BRect r, const char *name) : BOutlineListView(r, name) {
+KeymapOutlineListView::KeymapOutlineListView(BRect r, const char *name) 
+						: 
+						BOutlineListView(r, name, B_SINGLE_SELECTION_LIST, 
+								B_FOLLOW_ALL_SIDES) 
+{
 }
 
 bool KeymapOutlineListView::InitiateDrag(BPoint point, int32 index, bool wasSelected) {
@@ -163,36 +176,137 @@ bool KeymapOutlineListView::InitiateDrag(BPoint point, int32 index, bool wasSele
 }
 
 //  construct main window
-SettingsWindow::SettingsWindow() : 
-		BWindow(BRect(WINDOW_X, 
-			WINDOW_Y, 
-							WINDOW_X + WINDOW_WIDTH,
-					WINDOW_Y + WINDOW_HEIGHT),
-					B_TRANSLATE("Keymap Switcher"),
-					B_TITLED_WINDOW, 
-					B_NOT_ZOOMABLE | B_NOT_RESIZABLE) {
+SettingsWindow::SettingsWindow() 
+				: 
+				BWindow(BRect(WINDOW_X, WINDOW_Y,
+						WINDOW_X + WINDOW_WIDTH, WINDOW_Y + WINDOW_HEIGHT),
+						B_TRANSLATE("Keymap Switcher"),
+						B_TITLED_WINDOW, B_NOT_ZOOMABLE /*| B_NOT_H_RESIZABLE*/) 
+{
 	trace("read settings");
 	settings = new Settings("Switcher");
 	keymaps_changed = false;
 	Lock();
 	
-	BBox *box = new BBox(Bounds(),B_EMPTY_STRING, 
-				B_FOLLOW_LEFT_RIGHT | B_FOLLOW_TOP, 
-				B_WILL_DRAW | B_FRAME_EVENTS | B_NAVIGABLE_JUMP, 
-				B_PLAIN_BORDER);
+	BBox *box = new BBox(Bounds(), B_EMPTY_STRING,
+						B_FOLLOW_ALL_SIDES,
+						B_WILL_DRAW | B_FRAME_EVENTS | B_NAVIGABLE_JUMP,
+						B_PLAIN_BORDER);
 	AddChild(box);
 
+	BRect RC = box->Bounds();
+	RC.InsetBy(X_INSET, Y_INSET);
+
+	BRect rc(RC.LeftTop(), RC.LeftTop());
+	BStringView* stringView = new BStringView(rc, "string1",
+								B_TRANSLATE("Hotkey:"), B_FOLLOW_RIGHT);
+	box->AddChild(stringView);
+	stringView->ResizeToPreferred();
+	
+	float fLineHeight = 0.f;
+	float fMaxWidth = 0.f;
+	stringView->GetPreferredSize(&fMaxWidth, &fLineHeight);
+	
+	int32 hotkey = 0;
+	settings->FindInt32("hotkey", &hotkey);
+
+	struct _pair {
+		int32		hotkey;
+		const char*	name;
+	} a[] = {
+		{ KEY_LCTRL_SHIFT,	"Ctrl+Shift" },
+		{ KEY_ALT_SHIFT,	"Alt+Shift" },
+		{ KEY_SHIFT_SHIFT,	"Shift+Shift" },
+		{ KEY_CAPS_LOCK,	"Caps Lock" },
+		{ KEY_SCROLL_LOCK,	"Scroll Lock" }
+	};
+
+	const char* menuName = "none";
+	for (size_t i = 0; i < sizeof(a)/sizeof(a[0]); i++)
+		if (a[i].hotkey == hotkey)
+			menuName = a[i].name;
+
+	BPopUpMenu *pop_key = new BPopUpMenu(menuName);
+
+	for (size_t i = 0; i < sizeof(a)/sizeof(a[0]); i++) {
+		BMessage *msg = new BMessage(MSG_HOTKEY_CHANGED);
+		msg->AddInt32("hotkey", a[i].hotkey);
+		pop_key->AddItem(new BMenuItem(a[i].name, msg));
+	}
+	
+	BMenuField * menuField = new BMenuField(rc, "HotKey", NULL, pop_key, B_FOLLOW_RIGHT);
+	menuField->SetDivider(0);
+	
+	box->AddChild(menuField);
+
+	menuField->ResizeToPreferred();
+	
+	BPoint ptMenuField(0, 0);
+	menuField->GetPreferredSize(&ptMenuField.x, &ptMenuField.y);
+	fMaxWidth = fmax(fMaxWidth, ptMenuField.x);
+
+	struct _button {
+		const char* name;
+		const char* label;
+		int32		message;
+		int32		flags;
+		BButton*	button;
+		BPoint		pt;
+	} b[] = {
+		{ "beep_button", B_TRANSLATE("Beep setup" B_UTF8_ELLIPSIS),
+					MSG_BEEP_SETUP, B_FOLLOW_RIGHT, NULL },
+		{ "about_button", B_TRANSLATE("About" B_UTF8_ELLIPSIS),
+					MSG_ABOUT, B_FOLLOW_RIGHT, NULL },
+		{ "save_button", B_TRANSLATE("Apply"), 
+					MSG_SAVE_SETTINGS, B_FOLLOW_BOTTOM | B_FOLLOW_RIGHT, NULL },
+		{ "close_button", B_TRANSLATE("Revert"),
+					MSG_CLOSE, B_FOLLOW_BOTTOM | B_FOLLOW_RIGHT, NULL },
+	};
+
+	for (size_t i = 0; i < sizeof(b)/sizeof(b[0]); i++) {
+		b[i].button = new BButton(rc, b[i].name, b[i].label, 
+							new BMessage(b[i].message), b[i].flags);
+		box->AddChild(b[i].button);
+		b[i].button->ResizeToPreferred();
+		b[i].button->GetPreferredSize(&b[i].pt.x, &b[i].pt.y);
+		fMaxWidth = fmax(fMaxWidth, b[i].pt.x);
+	}
+
+	b[2].button->MakeDefault(TRUE);
+	b[2].pt.y += fYSpacing;
+
+	BPoint pt(RC.right - fMaxWidth, RC.top);
+	stringView->MoveTo(pt);
+
+	pt.y += fLineHeight + fYSpacing;
+	menuField->MoveTo(pt);
+
+	pt.y += ptMenuField.y + fYSpacing * 2;
+	b[0].button->MoveTo(pt);
+	pt.y += b[0].pt.y + fYSpacing;
+	b[1].button->MoveTo(pt);
+	
+	pt.y = RC.bottom - b[3].pt.y;
+	b[3].button->MoveTo(pt);
+	pt.y -= b[2].pt.y + fYSpacing;
+	b[2].button->MoveTo(pt);
+
+	for (size_t i = 0; i < sizeof(b)/sizeof(b[0]); i++)
+		b[i].button->ResizeTo(fMaxWidth, b[i].pt.y); 
+
+
 	BRect r = box->Bounds();
-	r.InsetBy(10,5);
+	r.InsetBy(X_INSET, Y_INSET);
 	r.bottom = r.top + 14;
 	r.right = r.left + 200;
 	box->AddChild(new BStringView(r, "string0", B_TRANSLATE("Selected keymaps:")));
 	r.OffsetBy(0, 18);
 	r.bottom = r.top + 50;
 	selected_list = new KeymapListView(r, "selected_list");
-	box->AddChild(new BScrollView("scroll_selected", selected_list, 
-		B_FOLLOW_LEFT|B_FOLLOW_TOP, 0, false, true));
-	
+	BScrollView* list =  new BScrollView("scroll_selected", selected_list, 
+		B_FOLLOW_LEFT_RIGHT, 0, false, true);
+	box->AddChild(list);
+
 	// fill selected keymaps list
 	int32 count = 0;
 	settings->FindInt32("keymaps", &count); // retrieve keymaps number
@@ -234,14 +348,14 @@ SettingsWindow::SettingsWindow() :
 	rA.bottom = rA.top + 16;
 	BMoveButton *buttonEx = new BMoveButton(rA, "add_keymap_button", 
 					R_ResAddButton, R_ResAddButtonPressed, R_ResAddButtonDisabled,
-		new BMessage(MSG_BUTTON_ADD_ITEM));
+		new BMessage(MSG_BUTTON_ADD_ITEM), B_ONE_STATE_BUTTON, B_FOLLOW_RIGHT);
 	box->AddChild(buttonEx);
 	buttonEx->SetTarget(this);
 	
 	rA.OffsetBy(27, 0);
 	buttonEx = new BMoveButton(rA, "remove_keymap_button",
 					R_ResRemoveButton, R_ResRemoveButtonPressed, R_ResRemoveButtonDisabled, 
-		new BMessage(MSG_BUTTON_REMOVE_ITEM));
+		new BMessage(MSG_BUTTON_REMOVE_ITEM), B_ONE_STATE_BUTTON, B_FOLLOW_RIGHT);
 	box->AddChild(buttonEx);
 	buttonEx->SetTarget(this);
 	
@@ -250,7 +364,7 @@ SettingsWindow::SettingsWindow() :
 	r.right  = r.left + 200;
 	available_list = new KeymapOutlineListView(r, "selected_list");
 	box->AddChild(new BScrollView("scroll_available", available_list, 
-		B_FOLLOW_LEFT|B_FOLLOW_TOP, 0, false, true));
+		B_FOLLOW_ALL_SIDES, 0, false, true));
 
 	// populate available_list
 	find_directory(B_BEOS_DATA_DIRECTORY, &path);
@@ -272,7 +386,7 @@ SettingsWindow::SettingsWindow() :
 	delete dir;	
 
 	directory_which userDir = B_USER_SETTINGS_DIRECTORY;
-		directory_which userDir = B_USER_DATA_DIRECTORY;
+//		directory_which userDir = B_USER_DATA_DIRECTORY;
 
 	find_directory(userDir, &path);
 
@@ -293,18 +407,18 @@ SettingsWindow::SettingsWindow() :
 	delete dir;
 	
 	// add hotkey and beep
-	int32 hotkey;
+/*	int32 hotkey;
 	bool beep;
 	settings->FindInt32("hotkey", &hotkey);
 	settings->FindBool("beep", &beep);
-
+*/
 	r.OffsetTo((WINDOW_WIDTH-BUTTON_WIDTH)-12, 5);
 	r.bottom = r.top + 14;
 	r.right = r.left + BUTTON_WIDTH;
-	box->AddChild(new BStringView(r, "string1", B_TRANSLATE("Hotkey:")));
-
+/*	box->AddChild(new BStringView(r, "string1", B_TRANSLATE("Hotkey:"), B_FOLLOW_RIGHT));
+*/
 	r.OffsetBy(0, 14);
-	BPopUpMenu *pop_key;
+/*	BPopUpMenu *pop_key;
 	BString temp = "none";
 	if(hotkey == KEY_LCTRL_SHIFT)
 		temp = "Ctrl+Shift";
@@ -312,8 +426,8 @@ SettingsWindow::SettingsWindow() :
 		temp = "Alt+Shift";
 	if(hotkey == KEY_SHIFT_SHIFT)
 		temp = "Shift+Shift";
-		if(hotkey == KEY_CAPS_LOCK)
-			temp = "Caps Lock";
+	if(hotkey == KEY_CAPS_LOCK)
+		temp = "Caps Lock";
 	if(hotkey == KEY_SCROLL_LOCK)
 		temp = "Scroll Lock";
 	pop_key = new BPopUpMenu(temp.String());
@@ -330,21 +444,21 @@ SettingsWindow::SettingsWindow() :
 	msg->AddInt32("hotkey", KEY_SHIFT_SHIFT);
 	pop_key->AddItem(new BMenuItem("Shift+Shift", msg));
 	
-		msg = new BMessage(MSG_HOTKEY_CHANGED);
-		msg->AddInt32("hotkey", KEY_CAPS_LOCK);
-		pop_key->AddItem(new BMenuItem("Caps Lock", msg));
+	msg = new BMessage(MSG_HOTKEY_CHANGED);
+	msg->AddInt32("hotkey", KEY_CAPS_LOCK);
+	pop_key->AddItem(new BMenuItem("Caps Lock", msg));
 	
 	msg = new BMessage(MSG_HOTKEY_CHANGED);
 	msg->AddInt32("hotkey", KEY_SCROLL_LOCK);
 	pop_key->AddItem(new BMenuItem("Scroll Lock", msg));
 	
-	BMenuField * menu_field = new BMenuField(r, "HotKey", NULL, pop_key);
+	BMenuField * menu_field = new BMenuField(r, "HotKey", NULL, pop_key, B_FOLLOW_RIGHT);
 	menu_field->SetDivider(0);
 	
 	box->AddChild(menu_field);
-
+*/
 	r.OffsetBy(0, 39);
-	
+	/*
 	long lTop = 46;
 	BButton *button = new BButton(BRect((WINDOW_WIDTH-BUTTON_WIDTH)-12,lTop,(WINDOW_WIDTH)-12,1),
 		"beep_button",B_TRANSLATE("Beep setup" B_UTF8_ELLIPSIS),
@@ -361,16 +475,16 @@ SettingsWindow::SettingsWindow() :
 	lTop += 68;
 	button = new BButton(BRect((WINDOW_WIDTH-BUTTON_WIDTH)-12,lTop, (WINDOW_WIDTH)-12,1),
 		"save_button",B_TRANSLATE("Apply"),
-		new BMessage(MSG_SAVE_SETTINGS), B_FOLLOW_RIGHT);
+		new BMessage(MSG_SAVE_SETTINGS), B_FOLLOW_BOTTOM | B_FOLLOW_RIGHT);
 	box->AddChild(button);
 	button->MakeDefault(TRUE); 
 	
 	lTop += 31;
 	button = new BButton(BRect((WINDOW_WIDTH-BUTTON_WIDTH)-12,lTop,(WINDOW_WIDTH)-12,1),
 		"close_button",B_TRANSLATE("Revert"),
-		new BMessage(MSG_CLOSE), B_FOLLOW_RIGHT);
+		new BMessage(MSG_CLOSE), B_FOLLOW_BOTTOM | B_FOLLOW_RIGHT);
 	box->AddChild(button);
-
+*/
 	hotkey_changed = false;
 	Unlock();
 	Show();
