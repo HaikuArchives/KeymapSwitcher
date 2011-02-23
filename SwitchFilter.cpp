@@ -296,9 +296,9 @@ filter_result SwitchFilter::Filter(BMessage *message, BList *outList) {
 			switch_on_hold = false; // skip previous attempt
 		}
 		
-		int32 index = -1;
+		int32 index = 0;
 		settings->FindInt32("remap", &index);
-		if(index <= 0)
+		if(--index < 0)
 			break; // no remap option was configured
 
 		// check if it is Alt+Key key pressed, we shall put correct value 
@@ -377,9 +377,9 @@ SwitchFilter::UpdateRemapTable()
 	if(keymaps <= 0)
 		return; // settings are empty - default mapping will be used.
 
-	int32 index = -1;
+	int32 index = 0;
 	settings->FindInt32("remap", &index);
-	if(index < 0)
+	if(--index < 0)
 		return; //  -1 means no remap option was configured
 
 	status_t st = B_OK;

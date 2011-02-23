@@ -2,6 +2,7 @@
 #include "Settings.h"
 
 #include <syslog.h>
+#include <stdio.h> //XXX
 
 #include <File.h>
 #include <FindDirectory.h>
@@ -98,6 +99,7 @@ status_t Settings::SetInt16(const char *name, int16 i) {
 
 status_t Settings::SetInt32(const char *name, int32 i) {
 	dirty = true;
+	fprintf(stderr, "SetInt32(%s):%ld\n", name, i);
 	if (HasInt32(name)) {
 		return ReplaceInt32(name, 0, i);
 	}
