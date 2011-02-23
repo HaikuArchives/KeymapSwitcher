@@ -59,7 +59,7 @@ const float fIconY = 15;
 const uint32	kChangeKeymap = 'CChK';
 const uint32	kSettings = 'CSet';
 const uint32	kAbout = 'CAbt';
-const uint32	kBeepSettings = 'CBSt';
+//const uint32	kBeepSettings = 'CBSt';
 const uint32	kUnloadNow = 'CUnl';
 const uint32	kDisableNow = 'CDis';
 
@@ -101,7 +101,7 @@ DeskView::DeskView(BMessage *message) :
 	SetViewColor(B_TRANSPARENT_COLOR);
 	BFont font;
 	font.SetSize(13.f);
-	font.SetFace(B_BOLD_FACE);
+	//font.SetFace(B_BOLD_FACE);
 	SetFont(&font);
 	Init();	// Do prepare...
 }
@@ -218,12 +218,13 @@ void DeskView::DetachedFromWindow(void)
 void DeskView::Draw(BRect rect) {
 	BView::Draw(rect);
 	SetDrawingMode(B_OP_COPY);
-	rgb_color color = ui_color(B_DESKTOP_COLOR);
+	rgb_color color = ui_color(B_MENU_SELECTED_BACKGROUND_COLOR);
+	rgb_color gray_color = make_color(128, 128, 128);
 
 	// draw rect
-	SetLowColor(189,185,189); // Deskbar's status pane color
+	SetLowColor(ui_color(B_MENU_BACKGROUND_COLOR)); // Deskbar's status pane color
 	if(disabled)
-		SetHighColor(128,128,128); // Disabled grey
+		SetHighColor(gray_color); // Disabled grey
 	else {
 		SetHighColor(color);
 	}
@@ -245,7 +246,7 @@ void DeskView::Draw(BRect rect) {
 		map_name << ":(";
 
 	if(disabled)
-		SetLowColor(128,128,128);
+		SetLowColor(gray_color);
 	else
 		SetLowColor(color);
 	SetHighColor(255,255,255);
@@ -274,10 +275,10 @@ void DeskView::MessageReceived(BMessage *message) {
 			trace("Unable to create SettingsWindow");
 		break;
 	}
-	case kBeepSettings: {
+/*	case kBeepSettings: {
 		be_roster->Launch(SOUNDS_PREF_SIGNATURE);
 		break;
-	}
+	}*/
 	case kAbout: {
 		ShowAboutWindow();
 		break;
@@ -485,11 +486,11 @@ void DeskView::ShowContextMenu(BPoint where) {
 	menu->AddItem(item = new BMenuItem(B_TRANSLATE("Settings" B_UTF8_ELLIPSIS), new BMessage(kSettings)));
 	item->SetTarget(this);
 
-	menu->AddSeparatorItem();
+/*	menu->AddSeparatorItem();
 	
 	menu->AddItem(item = new BMenuItem(B_TRANSLATE("Beep setup" B_UTF8_ELLIPSIS), new BMessage(kBeepSettings)));
 	item->SetTarget(this);
-
+*/
 	menu->AddSeparatorItem();
 	menu->AddItem(item = new BMenuItem(B_TRANSLATE("Disable"), new BMessage(kDisableNow)));
 	item->SetTarget(this);
