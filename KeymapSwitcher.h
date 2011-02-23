@@ -6,12 +6,12 @@
 #define __KeymapSwitcher_H 
 
 
-#define APP_SIGNATURE "application/x-vnd.KeymapSwitcher"
+#define APP_SIGNATURE "application/x-vnd.Nexus-KeymapSwitcher"
 #define DESKBAR_SIGNATURE "application/x-vnd.Be-TSKB"
 #define REPLICANT_NAME "Switcher/Deskbar"
 #define BEEP_NAME "Keymap Switch"
 #define SOUNDS_PREF_SIGNATURE "application/x-vnd.Haiku-Sounds"
-#define INDICATOR_SIGNATURE "application/x-vnd.KeymapSwitcher"
+//#define INDICATOR_SIGNATURE "application/x-vnd.KeymapSwitcher"
 
 // add/remove keymap buttons ids 
 enum {

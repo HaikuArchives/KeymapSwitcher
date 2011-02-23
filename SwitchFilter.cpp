@@ -117,7 +117,8 @@ SwitchFilter::~SwitchFilter() {
 status_t SwitchFilter::InitCheck() {
 	trace("init check");
 	settings = new Settings("Switcher");
-	monitor = new SettingsMonitor(INDICATOR_SIGNATURE, settings);
+	//monitor = new SettingsMonitor(INDICATOR_SIGNATURE, settings);
+	monitor = new SettingsMonitor(APP_SIGNATURE, settings);
 	monitor->Run();
 	
 	return B_OK;

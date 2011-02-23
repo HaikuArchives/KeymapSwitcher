@@ -9,10 +9,13 @@
 #include <syslog.h>
 
 #include <Alert.h>
+#include <Application.h>
+#include <Beep.h>
 #include <Bitmap.h>
 #include <Box.h>
 #include <Button.h>
 #include <Catalog.h>
+#include <Deskbar.h>
 #include <Directory.h>
 #include <Entry.h>
 #include <FindDirectory.h>
@@ -56,7 +59,7 @@ const float kBmpBtnX = 17.;
 const float kBmpBtnY = 16.;
 
 //  construct main window
-SettingsWindow::SettingsWindow() 
+SettingsWindow::SettingsWindow(bool fromDeskbar) 
 				: 
 				BWindow(BRect(WINDOW_X, WINDOW_Y,
 						WINDOW_X + WINDOW_WIDTH, WINDOW_Y + WINDOW_HEIGHT),
@@ -66,6 +69,8 @@ SettingsWindow::SettingsWindow()
 	trace("read settings");
 	settings = new Settings("Switcher");
 	keymaps_changed = false;
+	from_deskbar = fromDeskbar;
+
 	Lock();
 
 	// "client" area view
@@ -290,9 +295,12 @@ SettingsWindow::SettingsWindow()
 					MSG_BEEP_SETUP, B_FOLLOW_RIGHT, NULL },
 		{ "about_button", B_TRANSLATE("About" B_UTF8_ELLIPSIS),
 					MSG_ABOUT, B_FOLLOW_RIGHT, NULL },
-		{ "save_button", B_TRANSLATE("Apply"), 
+		{ "save_button", !AlreadyInDeskbar() ? B_TRANSLATE("Install in Deskbar")
+									: B_TRANSLATE("Apply"),
 					MSG_SAVE_SETTINGS, B_FOLLOW_BOTTOM | B_FOLLOW_RIGHT, NULL },
-		{ "close_button", B_TRANSLATE("Revert"),
+		{ "close_button", !AlreadyInDeskbar() ? B_TRANSLATE("No, thanks. Exit")
+									: (from_deskbar) ? B_TRANSLATE("Cancel")
+												: B_TRANSLATE("Exit"),
 					MSG_CLOSE, B_FOLLOW_BOTTOM | B_FOLLOW_RIGHT, NULL },
 	};
 
@@ -438,6 +446,14 @@ void SettingsWindow::MessageReceived(BMessage *msg) {
 		break;
 	}
 	case MSG_SAVE_SETTINGS: {
+		if (!AlreadyInDeskbar()) {
+			add_system_beep_event(BEEP_NAME);
+
+			BDeskbar deskbar;
+			entry_ref ref;
+			be_roster->FindApp(APP_SIGNATURE, &ref);
+			deskbar.AddItem(&ref);
+		}
 		// delete all keymaps from settings
 		if(keymaps_changed) {
 			int32 keymaps = 0;
@@ -468,11 +484,17 @@ void SettingsWindow::MessageReceived(BMessage *msg) {
 		settings->Save();
 		delete settings; // we save settings in its destructor
 		::UpdateIndicator(DeskView::MSG_UPDATESETTINGS);
-		Close();
+		if(!from_deskbar) {
+			be_app->PostMessage(B_QUIT_REQUESTED);
+		} else
+			Close();
 		break;
 	}
 	case MSG_CLOSE:
-		Close();
+		if(!from_deskbar) {
+			be_app->PostMessage(B_QUIT_REQUESTED);
+		} else
+			Close();
 		break;
 		
 	case MSG_ABOUT:
@@ -516,10 +538,22 @@ void SettingsWindow::ShowAboutWindow()  {
 	alert->Go();
 }
 
+bool SettingsWindow::AlreadyInDeskbar()
+{
+	if (from_deskbar)
+		return true; // in any case - avoid creating BDeskbar from Deskbar! :-D
+
+	BDeskbar deskbar;
+	return deskbar.HasItem(REPLICANT_NAME);
+}
+
 // process quit message
 bool
 SettingsWindow::QuitRequested()
 {
+	if(!from_deskbar) {
+		be_app->PostMessage(B_QUIT_REQUESTED);
+	}
 	return BWindow::QuitRequested(); // cause otherwise it will kill Deskbar
 }
 

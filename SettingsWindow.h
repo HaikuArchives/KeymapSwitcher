@@ -78,9 +78,10 @@ class SettingsWindow: public BWindow {
 	};
 
 	void ShowAboutWindow();
+	bool AlreadyInDeskbar();
 
 public:
-	SettingsWindow();
+	SettingsWindow(bool fromDeskbar);
 	virtual ~SettingsWindow();
 	virtual void MessageReceived(BMessage *msg);
 	virtual bool QuitRequested();
@@ -89,6 +90,7 @@ private:
 	Settings *settings;
 	bool hotkey_changed;
 	bool keymaps_changed;
+	bool from_deskbar;
 	KeymapListView *selected_list;
 	KeymapOutlineListView *available_list;
 	BView *parent;

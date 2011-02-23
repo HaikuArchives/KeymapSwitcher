@@ -1,4 +1,4 @@
-1	russian	x-vnd.KeymapSwitcher	2836720256
+1	russian	x-vnd.Nexus-KeymapSwitcher	2705252246
  (system)	SwitcherSettingsWindow		 (системная)
  (user)	SwitcherSettingsWindow		 (пользовательская)
 About	SwitcherSettingsWindow		О программе
@@ -6,21 +6,26 @@ About…	SwitcherSettingsWindow		О программе…
 Apply	SwitcherSettingsWindow		Применить
 Available keymaps:	SwitcherSettingsWindow		Доступные раскладки:
 Beep setup…	SwitcherSettingsWindow		Настройка звука…
+Cancel	SwitcherSettingsWindow		Cancel
 Copyright © 1999-2003 Stas Maximov.\n	SwitcherSettingsWindow		Copyright © 1999-2003 Стас Максимов.\n
 Copyright © 2008-2010 Haiku, Inc.\n	SwitcherSettingsWindow		Copyright © 2008-2010 Haiku, Inc.\n
 Disable	SwitcherDeskView		Отключить
+Exit	SwitcherSettingsWindow		Exit
 Hotkey:	SwitcherSettingsWindow		Переключатель:
+Install in Deskbar	SwitcherSettingsWindow		Install in Deskbar
 Keymap Switcher	SwitcherSettingsWindow		Переключатель раскладок
 Keymap Switcher\n\n	SwitcherSettingsWindow		Keymap Switcher\n\n
+No, thanks. Exit	SwitcherSettingsWindow		No, thanks. Exit
+OK	SwitcherApplication		OK
 Okay	SwitcherSettingsWindow		Хорошо
 Original notice from Stas Maximov:\n	SwitcherSettingsWindow		Первоначальное сообщение Стаса Максимова:\n
 Quit	SwitcherDeskView		Выход
-Revert	SwitcherSettingsWindow		Вернуть
 Selected keymaps:	SwitcherSettingsWindow		Выбранные раскладки:
 Settings…	SwitcherDeskView		Настройки…
 Special thanks to all BeOS users, whether they use this app or not - they're keeping BeOS alive!\n\n	SwitcherSettingsWindow		Особая благодарность всем поклонникам BeOS, пользуются они этой программой или нет - они поддерживают в BeOS жизнь!\n\n
 System	SwitcherSettingsWindow		Системные
 Tested and inspired by\n\tSergey \"fyysik\" Dolgov,\n\tMaxim \"baza\" Bazarov,\n\tDenis Korotkov,\n\tNur Nazmetdinov and others.\n\n	SwitcherSettingsWindow		Протестирован и вдохновлен:\n\tСергеем \"fyysik\" Долговым,\n\tМаксимом \"baza\" Базаровым,\n\tДенисом Коротковым,\n\tНуром Назметдиновым и другими.\n\n
 Thanks to Pierre Raynaud-Richard and Robert Polic for BeOS tips.\n\n	SwitcherSettingsWindow		Спасибо Pierre Raynaud-Richard и Robert Polic за советы по BeOS.\n\n
+Unable to create Settings configuration window.	SwitcherApplication		Unable to create Settings configuration window.
 User	SwitcherSettingsWindow		Пользовательские
 Version  %VERSION \n\n	SwitcherSettingsWindow		Версия  %VERSION \n\n

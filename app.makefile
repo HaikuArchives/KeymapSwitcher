@@ -18,7 +18,7 @@ NAME=KeymapSwitcher
 #	DRIVER: Kernel Driver
 TYPE=APP
 
-APP_MIME_SIG=x-vnd.KeymapSwitcher
+APP_MIME_SIG=x-vnd.Nexus-KeymapSwitcher
 
 #	add support for new Pe and Eddie features
 #	to fill in generic makefile

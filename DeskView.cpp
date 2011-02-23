@@ -255,7 +255,7 @@ void DeskView::MessageReceived(BMessage *message) {
 		break;
 	}
 	case kSettings: {
-		SettingsWindow *settingsWnd = new SettingsWindow();
+		SettingsWindow *settingsWnd = new SettingsWindow(true);
 		if(settingsWnd == NULL)
 			trace("Unable to create SettingsWindow");
 		break;
