@@ -93,7 +93,7 @@ class SwitcherApplication : public BApplication
 
 		if (strcmp(argv[1], "--help") == 0
 			|| strcmp(argv[1], "-h") == 0) {
-			const char* str = B_TRANSLATE("Deskbar options:\n"
+			const char* str = B_TRANSLATE("KeymapSwitcher options:\n"
 					"\t--deskbar\tautomatically add replicant to Deskbar\n"
 					"\t--help\t\tprint this info and exit\n");
 			printf(str);

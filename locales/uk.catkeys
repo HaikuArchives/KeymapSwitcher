@@ -1,4 +1,4 @@
-1	ukrainian	x-vnd.Nexus-KeymapSwitcher	2407497108
+1	ukrainian	x-vnd.Nexus-KeymapSwitcher	3964042630
  (system)	SwitcherSettingsWindow		 (системна)
  (user)	SwitcherSettingsWindow		 (користувач)
 About	SwitcherDeskView		Про
@@ -14,6 +14,7 @@ Hotkey:	SwitcherSettingsWindow		Горячі клавіші:
 Install in Deskbar	SwitcherSettingsWindow		Встановити в Deskbar
 Keymap Switcher	SwitcherSettingsWindow		Перемикач розкладок
 Keymap Switcher\n\n	SwitcherDeskView		Перемикач розкладок\n\n
+KeymapSwitcher options:\n\t--deskbar\tautomatically add replicant to Deskbar\n\t--help\t\tprint this info and exit\n	SwitcherApplication		Настройки Перемикача розкладок:\n\t--deskbar\автоматично додавати реплікант в Deskbar\n\t--help\t\надрукувати це повідомлення і вийти\n
 OK	SwitcherApplication		Гаразд
 OK	SwitcherSettingsWindow		Гаразд
 Okay	SwitcherDeskView		Гаразд
@@ -27,6 +28,7 @@ System	SwitcherSettingsWindow		Системні
 Tested and inspired by\n\tSergey \"fyysik\" Dolgov,\n\tMaxim \"baza\" Bazarov,\n\tDenis Korotkov,\n\tNur Nazmetdinov and others.\n\n	SwitcherDeskView		Тестування і надхнення від\n\tСергія \"fyysik\" Долгова ,\n\tМаксима \"baza\" Базарова,\n\tДениса Короткова,\n\tНур Мухаметдинова і інших.\n\n
 Thanks to Pierre Raynaud-Richard and Robert Polic for BeOS tips.\n\n	SwitcherDeskView		Подяка для Pierre Raynaud-Richard і Robert Polic за підказки для BeOS .\n\n
 Unable to create Settings configuration window.	SwitcherApplication		Неможливо створити вікно конфігурації Настройок . 
+Unable to install keymap indicator. Deskbar application is not running.	SwitcherApplication		Неможливо встановити індикатор розкладок.Додаток Deskbar не запущено.
 Unable to install keymap indicator. Deskbar application is not running.	SwitcherSettingsWindow		Неможливо встановити індикатор розкладок.Додаток Deskbar не запущено.
 User	SwitcherSettingsWindow		Користувацькі
 Version  %VERSION \n\n	SwitcherDeskView		Версія  %VERSION \n\n

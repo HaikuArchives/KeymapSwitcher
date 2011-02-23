@@ -18,7 +18,7 @@
 
 #include "KeymapSwitcher.h"
 
-
+/*
 const int32 key_table[][2] = {
 {41,101},
 {42,114},
@@ -51,13 +51,49 @@ const int32 key_table[][2] = {
 {83,44},
 {84,46},
 {85,47}
+}; */
+
+//#
+//#	Raw key numbering for 101 keyboard...
+//#                                                                                        [sys]       [brk]
+//#                                                                                         0x7e        0x7f
+//# [esc]       [ f1] [ f2] [ f3] [ f4] [ f5] [ f6] [ f7] [ f8] [ f9] [f10] [f11] [f12]    [prn] [scr] [pau]
+//#  0x01        0x02  0x03  0x04  0x05  0x06  0x07  0x08  0x09  0x0a  0x0b  0x0c  0x0d     0x0e  0x0f  0x10     K E Y P A D   K E Y S
+//#
+//# [ ` ] [ 1 ] [ 2 ] [ 3 ] [ 4 ] [ 5 ] [ 6 ] [ 7 ] [ 8 ] [ 9 ] [ 0 ] [ - ] [ = ] [bck]    [ins] [hme] [pup]    [num] [ / ] [ * ] [ - ]
+//#  0x11  0x12  0x13  0x14  0x15  0x16  0x17  0x18  0x19  0x1a  0x1b  0x1c  0x1d  0x1e     0x1f  0x20  0x21     0x22  0x23  0x24  0x25
+//#
+//# [tab] [ q ] [ w ] [ e ] [ r ] [ t ] [ y ] [ u ] [ i ] [ o ] [ p ] [ [ ] [ ] ] [ \ ]    [del] [end] [pdn]    [ 7 ] [ 8 ] [ 9 ] [ + ]
+//#  0x26  0x27  0x28  0x29  0x2a  0x2b  0x2c  0x2d  0x2e  0x2f  0x30  0x31  0x32  0x33     0x34  0x35  0x36     0x37  0x38  0x39  0x3a
+//#
+//# [cap] [ a ] [ s ] [ d ] [ f ] [ g ] [ h ] [ j ] [ k ] [ l ] [ ; ] [ ' ] [  enter  ]                         [ 4 ] [ 5 ] [ 6 ]
+//#  0x3b  0x3c  0x3d  0x3e  0x3f  0x40  0x41  0x42  0x43  0x44  0x45  0x46     0x47                             0x48  0x49  0x4a
+//#
+//# [shift]     [ z ] [ x ] [ c ] [ v ] [ b ] [ n ] [ m ] [ , ] [ . ] [ / ]     [shift]          [ up]          [ 1 ] [ 2 ] [ 3 ] [ent]
+//#   0x4b       0x4c  0x4d  0x4e  0x4f  0x50  0x51  0x52  0x53  0x54  0x55       0x56            0x57           0x58  0x59  0x5a  0x5b
+//#
+//# [ctr]             [cmd]             [  space  ]             [cmd]             [ctr]    [lft] [dwn] [rgt]    [ 0 ] [ . ]
+//#  0x5c              0x5d                 0x5e                 0x5f              0x60     0x61  0x62  0x63     0x64  0x65
+//#
+//#	NOTE: On a Microsoft Natural Keyboard:
+//#			left option  = 0x66
+//#			right option = 0x67
+//#			menu key     = 0x68
+//#	NOTE: On an Apple Extended Keyboard:
+//#			left option  = 0x66
+//#			right option = 0x67
+//#			keypad '='   = 0x6a
+//#			power key    = 0x6b
+
+const int32 key_table[][2] = {
+	{ 0x4e, 'c' }, { 0x4f, 'v' }
 };
 
 enum __msgs {
 	MSG_CHANGEKEYMAP = 0x400, // thats for Indicator, don't change it
 }; 
 
-#if 0 //def NDEBUG
+#if 1 //def NDEBUG
 #define trace(x...) syslog(LOG_DEBUG, x);
 #else
 #define trace(s) ((void)0)  
@@ -130,14 +166,16 @@ status_t SwitchFilter::InitCheck() {
 
 // Filter key pressed 
 filter_result SwitchFilter::Filter(BMessage *message, BList *outList) {
-/*	union U{
+#if 0	
+	union U{
 		int32 long l;
 		char b[6];
 	} u;
 	memset(&u, 0, sizeof(u));
 	u.l = message->what;
 	trace("Filter:%s\n", u.b);
-*/	
+#endif
+
 	switch (message->what) {
 	case B_KEY_MAP_CHANGED:
 		trace("key_map_changed");
@@ -261,9 +299,6 @@ filter_result SwitchFilter::Filter(BMessage *message, BList *outList) {
 							  }
 		break;
 */
-//	case B_KEY_UP: 
-//		trace("Key up:\n");
-		break;
 	case B_KEY_DOWN: {
 		trace("Key down:\n");
 		if(switch_on_hold) {
@@ -289,8 +324,9 @@ filter_result SwitchFilter::Filter(BMessage *message, BList *outList) {
 */
 		modifiers &= ~(B_CAPS_LOCK | B_SCROLL_LOCK | B_NUM_LOCK);
 		if((modifiers != (B_COMMAND_KEY | B_LEFT_COMMAND_KEY)) && 
-			(modifiers != (B_COMMAND_KEY | B_RIGHT_COMMAND_KEY))) {
-//			trace("quitting because...");
+			(modifiers != (B_COMMAND_KEY | B_RIGHT_COMMAND_KEY)))
+		{
+			trace("quitting because... %#x", modifiers);
 			break; // only Alts needed
 		}
 			
@@ -310,13 +346,96 @@ filter_result SwitchFilter::Filter(BMessage *message, BList *outList) {
 		if(B_OK != be_roster->GetActiveAppInfo(&appinfo)) 
 			break; // no active app found. strange.. :))
 
+		if(key == 0xa)
+			debugger("a!");
 			
 //		if(raw > 0)
 //			break;
+		int32 raw_char = message->FindInt32("raw_char");
+		trace("key %d(%#x) raw:%d(%#x)", key, key, raw_char, raw_char);
+
+		BString str1;
+		message->FindString("bytes", &str1);
+		trace("str %s", str1.String());
+		int8 z[3] = {0};
+		message->FindInt8("byte", 0, &z[0]);
+		message->FindInt8("byte", 1, &z[1]);
+		message->FindInt8("byte", 2, &z[2]);
+		trace("byte %x %x %x", z[0], z[1], z[2]);
+
 			
-		for(uint32 i=0; i<sizeof(key_table)/sizeof(key_table[0]);i++) {
+		for(uint32 i = 0; i < sizeof(key_table)/sizeof(key_table[0]); i++) {
 			if(key == key_table[i][0]) {
 				message->ReplaceInt32("raw_char", key_table[i][1]);
+				trace("replaced to: %d", message->FindInt32("raw_char"));
+//				raw = key_table[i][1]; // set correct  value
+				char ach[2] = { key_table[i][1], 0};
+				BString str4("v");
+				message->RemoveName("bytes");
+				message->AddString("bytes", ach);
+				message->ReplaceString("bytes", str4);
+				message->ReplaceInt8("byte", 0, key_table[i][1]);
+				message->ReplaceInt8("byte", 1, 0);
+				message->ReplaceInt8("byte", 2, 0);
+				break;
+			}
+		}
+
+		BString str6;
+		message->FindString("bytes", &str6);
+		trace("r:str %s", str6.String());
+		message->FindInt8("byte", 0, &z[0]);
+		message->FindInt8("byte", 1, &z[1]);
+		message->FindInt8("byte", 2, &z[2]);
+		trace("r:byte %x %x %x", z[0], z[1], z[2]);
+
+//		if(raw < 0) // have no raw value for this key
+//			break;
+			
+		break;
+	} 
+/*	case B_KEY_UP: 
+	{
+		trace("Key up:\n");
+		
+		int32 modifiers = message->FindInt32("modifiers");
+		
+		modifiers &= ~(B_CAPS_LOCK | B_SCROLL_LOCK | B_NUM_LOCK);
+		if((modifiers != (B_COMMAND_KEY | B_LEFT_COMMAND_KEY)) && 
+			(modifiers != (B_COMMAND_KEY | B_RIGHT_COMMAND_KEY)))
+		{
+			trace("quitting because... %#x", modifiers);
+			break; // only Alts needed
+		}
+			
+		int32 key = message->FindInt32("key");
+
+		// continue processing "modifiered" key
+		app_info appinfo;
+		if(B_OK != be_roster->GetActiveAppInfo(&appinfo)) 
+			break; // no active app found. strange.. :))
+
+//		if(key == 0xa)
+//			debugger("a!");
+			
+//		if(raw > 0)
+//			break;
+		int32 raw_char = message->FindInt32("raw_char");
+		trace("key %d(%#x) raw:%d(%#x)", key, key, raw_char, raw_char);
+		
+		BString str1;
+		message->FindString("bytes", &str1);
+		trace("str %s", str1.String());
+		int8 z[3] = {0};
+		message->FindInt8("byte", 0, &z[0]);
+		message->FindInt8("byte", 1, &z[1]);
+		message->FindInt8("byte", 2, &z[2]);
+		trace("byte %x %x %x", z[0], z[1], z[2]);
+			
+		for(uint32 i = 0; i < sizeof(key_table)/sizeof(key_table[0]); i++) {
+			if(key == key_table[i][0]) {
+				message->ReplaceInt32("raw_char", key_table[i][1]);
+				trace("UP replaced to: %d", message->FindInt32("raw_char"));
 //				raw = key_table[i][1]; // set correct  value
 				break;
 			}
@@ -326,7 +445,7 @@ filter_result SwitchFilter::Filter(BMessage *message, BList *outList) {
 //			break;
 			
 		break;
-	} 
+	} */
 	default: 
 		break;
 	} // switch
