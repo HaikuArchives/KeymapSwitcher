@@ -223,6 +223,8 @@ void DeskView::AttachedToWindow(void)
 	BPoint pt;
 	GetPreferredSize(&pt.x, &pt.y);
 	ResizeTo(pt.x + 2, fIconY); // let some place for better look
+	BPoint ptOrg = Origin();
+	SetOrigin(ptOrg.x, ptOrg.y + 1); // im request from Diver. ;-)
 }
 
 void DeskView::UpdateViewColors()
