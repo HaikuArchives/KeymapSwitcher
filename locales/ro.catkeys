@@ -1,0 +1,41 @@
+1	romanian	x-vnd.Nexus-KeymapSwitcher	3524379678
+KeymapSwitcher options:\n\t--deskbar\tautomatically add replicant to Deskbar\n\t--help\t\tprint this info and exit\n	SwitcherApplication		Opțiuni ComutatorHartăTaste:\n\t--deskbar\tadaugă automat replica la Deskbar\n\t--help\t\ttipărește aceste informații și părăsește\n
+ (system)	SwitcherSettingsWindow		 (sistem)
+Copyright © 2008-2010 Haiku, Inc.\n	SwitcherDeskView		Drepturi de autor © 2008-2010 Haiku, Inc.\n
+Quit	SwitcherDeskView		Părăsește
+OK	SwitcherSettingsWindow		OK
+Unable to start Deskbar application. Keymap indicator was not installed.	SwitcherSettingsWindow		Nu s-a putut porni aplicația Deskbar. Indicatorul HartăTaste nu a fost instalat.
+About…	SwitcherDeskView		Despre…
+Unable to install keymap indicator. Deskbar application is not running.	SwitcherSettingsWindow		Nu s-a putut instala indicatorul hartă taste. Aplicația Deskbar nu rulează.
+Hotkey:	SwitcherSettingsWindow		Tastă rapidă:
+Settings…	SwitcherDeskView		Configurări…
+Shift+Shift	SwitcherSettingsWindow		Shift+Shift
+Substitute shortcuts with %KEYMAP%'s ones	SwitcherSettingsWindow		Înlocuiește scurtăturile cu cele %KEYMAP%
+System	SwitcherSettingsWindow		Sistem
+Thanks to Pierre Raynaud-Richard and Robert Polic for BeOS tips.\n\n	SwitcherDeskView		Mulțumesc lui Pierre Raynaud-Richard și lui Robert Polic pentru sfaturile legate de BeOS.\n\n
+Original notice from Stas Maximov:\n	SwitcherDeskView		Notiță originală de la Stas Maximov:\n
+Cmd+Shift	SwitcherSettingsWindow		Cmd+Shift
+Install in Deskbar	SwitcherSettingsWindow		Instalează pe Deskbar
+Special thanks to all BeOS users, whether they use this app or not - they're keeping BeOS alive!\n\n	SwitcherDeskView		Mulțumiri speciale tuturor utilizatorilor BeOS, chiar dacă utilizează sau nu această aplicație - ei mențin BeOS viu!\n\n
+Unable to install keymap indicator. Deskbar application is not running.	SwitcherApplication		Nu s-a putut instala indicatorul hartă taste. Aplicația Deskbar nu rulează.
+OK	SwitcherApplication		OK
+Apply	SwitcherSettingsWindow		Aplică
+About	SwitcherDeskView		Despre
+Scroll Lock	SwitcherSettingsWindow		Scroll Lock
+Revert	SwitcherSettingsWindow		Revenire
+Caps Lock	SwitcherSettingsWindow		Caps Lock
+ (user)	SwitcherSettingsWindow		 (utilizator)
+Copyright © 1999-2003 Stas Maximov.\n	SwitcherDeskView		Drepturi de autor © 1999-2003 Stas Maximov.\n
+Ctrl+Shift	SwitcherSettingsWindow		Ctrl+Shift
+Keymap Switcher	SwitcherSettingsWindow		Comutator HartăTaste
+Okay	SwitcherDeskView		Bine
+Exit	SwitcherSettingsWindow		Ieșire
+Start Deskbar	SwitcherSettingsWindow		Pornește Deskbar
+Available keymaps:	SwitcherSettingsWindow		Hărți de taste disponibile:
+Version  %VERSION \n\n	SwitcherDeskView		Versiune  %VERSION \n\n
+Selected keymaps:	SwitcherSettingsWindow		Hărți de taste selectate:
+Unable to create Settings configuration window.	SwitcherApplication		Nu s-a putut crea fereastra Configurări.
+Keymap Switcher\n\n	SwitcherDeskView		Comutator HartăTaste\n\n
+Tested and inspired by\n\tSergey \"fyysik\" Dolgov,\n\tMaxim \"baza\" Bazarov,\n\tDenis Korotkov,\n\tNur Nazmetdinov and others.\n\n	SwitcherDeskView		Testat și inspirat de\n\tSergey \"fyysik\" Dolgov,\n\tMaxim \"baza\" Bazarov,\n\tDenis Korotkov,\n\tNur Nazmetdinov și alții.\n\n
+User	SwitcherSettingsWindow		Utilizator
+Activate shortcuts substitution	SwitcherSettingsWindow		Activează înlocuirea scurtăturilor
