@@ -222,7 +222,7 @@ void DeskView::AttachedToWindow(void)
 
 	BPoint pt;
 	GetPreferredSize(&pt.x, &pt.y);
-	ResizeTo(pt.x/* + 2*/, fIconY); // let some place for better look
+	ResizeTo(pt.x + 2, fIconY); // let some place for better look
 }
 
 void DeskView::UpdateViewColors()
