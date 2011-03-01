@@ -1,0 +1,41 @@
+1	english	x-vnd.Nexus-KeymapSwitcher	3524379678
+ (system)	SwitcherSettingsWindow		 (systém)
+ (user)	SwitcherSettingsWindow		 (uživatel)
+About	SwitcherDeskView		O…
+About…	SwitcherDeskView		O…
+Activate shortcuts substitution	SwitcherSettingsWindow		Spustit nahrazování klávesových zkratek
+Apply	SwitcherSettingsWindow		Použít
+Available keymaps:	SwitcherSettingsWindow		Dostupné klávesnice:
+Caps Lock	SwitcherSettingsWindow		Caps Lock
+Cmd+Shift	SwitcherSettingsWindow		Cmd+Shift
+Copyright © 1999-2003 Stas Maximov.\n	SwitcherDeskView		Copyright © 1999-2003 Stas Maximov.\n
+Copyright © 2008-2010 Haiku, Inc.\n	SwitcherDeskView		Copyright © 2008-2010 Haiku, Inc.\n
+Ctrl+Shift	SwitcherSettingsWindow		Ctrl+Shift
+Exit	SwitcherSettingsWindow		Konec
+Hotkey:	SwitcherSettingsWindow		Klávesová zkratka:
+Install in Deskbar	SwitcherSettingsWindow		Instalovat do Lišty
+Keymap Switcher	SwitcherSettingsWindow		Přepínač Klávesnice
+Keymap Switcher\n\n	SwitcherDeskView		Přepínač Klávesnice
+KeymapSwitcher options:\n\t--deskbar\tautomatically add replicant to Deskbar\n\t--help\t\tprint this info and exit\n	SwitcherApplication		Volby Přepínače Klávesnice:\n\t--deskbar\tautomaticky přidá indikátor do Lišta\n\t--help\t\tvytisknout toto info a ukončit\n
+OK	SwitcherApplication		OK
+OK	SwitcherSettingsWindow		OK
+Okay	SwitcherDeskView		Jasně
+Original notice from Stas Maximov:\n	SwitcherDeskView		Původní recenze od Stase Maximova:\n
+Quit	SwitcherDeskView		Konec
+Revert	SwitcherSettingsWindow		Zpět
+Scroll Lock	SwitcherSettingsWindow		Scroll Lock
+Selected keymaps:	SwitcherSettingsWindow		Zvolená klávesnice:
+Settings…	SwitcherDeskView		Nastavení…
+Shift+Shift	SwitcherSettingsWindow		Shift+Shift
+Special thanks to all BeOS users, whether they use this app or not - they're keeping BeOS alive!\n\n	SwitcherDeskView		Obzvláštní díky všem uživatelům BeOS, ať už tuhle aplikaci používají, nebo ne - že udržují BeOS naživu!\n\n
+Start Deskbar	SwitcherSettingsWindow		Spustit Lištu
+Substitute shortcuts with %KEYMAP%'s ones	SwitcherSettingsWindow		Nahradit klávesové zkratky zkratkami z %KEYMAP%
+System	SwitcherSettingsWindow		Systém
+Tested and inspired by\n\tSergey \"fyysik\" Dolgov,\n\tMaxim \"baza\" Bazarov,\n\tDenis Korotkov,\n\tNur Nazmetdinov and others.\n\n	SwitcherDeskView		Testováno a inspirováno \n\tSergeyem \"fyysik\" Dolgovem,\n\tMaximem \"baza\" Bazarovem,\n\tDenisem Korotkovem,\n\tNurem Nazmetdinovem a ostatními.\n\n
+Thanks to Pierre Raynaud-Richard and Robert Polic for BeOS tips.\n\n	SwitcherDeskView		Díky Pierre Raynaud-Richardovi a Robertu Policemu za BeOS tipy.\n\n
+Unable to create Settings configuration window.	SwitcherApplication		Nebylo možné vytvořit okno Nastavení konfigurace.
+Unable to install keymap indicator. Deskbar application is not running.	SwitcherApplication		Nebylo možno instalovat indikátor klávesnice. Miniaplikace v liště neběží.
+Unable to install keymap indicator. Deskbar application is not running.	SwitcherSettingsWindow		Nebylo možno instalovat indikátor klávesnice. Miniaplikace v liště neběží.
+Unable to start Deskbar application. Keymap indicator was not installed.	SwitcherSettingsWindow		Nebylo možno spustit aplikaci miniaplikaci v liště. Indikátor klávesnice nebyl nainstalován.
+User	SwitcherSettingsWindow		Uživatel
+Version  %VERSION \n\n	SwitcherDeskView		Verze %VERSION \n\n
