@@ -16,7 +16,7 @@ Hotkey:	SwitcherSettingsWindow		Klávesová zkratka:
 Install in Deskbar	SwitcherSettingsWindow		Instalovat do Lišty
 Keymap Switcher	SwitcherSettingsWindow		Přepínač Klávesnice
 Keymap Switcher\n\n	SwitcherDeskView		Přepínač Klávesnice
-KeymapSwitcher options:\n\t--deskbar\tautomatically add replicant to Deskbar\n\t--help\t\tprint this info and exit\n	SwitcherApplication		Volby Přepínače Klávesnice:\n\t--deskbar\tautomaticky přidá indikátor do Lišta\n\t--help\t\tvytisknout toto info a ukončit\n
+KeymapSwitcher options:\n\t--deskbar\tautomatically add replicant to Deskbar\n\t--help\t\tprint this info and exit\n	SwitcherApplication		Volby Přepínače Klávesnice:\n\t--deskbar\tautomaticky přidat indikátor do Lišty\n\t--help\t\tvytisknout toto info a ukončit\n
 OK	SwitcherApplication		OK
 OK	SwitcherSettingsWindow		OK
 Okay	SwitcherDeskView		Jasně
