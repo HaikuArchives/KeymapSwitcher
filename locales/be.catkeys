@@ -1,4 +1,4 @@
-1	belarusian	x-vnd.Nexus-KeymapSwitcher	3524379678
+1	belarusian	x-vnd.Nexus-KeymapSwitcher	3535026967
  (system)	SwitcherSettingsWindow		 (сістэмная)
  (user)	SwitcherSettingsWindow		 (карыстальніцкая)
 About	SwitcherDeskView		Пра Праграму
@@ -16,6 +16,7 @@ Hotkey:	SwitcherSettingsWindow		Пераключальнік:
 Install in Deskbar	SwitcherSettingsWindow		Усталяваць у Дэскбар
 Keymap Switcher	SwitcherSettingsWindow		Пераключальнік Клавіятуры
 Keymap Switcher\n\n	SwitcherDeskView		Пераключальнік Клавіятуры\n\n
+KeymapSwitcher	System name		Пераключальнік Клавіятуры
 KeymapSwitcher options:\n\t--deskbar\tautomatically add replicant to Deskbar\n\t--help\t\tprint this info and exit\n	SwitcherApplication		Параметры KeymapSwitcher:\n\t--deskbar\tаўтаматычна усталяваць у Дэскбар\n\t--help\t\tПаказаць гэтую інфармацыю і выйсці\n
 OK	SwitcherApplication		ОК
 OK	SwitcherSettingsWindow		ОК

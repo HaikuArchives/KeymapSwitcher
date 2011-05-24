@@ -1,4 +1,4 @@
-1	russian	x-vnd.Nexus-KeymapSwitcher	3524379678
+1	russian	x-vnd.Nexus-KeymapSwitcher	3535026967
  (system)	SwitcherSettingsWindow		 (системная)
  (user)	SwitcherSettingsWindow		 (пользовательская)
 About	SwitcherDeskView		О программе
@@ -15,7 +15,8 @@ Exit	SwitcherSettingsWindow		Выход
 Hotkey:	SwitcherSettingsWindow		Переключатель:
 Install in Deskbar	SwitcherSettingsWindow		Установить в Deskbar
 Keymap Switcher	SwitcherSettingsWindow		Переключатель раскладок
-Keymap Switcher\n\n	SwitcherDeskView		Keymap Switcher\n\n
+Keymap Switcher\n\n	SwitcherDeskView		Переключатель раскладок\n\n
+KeymapSwitcher	System name		Переключатель раскладок
 KeymapSwitcher options:\n\t--deskbar\tautomatically add replicant to Deskbar\n\t--help\t\tprint this info and exit\n	SwitcherApplication		Опции KeymapSwitcher:\n\t--deskbar\tавтоматически добавить репликант в Deskbar\n\t--help\t\tвывести эту информацию и выйти\n
 OK	SwitcherApplication		ОК
 OK	SwitcherSettingsWindow		ОК

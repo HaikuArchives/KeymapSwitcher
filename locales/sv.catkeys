@@ -1,4 +1,4 @@
-1	swedish	x-vnd.Nexus-KeymapSwitcher	3524379678
+1	swedish	x-vnd.Nexus-KeymapSwitcher	3535026967
  (system)	SwitcherSettingsWindow		 (systeminstallerad)
  (user)	SwitcherSettingsWindow		 (användarspecifik)
 About	SwitcherDeskView		Om
@@ -16,6 +16,7 @@ Hotkey:	SwitcherSettingsWindow		Snabbtangent:
 Install in Deskbar	SwitcherSettingsWindow		Lägg till i Deskbar
 Keymap Switcher	SwitcherSettingsWindow		LayoutVäxlaren
 Keymap Switcher\n\n	SwitcherDeskView		LayoutVäxlaren\n\n
+KeymapSwitcher	System name		LayoutVäxlaren
 KeymapSwitcher options:\n\t--deskbar\tautomatically add replicant to Deskbar\n\t--help\t\tprint this info and exit\n	SwitcherApplication		LayoutVäxlarens alternativ:\n\t--deskbar\tlägg till replikant i Deskbar\n\t--help\t\tvisa denna info och avsluta\n
 OK	SwitcherApplication		OK
 OK	SwitcherSettingsWindow		OK

@@ -1,4 +1,4 @@
-1	german	x-vnd.Nexus-KeymapSwitcher	3524379678
+1	german	x-vnd.Nexus-KeymapSwitcher	3535026967
  (system)	SwitcherSettingsWindow		 (System)
  (user)	SwitcherSettingsWindow		 (Benutzer)
 About	SwitcherDeskView		Über
@@ -16,6 +16,7 @@ Hotkey:	SwitcherSettingsWindow		Tastenkombination zum Wechseln:
 Install in Deskbar	SwitcherSettingsWindow		In Deskbar installieren
 Keymap Switcher	SwitcherSettingsWindow		Keymap-Wechsler
 Keymap Switcher\n\n	SwitcherDeskView		Keymap-Wechsler\n\n
+KeymapSwitcher	System name		Keymap-Wechsler
 KeymapSwitcher options:\n\t--deskbar\tautomatically add replicant to Deskbar\n\t--help\t\tprint this info and exit\n	SwitcherApplication		Gebrauch:\n\t--deskbar\tAutomatisch in Deskbar installieren\n\t--help\t\tDiesen Text ausgeben und beenden\n
 OK	SwitcherApplication		OK
 OK	SwitcherSettingsWindow		OK

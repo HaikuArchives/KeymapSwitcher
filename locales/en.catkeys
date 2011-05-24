@@ -1,4 +1,4 @@
-1	english	x-vnd.Nexus-KeymapSwitcher	3524379678
+1	english	x-vnd.Nexus-KeymapSwitcher	3535026967
 KeymapSwitcher options:\n\t--deskbar\tautomatically add replicant to Deskbar\n\t--help\t\tprint this info and exit\n	SwitcherApplication		KeymapSwitcher options:\n\t--deskbar\tautomatically add replicant to Deskbar\n\t--help\t\tprint this info and exit\n
  (system)	SwitcherSettingsWindow		 (system)
 Copyright © 2008-2010 Haiku, Inc.\n	SwitcherDeskView		Copyright © 2008-2010 Haiku, Inc.\n
@@ -15,6 +15,7 @@ System	SwitcherSettingsWindow		System
 Thanks to Pierre Raynaud-Richard and Robert Polic for BeOS tips.\n\n	SwitcherDeskView		Thanks to Pierre Raynaud-Richard and Robert Polic for BeOS tips.\n\n
 Original notice from Stas Maximov:\n	SwitcherDeskView		Original notice from Stas Maximov:\n
 Cmd+Shift	SwitcherSettingsWindow		Cmd+Shift
+KeymapSwitcher	System name		KeymapSwitcher
 Install in Deskbar	SwitcherSettingsWindow		Install in Deskbar
 Special thanks to all BeOS users, whether they use this app or not - they're keeping BeOS alive!\n\n	SwitcherDeskView		Special thanks to all BeOS users, whether they use this app or not - they're keeping BeOS alive!\n\n
 Unable to install keymap indicator. Deskbar application is not running.	SwitcherApplication		Unable to install keymap indicator. Deskbar application is not running.

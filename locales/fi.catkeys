@@ -1,4 +1,4 @@
-1	english	x-vnd.Nexus-KeymapSwitcher	3524379678
+1	english	x-vnd.Nexus-KeymapSwitcher	3535026967
  (system)	SwitcherSettingsWindow		 (järjestelmä)
  (user)	SwitcherSettingsWindow		 (käyttäjä)
 About	SwitcherDeskView		Ohjelmasta
@@ -16,6 +16,7 @@ Hotkey:	SwitcherSettingsWindow		Pikanäppäin:
 Install in Deskbar	SwitcherSettingsWindow		Asenna Työpöytäpalkkiin
 Keymap Switcher	SwitcherSettingsWindow		Näppäinkarttavaihtaja
 Keymap Switcher\n\n	SwitcherDeskView		Näppäinkarttavaihtaja\n\n
+KeymapSwitcher	System name		Näppäinkarttavaihtaja
 KeymapSwitcher options:\n\t--deskbar\tautomatically add replicant to Deskbar\n\t--help\t\tprint this info and exit\n	SwitcherApplication		Näppäinkarttavaihtajan valitsimet:\n\t--deskbar\tlisää replikantti automaattisesti Työpöytäpalkkiin\n\t--help\t\ttulosta nämä tiedot ja poistu\n
 OK	SwitcherApplication		Valmis
 OK	SwitcherSettingsWindow		Valmis

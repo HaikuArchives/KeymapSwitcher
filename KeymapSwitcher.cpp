@@ -40,6 +40,7 @@ class SwitcherApplication : public BApplication
 							fAutoInstallInDeskbar(false),
 							fQuitImmediately(false)
 	{
+		B_TRANSLATE_MARK_SYSTEM_NAME("KeymapSwitcher");
 	}
 
     virtual void

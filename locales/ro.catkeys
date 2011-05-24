@@ -1,4 +1,4 @@
-1	romanian	x-vnd.Nexus-KeymapSwitcher	3524379678
+1	romanian	x-vnd.Nexus-KeymapSwitcher	3535026967
  (system)	SwitcherSettingsWindow		 (sistem)
  (user)	SwitcherSettingsWindow		 (utilizator)
 About	SwitcherDeskView		Despre
@@ -16,6 +16,7 @@ Hotkey:	SwitcherSettingsWindow		Tastă rapidă:
 Install in Deskbar	SwitcherSettingsWindow		Instalează pe Deskbar
 Keymap Switcher	SwitcherSettingsWindow		Comutator HartăTaste
 Keymap Switcher\n\n	SwitcherDeskView		Comutator HartăTaste\n\n
+KeymapSwitcher	System name		Comutator HartăTaste
 KeymapSwitcher options:\n\t--deskbar\tautomatically add replicant to Deskbar\n\t--help\t\tprint this info and exit\n	SwitcherApplication		Opțiuni ComutatorHartăTaste:\n\t--deskbar\tadaugă automat replica la Deskbar\n\t--help\t\ttipărește aceste informații și părăsește\n
 OK	SwitcherApplication		OK
 OK	SwitcherSettingsWindow		OK

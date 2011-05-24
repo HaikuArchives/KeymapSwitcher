@@ -1,4 +1,4 @@
-1	bulgarian	x-vnd.Nexus-KeymapSwitcher	3524379678
+1	bulgarian	x-vnd.Nexus-KeymapSwitcher	3535026967
  (system)	SwitcherSettingsWindow		 (системна)
  (user)	SwitcherSettingsWindow		 (потребителска)
 About	SwitcherDeskView		Относно
@@ -16,6 +16,7 @@ Hotkey:	SwitcherSettingsWindow		Бързи клавиши:
 Install in Deskbar	SwitcherSettingsWindow		Инсталирай в Deskbar
 Keymap Switcher	SwitcherSettingsWindow		Keymap Switcher
 Keymap Switcher\n\n	SwitcherDeskView		Keymap Switcher\n\n
+KeymapSwitcher	System name		KeymapSwitcher
 KeymapSwitcher options:\n\t--deskbar\tautomatically add replicant to Deskbar\n\t--help\t\tprint this info and exit\n	SwitcherApplication		KeymapSwitcher опции:\n\t--deskbar\tавтоматично добавя репликанта в Deskbar\n\t--help\t\tизвежда тази информация и изход\n
 OK	SwitcherApplication		OK
 OK	SwitcherSettingsWindow		OK
