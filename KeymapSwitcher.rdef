@@ -5,6 +5,8 @@ resource(1, "BEOS:FILE_TYPES") message { };
 
 resource app_flags B_SINGLE_LAUNCH /*| B_BACKGROUND_APP*/;
 
+resource app_name_catalog_entry "x-vnd.Nexus-KeymapSwitcher:System name:KeymapSwitcher";
+
 resource app_version {
 	major  = VersionMajor,
 	middle = VersionMiddle,
