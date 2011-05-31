@@ -488,11 +488,12 @@ BMessenger* SwitchFilter::GetIndicatorMessenger() {
 	// In the Deskbar the Shelf is in the View "Status" in Window "Deskbar"
 //	request.AddSpecifier("View", REPLICANT_NAME);
 	request.AddSpecifier("View", "Status");
-	request.AddSpecifier("Window", "Deskbar");
+//	request.AddSpecifier("Window", "Deskbar");
+	request.AddSpecifier("Window", (int32)1); // the first one "Twitcher"???
 	to = BMessenger(DESKBAR_SIGNATURE, -1);
-	
+
 	BMessage	reply;
-	
+
 	if (to.SendMessage(&request, &reply) == B_OK) {
 		if(reply.FindMessenger("result", &status) == B_OK) {
 
