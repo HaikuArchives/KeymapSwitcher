@@ -256,7 +256,6 @@ void DeskView::UpdateText()
 		map_name << ":(";
 
 	map_name.Truncate(2, true);
-	map_name.ToUpper();
 
 	if(0 != map_name.Compare(Text())) {
 		SetText(map_name);
