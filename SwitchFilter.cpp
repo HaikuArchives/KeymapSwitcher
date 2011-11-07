@@ -489,7 +489,7 @@ BMessenger* SwitchFilter::GetIndicatorMessenger() {
 //	request.AddSpecifier("View", REPLICANT_NAME);
 	request.AddSpecifier("View", "Status");
 //	request.AddSpecifier("Window", "Deskbar");
-	request.AddSpecifier("Window", (int32)1); // the first one "Twitcher"???
+	request.AddSpecifier("Window", (int32)0); // the first one "Twitcher"???
 	to = BMessenger(DESKBAR_SIGNATURE, -1);
 
 	BMessage	reply;
