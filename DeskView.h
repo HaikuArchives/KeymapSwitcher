@@ -37,10 +37,8 @@ public:
 
 	virtual void MouseDown(BPoint);
 	virtual void Pulse();
-//	virtual void Draw(BRect );
 	virtual void MessageReceived(BMessage *);
     void     AttachedToWindow();
-//    void     DetachedFromWindow();
 
 private:
 	void ShowContextMenu(BPoint where);
@@ -53,7 +51,6 @@ private:
 	void UpdateText();
 private:
 	Settings *settings; 
-//	bool disabled;
 	bool watching;
 	BPath cur_map_path;
 	int32 active_keymap;

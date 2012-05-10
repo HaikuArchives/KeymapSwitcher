@@ -65,9 +65,7 @@ const float fIconY = 15;
 const uint32	kChangeKeymap = 'CChK';
 const uint32	kSettings = 'CSet';
 const uint32	kAbout = 'CAbt';
-//const uint32	kBeepSettings = 'CBSt';
 const uint32	kUnloadNow = 'CUnl';
-//const uint32	kDisableNow = 'CDis';
 
 typedef struct {
 	BPopUpMenu*	menu;
@@ -95,20 +93,16 @@ DeskView::DeskView(const char *name,
 	uint32 resizeMask, uint32 flags)
 		: BStringView(BRect(0,0, fIconX, fIconY), name, ":)",  resizeMask, flags)
 {
-	//SetViewColor(B_TRANSPARENT_32_BIT);
 	AddChild(new BDragger(BRect(-10, -10, - 10, -10), this));
 	Init();	// Do prepare...
 }
 
 // Archive constructor
 DeskView::DeskView(BMessage *message) : 
-		BStringView(message)/*,
-		menu(new BPopUpMenu("Menu",false,false)) */
+		BStringView(message)
 {
-	//SetViewColor(B_TRANSPARENT_COLOR);
 	BFont font;
 	font.SetSize(12.f);
-	//font.SetFace(B_BOLD_FACE);
 	SetFont(&font);
 	SetAlignment(B_ALIGN_CENTER);
 
@@ -116,9 +110,8 @@ DeskView::DeskView(BMessage *message) :
 }
 
 // Prepare 
-void DeskView::Init() {
-	//	InitVersionInfo();
-
+void DeskView::Init()
+{
 	keymaps = new BList();
 	settings = new Settings("Switcher");
 	if (settings->InitCheck() != B_OK) {
@@ -128,8 +121,6 @@ void DeskView::Init() {
 	}
 	active_keymap = 0;
 	settings->FindInt32("active", &active_keymap);
-//	disabled = false;
-//	settings->FindBool("disabled", &disabled);
 	watching = false;	
 	
 	find_directory(B_USER_SETTINGS_DIRECTORY, &cur_map_path);
@@ -179,7 +170,8 @@ void DeskView::Init() {
 }
 
 //
-DeskView::~DeskView() {
+DeskView::~DeskView()
+{
 	be_roster->StopWatching(this);
 	settings->SetInt32("active", active_keymap);
 	if (NULL != settings) 
@@ -197,15 +189,18 @@ DeskView::~DeskView() {
 
 
 // archiving overrides
-DeskView *DeskView::Instantiate(BMessage *data) {
+DeskView *DeskView::Instantiate(BMessage *data)
+{
 	if (validate_instantiation(data, "DeskView")) {
 		return new DeskView(data);
 	}
+
 	return NULL;
 }
 
 //
-status_t DeskView::Archive(BMessage *data, bool deep) const {
+status_t DeskView::Archive(BMessage *data, bool deep) const
+{
 	BStringView::Archive(data, deep);
 	data->AddString("add_on", APP_SIGNATURE);
 	data->AddString("class", REPLICANT_NAME);
@@ -263,7 +258,8 @@ void DeskView::UpdateText()
 }
 
 //
-void DeskView::MessageReceived(BMessage *message) {
+void DeskView::MessageReceived(BMessage *message)
+{
 	switch(message->what) {
 	case B_KEY_MAP_CHANGED:
 		break;
@@ -274,17 +270,9 @@ void DeskView::MessageReceived(BMessage *message) {
 		break;
 	}
 	case kSettings: {
-		/*
-		SettingsWindow *settingsWnd = new SettingsWindow(true);
-		if(settingsWnd == NULL)
-			trace("Unable to create SettingsWindow");*/
 		be_roster->Launch(APP_SIGNATURE);
 		break;
 	}
-/*	case kBeepSettings: {
-		be_roster->Launch(SOUNDS_PREF_SIGNATURE);
-		break;
-	}*/
 	case kAbout: {
 		ShowAboutWindow();
 		break;
@@ -294,21 +282,8 @@ void DeskView::MessageReceived(BMessage *message) {
 		deskbar.RemoveItem(REPLICANT_NAME);
 		break;
 	}
-/*	case kDisableNow: {
-		disabled = !disabled; 
-
-		UpdateViewColors();
-
-		settings->SetBool("disabled", disabled);
-		settings->Save();
-		Invalidate();
-		//Pulse();
-		break;
-	} */
 	case MSG_CHANGEKEYMAP:
 		// message from Switcher, change Indicator now!
-	//	if (disabled)
-	//		break;
 		ChangeKeyMap(NEXT_KEYMAP(active_keymap, keymaps->CountItems()));
 		break;
 
@@ -416,7 +391,8 @@ void DeskView::MessageReceived(BMessage *message) {
 	BStringView::MessageReceived(message);
 }
 
-int32 DeskView::FindApp(int32 team) {
+int32 DeskView::FindApp(int32 team)
+{
 	int32 count = app_list->CountItems();
 	for(int i=0; i<count; i++) {
 		if(((team_keymap*)app_list->ItemAt(i))->team == team)
@@ -426,33 +402,10 @@ int32 DeskView::FindApp(int32 team) {
 }
 
 //
-void DeskView::Pulse() {
-
-	//Draw(Bounds());
-
+void DeskView::Pulse()
+{
 	UpdateText();
-/*
-	BString map_name;
-	// get keymap name from the keymap path
-	BString *keymap = (BString *)keymaps->ItemAt(active_keymap); 
-	if(keymap == 0) {
-		keymap = (BString *)keymaps->ItemAt(0);
-	}
 
-	if (keymap != 0) {
-		BPath path(keymap->String());
-		map_name = path.Leaf();
-	}
-
-	if (map_name.Length() == 0)
-		map_name << ":(";
-
-	map_name.Truncate(2, true);
-
-	if(0 != map_name.Compare(Text())) {
-		SetText(map_name);
-	}
-*/
 	if(!watching) {
 		if(B_OK == be_roster->StartWatching(this, B_REQUEST_LAUNCHED | B_REQUEST_QUIT | B_REQUEST_ACTIVATED))
 			trace("start watching");
@@ -461,7 +414,8 @@ void DeskView::Pulse() {
 }
 
 //
-void DeskView::MouseDown(BPoint where) {
+void DeskView::MouseDown(BPoint where)
+{
 	BWindow *window = Window();
 	if (window == NULL)
 		return;
@@ -483,17 +437,14 @@ void DeskView::MouseDown(BPoint where) {
 		} else if (buttons & B_PRIMARY_MOUSE_BUTTON /*&& !disabled*/) {
 			ChangeKeyMap(NEXT_KEYMAP(active_keymap, keymaps->CountItems()));
 		} else if (buttons & B_TERTIARY_MOUSE_BUTTON) {
-			/*SettingsWindow *settingsWnd = new SettingsWindow(true);
-			if(settingsWnd == NULL)
-				trace("Unable to create SettingsWindow");*/
 			be_roster->Launch(APP_SIGNATURE);
 		}
 	}
 }
 
 //
-void DeskView::ShowContextMenu(BPoint where) {
-	
+void DeskView::ShowContextMenu(BPoint where)
+{
 	BMessenger messenger(this);
 	BPopUpMenu *menu = new BPopUpMenu("Menu", false, false);
 
@@ -507,7 +458,6 @@ void DeskView::ShowContextMenu(BPoint where) {
 		item = new BMenuItem(path.Leaf(), msg);
 		item->SetTarget(this);
 		item->SetMarked(i == active_keymap);
-		//if(disabled) item->SetEnabled(false);
 		menu->AddItem(item);
 	}
 	
@@ -520,16 +470,6 @@ void DeskView::ShowContextMenu(BPoint where) {
 	menu->AddItem(item = new BMenuItem(B_TRANSLATE("About" B_UTF8_ELLIPSIS), new BMessage(kAbout)));
 	item->SetTarget(this);
 
-/*	menu->AddSeparatorItem();
-	
-	menu->AddItem(item = new BMenuItem(B_TRANSLATE("Beep setup" B_UTF8_ELLIPSIS), new BMessage(kBeepSettings)));
-	item->SetTarget(this);
-*/
-/*	menu->AddSeparatorItem();
-	menu->AddItem(item = new BMenuItem(B_TRANSLATE("Disable"), new BMessage(kDisableNow)));
-	item->SetTarget(this);
-	item->SetMarked(disabled);
-*/	
 	menu->AddItem(item = new BMenuItem(B_TRANSLATE("Quit"), new BMessage(kUnloadNow)));
 	item->SetTarget(this);
 	BRect bounds = Bounds();
@@ -545,7 +485,8 @@ void DeskView::ShowContextMenu(BPoint where) {
 
 
 // change keymap, when user changed keymap with mouse on deskbar or via hotkey.
-void DeskView::ChangeKeyMap(int32 change_to) {
+void DeskView::ChangeKeyMap(int32 change_to)
+{
 	fprintf(stderr, "change to:%ld\n", change_to);
 	ChangeKeyMapSilent(change_to);
 	bool should_beep = false;
@@ -555,9 +496,8 @@ void DeskView::ChangeKeyMap(int32 change_to) {
 }
 
 // silently changes keymap.
-void DeskView::ChangeKeyMapSilent(int32 change_to) {
-//	if (disabled)
-//		return;
+void DeskView::ChangeKeyMapSilent(int32 change_to)
+{
 	app_info info;
 	team_keymap *item;
 	bool need_switch = false;
@@ -624,7 +564,8 @@ void DeskView::ChangeKeyMapSilent(int32 change_to) {
 	Pulse();
 }
 
-void DeskView::ShowAboutWindow()  {
+void DeskView::ShowAboutWindow()
+{
 	BString str(B_TRANSLATE("Keymap Switcher\n\n"));
 	int nameLen = str.Length();
 	str << B_TRANSLATE("Copyright " B_UTF8_COPYRIGHT " 1999-2003 Stas Maximov.\n");

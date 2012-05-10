@@ -350,7 +350,8 @@ SettingsWindow::SettingsWindow(bool fromDeskbar)
 }
 
 // destructor
-SettingsWindow::~SettingsWindow() {
+SettingsWindow::~SettingsWindow()
+{
 	while(0 < available_list->CountItems())
 		delete (dynamic_cast<KeymapItem*> (available_list->RemoveItem(0L)));
 	while(0 < selected_list->CountItems())
@@ -360,7 +361,8 @@ SettingsWindow::~SettingsWindow() {
 }
 
 // process message
-void SettingsWindow::MessageReceived(BMessage *msg) {
+void SettingsWindow::MessageReceived(BMessage *msg)
+{
 	switch (msg->what) {
 	case MSG_ACTIVE_ITEM_DRAGGED: {
 		BMessage reply(*msg);

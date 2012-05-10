@@ -19,7 +19,8 @@ const int maxCharBytes = 3;
 
 class SwitchFilter: public BInputServerFilter 
 {
-	class SettingsMonitor : public BLooper {
+	class SettingsMonitor : public BLooper
+   	{
 	public:
 		SettingsMonitor(const char *name, SwitchFilter *filter);
 		~SettingsMonitor();

@@ -19,8 +19,8 @@
 
 #include "Settings.h"
 
-class SettingsWindow: public BWindow {
-
+class SettingsWindow: public BWindow
+{
 	// private Settings Window messages
 	enum {
 		MSG_KEYMAPS_CHANGED = 0x1002, // indexes are backward compatible!
@@ -38,7 +38,8 @@ class SettingsWindow: public BWindow {
 		MSG_LIST_SEL_CHANGE
 	};
 
-	class KeymapItem : public BStringItem {
+	class KeymapItem : public BStringItem
+   	{
 	public:
 		KeymapItem(const char *text, const char *real_name, int32 dir);
 		KeymapItem(KeymapItem *item);
@@ -49,7 +50,8 @@ class SettingsWindow: public BWindow {
 		BString real_name;
 	};
 
-	class KeymapListView : public BListView {
+	class KeymapListView : public BListView
+   	{
 	public:
 		KeymapListView(BRect r, const char *name);
 		virtual bool InitiateDrag(BPoint pt, int32 index, bool wasSelected);
@@ -60,7 +62,8 @@ class SettingsWindow: public BWindow {
 		virtual void SelectionChanged();
 	};
 
-	class KeymapOutlineListView : public BOutlineListView {
+	class KeymapOutlineListView : public BOutlineListView
+   	{
 	public:
 		KeymapOutlineListView(BRect r, const char *name);
 		virtual bool InitiateDrag(BPoint point, int32 index, bool wasSelected);
@@ -69,7 +72,8 @@ class SettingsWindow: public BWindow {
 		virtual void SelectionChanged();
 	};
 
-	class MoveButton : public BPictureButton {
+	class MoveButton : public BPictureButton
+   	{
 		BPicture fPicOff;
 		BPicture fPicOn;
 		BPicture fPicDisabled;
@@ -90,7 +94,8 @@ class SettingsWindow: public BWindow {
 		virtual void GetPreferredSize(float *width, float *height);
 	};
 
-	class RemapCheckBox : public BCheckBox {
+	class RemapCheckBox : public BCheckBox
+   	{
 		int32 fIndex;
 	public:
 		RemapCheckBox(BRect frame, const char* name, const char* label,

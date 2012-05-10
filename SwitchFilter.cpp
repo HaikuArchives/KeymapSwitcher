@@ -71,10 +71,6 @@ union SwitchFilter::_key defaultRemapKeys[] = {
 
 const uint32 remapKeysCount = sizeof(defaultRemapKeys)/sizeof(defaultRemapKeys[0]);
 
-/*		
-enum __msgs {
-	MSG_CHANGEKEYMAP = 0x400, // thats for Indicator, don't change it
-}; */
 
 #if 0 //def NDEBUG
 #define trace(x...) syslog(LOG_DEBUG, x);
@@ -83,7 +79,8 @@ enum __msgs {
 #endif
 
 
-BInputServerFilter* instantiate_input_filter() {
+BInputServerFilter* instantiate_input_filter()
+{
 	openlog("switcher_filter", LOG_CONS, LOG_USER);
 	trace("start");
 	// this is where it all starts
@@ -115,7 +112,8 @@ SwitchFilter::SwitchFilter() : BInputServerFilter()
 
 
 // Destructor
-SwitchFilter::~SwitchFilter() {
+SwitchFilter::~SwitchFilter()
+{
 	trace("start");
 
 	// do some clean-ups here
@@ -139,7 +137,8 @@ SwitchFilter::~SwitchFilter() {
 
 
 // Init check
-status_t SwitchFilter::InitCheck() {
+status_t SwitchFilter::InitCheck()
+{
 	trace("init check");
 	settings = new Settings("Switcher");
 
@@ -155,7 +154,8 @@ status_t SwitchFilter::InitCheck() {
 
 
 // Filter key pressed 
-filter_result SwitchFilter::Filter(BMessage *message, BList *outList) {
+filter_result SwitchFilter::Filter(BMessage *message, BList *outList)
+{
 #if 0	
 	union U{
 		int32 long l;
@@ -474,7 +474,8 @@ SwitchFilter::UpdateRemapTable()
 }
 
 // Gets Indicator's BMessenger
-BMessenger* SwitchFilter::GetIndicatorMessenger() {
+BMessenger* SwitchFilter::GetIndicatorMessenger()
+{
 	//const char *REPLICANT_NAME = "Switcher/Deskbar";
 	BMessenger *indicator = 0;
 
@@ -524,7 +525,8 @@ BMessenger* SwitchFilter::GetIndicatorMessenger() {
 }
 
 //
-void SwitchFilter::UpdateIndicator() {
+void SwitchFilter::UpdateIndicator()
+{
 	// tell Indicator to change icon
 	BMessenger *indicator = GetIndicatorMessenger();
 	trace("go:%#x", indicator);
@@ -641,7 +643,8 @@ SwitchFilter::SettingsMonitor::SettingsMonitor(const char *name, SwitchFilter* f
 	trace("created");
 }
 
-SwitchFilter::SettingsMonitor::~SettingsMonitor() {
+SwitchFilter::SettingsMonitor::~SettingsMonitor()
+{
 	trace("killing");
 	BLocker lock;
 	lock.Lock();
@@ -655,7 +658,8 @@ SwitchFilter::SettingsMonitor::~SettingsMonitor() {
 	trace("killed");
 }
 
-void SwitchFilter::SettingsMonitor::MessageReceived(BMessage *message) {
+void SwitchFilter::SettingsMonitor::MessageReceived(BMessage *message)
+{
 	trace("start");
 	switch (message->what) {
 		case B_NODE_MONITOR: {

@@ -15,7 +15,8 @@ const int32 KEY_CAPS_LOCK   = 0x2004;
 const int32 KEY_SCROLL_LOCK = 0x2005;
 
 
-class Settings : public BMessage {
+class Settings : public BMessage
+{
 public:
 	Settings(const char *filename);
 	~Settings();
