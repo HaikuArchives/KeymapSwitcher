@@ -31,8 +31,8 @@ enum {
 // version defines
 #define	VersionMajor  1
 #define	VersionMiddle 2
-#define	VersionMinor  6
-#define VersionBuild  14
+#define	VersionMinor  7
+#define VersionBuild  1
 
 #define _NUM2STR(_x) #_x
 #define NUM2STR(_x) _NUM2STR(_x)
