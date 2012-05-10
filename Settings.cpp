@@ -52,7 +52,7 @@ status_t Settings::SetDefaults() {
 	SetBool("disabled", false);
 	SetInt32("active", 0L);
 	SetInt32("keymaps", 1L);
-	SetString("n0", "American");
+	SetString("n0", "US-International");
 	SetInt32("d0", B_BEOS_DATA_DIRECTORY); 
 
 	return status = B_OK;

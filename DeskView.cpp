@@ -25,8 +25,8 @@
 #include "KeymapSwitcher.h"
 
 
-#undef B_TRANSLATE_CONTEXT
-#define B_TRANSLATE_CONTEXT "SwitcherDeskView"
+#undef B_TRANSLATION_CONTEXT
+#define B_TRANSLATION_CONTEXT "SwitcherDeskView"
 
 #define NEXT_KEYMAP(index, total) ((++index) >= total ? 0 : index)
 

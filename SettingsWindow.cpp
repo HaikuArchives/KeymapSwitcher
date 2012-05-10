@@ -33,8 +33,8 @@
 #include "Replicator.h"
 #include "Settings.h"
 
-#undef B_TRANSLATE_CONTEXT
-#define B_TRANSLATE_CONTEXT "SwitcherSettingsWindow"
+#undef B_TRANSLATION_CONTEXT
+#define B_TRANSLATION_CONTEXT "SwitcherSettingsWindow"
 
 #if 1
 #define trace(x...) (void(0))
@@ -226,7 +226,7 @@ SettingsWindow::SettingsWindow(bool fromDeskbar)
 	buttonCancel->SetEnabled(!AlreadyInDeskbar());
 	
 	BString strRemap(remapLabel1);
-	strRemap.ReplaceAll("%KEYMAP%", "American");
+	strRemap.ReplaceAll("%KEYMAP%", "US-International");
 	checkRemap = new RemapCheckBox(rc, "check_remap", strRemap,
 			   new BMessage(MSG_CHECK_REMAP), B_FOLLOW_LEFT | B_FOLLOW_BOTTOM);
 	box->AddChild(checkRemap);

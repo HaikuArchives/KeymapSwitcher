@@ -29,8 +29,8 @@
 #include "DeskView.h"
 #include "SettingsWindow.h"
 
-#undef B_TRANSLATE_CONTEXT
-#define B_TRANSLATE_CONTEXT "SwitcherApplication"
+#undef B_TRANSLATION_CONTEXT
+#define B_TRANSLATION_CONTEXT "SwitcherApplication"
 
 
 class SwitcherApplication : public BApplication
