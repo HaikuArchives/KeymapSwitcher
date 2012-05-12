@@ -19,7 +19,7 @@ class DeskView : public BStringView
 {
 	typedef struct {
 		team_id	team;
-		int32		keymap;
+		int32	keymap;
 	} team_keymap;
 
 public:
@@ -56,6 +56,7 @@ private:
 	int32 active_keymap;
 	BList *keymaps;
 	BList *app_list;
+	team_id active_team; // tracked to ignore Deskbar activation
 };
 
 #endif

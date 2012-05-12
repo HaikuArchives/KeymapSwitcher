@@ -122,7 +122,8 @@ void DeskView::Init()
 	active_keymap = 0;
 	settings->FindInt32("active", &active_keymap);
 	watching = false;	
-	
+
+	active_team = -1; 
 	find_directory(B_USER_SETTINGS_DIRECTORY, &cur_map_path);
 	cur_map_path.Append("Key_map");
 	trace(cur_map_path.Path());
@@ -372,6 +373,7 @@ void DeskView::MessageReceived(BMessage *message)
 			if((info.flags & B_BACKGROUND_APP) || (0 == strcmp(info.signature, DESKBAR_SIGNATURE))){
 				break; // we don't need any background apps here
 			}
+			active_team = info.team;
 			int32 index = FindApp(info.team);
 			if (index != -1) {
 				team_keymap *item = (team_keymap *)app_list->ItemAt(index);
@@ -502,7 +504,10 @@ void DeskView::ChangeKeyMapSilent(int32 change_to)
 	team_keymap *item;
 	bool need_switch = false;
 	if(B_OK == be_roster->GetActiveAppInfo(&info)) {
-		int32 index = FindApp(info.team);
+		team_id the_team = info.team;
+		if (0 == strcmp(info.signature, DESKBAR_SIGNATURE) && active_team != -1)
+			the_team = active_team;
+		int32 index = FindApp(the_team);
 		if (index != -1) {
 			item = (team_keymap *)app_list->ItemAt(index);
 			if(item->keymap != change_to) {
@@ -513,7 +518,7 @@ void DeskView::ChangeKeyMapSilent(int32 change_to)
 			}
 		} else {
 			item = new team_keymap;
-			item->team = info.team;
+			item->team = the_team;
 			item->keymap = change_to;
 			app_list->AddItem((void *)item);
 		}
