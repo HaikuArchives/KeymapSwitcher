@@ -36,10 +36,10 @@
 #undef B_TRANSLATION_CONTEXT
 #define B_TRANSLATION_CONTEXT "SwitcherSettingsWindow"
 
-#if 1
+#if 0
 #define trace(x...) (void(0))
 #else
-#define trace(x...) printf(x);
+#define trace(x...) (void(0))//printf(x);
 #endif
 
 // the initial dimensions of the window.

@@ -35,7 +35,7 @@
 
 extern void _restore_key_map_(); // magic undoc function :))
 
-#if 1
+#if 0
 #define trace(x...) syslog(0, x);
 #else
 #define trace(s) ((void) 0)

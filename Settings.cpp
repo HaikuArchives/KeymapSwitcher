@@ -10,7 +10,7 @@
 #include "KeymapSwitcher.h"
 
 
-#if 1 //def NDEBUG
+#if 0 //def NDEBUG
 #define trace(x...) syslog(0, x); 
 #else
 #define trace(x...) 
