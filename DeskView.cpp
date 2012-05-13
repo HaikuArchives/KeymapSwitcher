@@ -229,6 +229,11 @@ void DeskView::UpdateViewColors()
 	rgb_color low = ui_color(B_DESKTOP_COLOR);
 	rgb_color high = make_color(255, 255, 255, 255);
 
+	if (!settings->GetColor("low", &low))
+		low = ui_color(B_DESKTOP_COLOR);
+	if (!settings->GetColor("high", &high))
+		high = make_color(255, 255, 255, 255);
+
 	SetViewColor(low);
 	SetLowColor(low);
 	SetHighColor(high);
@@ -261,6 +266,30 @@ void DeskView::UpdateText()
 //
 void DeskView::MessageReceived(BMessage *message)
 {
+	if (message->WasDropped()) {
+		message->PrintToStream();
+		rgb_color *color = 0;
+		ssize_t sz = 0;
+		if (message->FindData("RGBColor", B_RGB_COLOR_TYPE, 0,
+			(const void**)&color, &sz) == B_OK && sz == sizeof(rgb_color))
+		{
+			int32 buttons = B_PRIMARY_MOUSE_BUTTON;
+			if (message->FindInt32("buttons", &buttons) == B_OK
+					&& (buttons & B_PRIMARY_MOUSE_BUTTON))
+			{
+				settings->SetColor("low", color);
+				SetViewColor(*color);
+				SetLowColor(*color);
+
+			} else {
+				settings->SetColor("high", color);
+				SetHighColor(*color);
+			}
+			Invalidate();
+			settings->Save();
+			return;
+		}
+	}
 	switch(message->what) {
 	case B_KEY_MAP_CHANGED:
 		break;

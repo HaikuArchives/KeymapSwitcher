@@ -187,3 +187,30 @@ status_t Settings::SetFlat(const char *name, const BFlattenable *obj)
 	return AddFlat(name, (BFlattenable *) obj);
 }
 
+status_t Settings::SetColor(const char *name, const rgb_color* color)
+{
+	dirty = true;
+	if (HasData(name, B_RGB_COLOR_TYPE)) {
+		return ReplaceData(name, B_RGB_COLOR_TYPE, color, sizeof(rgb_color));
+	}
+	return AddData(name, B_RGB_COLOR_TYPE, color, sizeof(rgb_color));
+}
+
+bool Settings::GetColor(const char *name, rgb_color* color)
+{
+	if (!HasData(name, B_RGB_COLOR_TYPE)) {
+		return false;
+	}
+
+	rgb_color *clr = 0;
+	ssize_t sz = sizeof(rgb_color);
+	if (B_OK == FindData(name, B_RGB_COLOR_TYPE, (const void**)&clr, &sz)
+						&& sz == sizeof(rgb_color))
+   	{
+		*color = *clr;
+		return true;
+	}
+
+	return false;
+}
+
