@@ -282,6 +282,17 @@ void DeskView::MessageReceived(BMessage *message)
 				SetViewColor(*color);
 				SetLowColor(*color);
 
+			} else if (buttons & B_TERTIARY_MOUSE_BUTTON) {
+				rgb_color low = ui_color(B_DESKTOP_COLOR);
+				rgb_color high = make_color(255, 255, 255, 255);
+
+				settings->SetColor("low",  &low);
+				settings->SetColor("high", &high);
+
+				SetViewColor(low);
+				SetLowColor(low);
+				SetHighColor(high);
+
 			} else {
 				settings->SetColor("high", color);
 				SetHighColor(*color);
