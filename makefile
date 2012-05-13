@@ -10,7 +10,7 @@ ADDON_DEST := $(DIST_DIR)/common/add-ons/input_server/filters/
 APP_DEST := $(DIST_DIR)/common/bin/ 
 CATALOGS_DEST := $(DIST_DIR)/common/data/locale/catalogs/
 APP_MIME_SIG := x-vnd.Nexus-KeymapSwitcher
-VERSION := 1.2.6
+VERSION := 1.2.7
 DATE := `date +%F`
 PACKAGE_NAME := KeymapSwitcher-$(VERSION)-x86-gcc$(CC_VER)-$(DATE)
 
