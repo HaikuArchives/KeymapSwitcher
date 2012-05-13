@@ -7,6 +7,7 @@
 #include "DeskView.h"
 
 #include <stdio.h>
+#include <syslog.h>
 
 #include <Alert.h>
 #include <Beep.h>
@@ -35,7 +36,7 @@
 extern void _restore_key_map_(); // magic undoc function :))
 
 #if 1
-#define trace(s) ((void) 0)
+#define trace(x...) syslog(0, x);
 #else
 #define trace(s) ((void) 0)
 #endif
@@ -117,7 +118,7 @@ void DeskView::Init()
 	if (settings->InitCheck() != B_OK) {
 		// settings do not exist, populate default values
 		settings->SetDefaults();
-		settings->Save(); // let Switcher know about new settings
+		settings->Save(); // let the Filter know about new settings
 	}
 	active_keymap = 0;
 	settings->FindInt32("active", &active_keymap);
