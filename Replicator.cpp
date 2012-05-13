@@ -24,7 +24,7 @@ void UpdateIndicator(uint32 what) {
 	  
 	// In the Deskbar the Shelf is in the View "Status" in Window "Deskbar"
 	request.AddSpecifier("View", "Status");
-	request.AddSpecifier("Window", (int32)1); // the first one "Twitcher"???
+	request.AddSpecifier("Window", (int32)0); // the first one "Twitcher"???
 	to = BMessenger(DESKBAR_SIGNATURE, -1);
 	
 	BMessage	reply;
