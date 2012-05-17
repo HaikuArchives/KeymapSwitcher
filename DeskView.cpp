@@ -103,7 +103,7 @@ DeskView::DeskView(BMessage *message) :
 		BStringView(message)
 {
 	BFont font;
-	font.SetSize(12.f);
+//	font.SetSize(12.f);
 	SetFont(&font);
 	SetAlignment(B_ALIGN_CENTER);
 
@@ -215,11 +215,8 @@ void DeskView::AttachedToWindow(void)
 	BStringView::AttachedToWindow();
 
 	UpdateViewColors();
-	UpdateText();
+	UpdateText(true);
 
-	BPoint pt;
-	GetPreferredSize(&pt.x, &pt.y);
-	ResizeTo(pt.x + 1, fIconY); // let some place for better look
 	BPoint ptOrg = Origin();
 	SetOrigin(ptOrg.x, ptOrg.y + 1); // im request from Diver. ;-)
 	SetAlignment(B_ALIGN_CENTER);
@@ -240,7 +237,7 @@ void DeskView::UpdateViewColors()
 	SetHighColor(high);
 }
 
-void DeskView::UpdateText()
+void DeskView::UpdateText(bool init)
 {
 	BString map_name;
 	// get keymap name from the keymap path
@@ -261,6 +258,13 @@ void DeskView::UpdateText()
 
 	if(0 != map_name.Compare(Text())) {
 		SetText(map_name);
+	}
+
+	// handle case of too narrow language-codes ("It" for example)
+	BPoint pt;
+	GetPreferredSize(&pt.x, &pt.y);
+	if (init || ((pt.x + 2) > Bounds().Width())) {
+		ResizeTo(pt.x + 2, fIconY); // let some place for better look
 	}
 }
 
@@ -447,7 +451,7 @@ int32 DeskView::FindApp(int32 team)
 //
 void DeskView::Pulse()
 {
-	UpdateText();
+	UpdateText(false);
 
 	if(!watching) {
 		if(B_OK == be_roster->StartWatching(this, B_REQUEST_LAUNCHED | B_REQUEST_QUIT | B_REQUEST_ACTIVATED))

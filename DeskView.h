@@ -48,7 +48,7 @@ private:
 	int32 FindApp(int32 team);
 	void ShowAboutWindow();
 	void UpdateViewColors();
-	void UpdateText();
+	void UpdateText(bool init);
 private:
 	Settings *settings; 
 	bool watching;
