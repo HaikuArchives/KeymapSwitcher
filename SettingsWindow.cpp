@@ -418,7 +418,10 @@ void SettingsWindow::MessageReceived(BMessage *msg)
 		break;
 	}
 	case MSG_LIST_SEL_CHANGE: {
-		addButton->SetEnabled(available_list->CurrentSelection() != -1);
+		int32 index = available_list->CurrentSelection();
+		addButton->SetEnabled(index != -1
+				&& available_list->ItemAt(index) != NULL
+				&& available_list->Superitem(available_list->ItemAt(index)) != NULL);
 		delButton->SetEnabled(selected_list->CurrentSelection() != -1);
 		break;
 	}
@@ -803,6 +806,13 @@ SettingsWindow::KeymapOutlineListView::InitiateDrag(BPoint point, int32 index, b
 	return true;
 }
 
+void
+SettingsWindow::KeymapOutlineListView::SelectionChanged()
+{
+	BMessage message(MSG_LIST_SEL_CHANGE);
+	Window()->PostMessage(&message);
+}
+	
 static BPicture sPicture;
 
 SettingsWindow::MoveButton::MoveButton(BRect 		frame, const char *name,  
@@ -876,10 +886,3 @@ SettingsWindow::MoveButton::LoadPicture(BResources *resFrom, BPicture *picTo, ui
 	return B_OK;
 }
 
-void
-SettingsWindow::KeymapOutlineListView::SelectionChanged()
-{
-	BMessage message(MSG_LIST_SEL_CHANGE);
-	Window()->PostMessage(&message);
-}
-	
