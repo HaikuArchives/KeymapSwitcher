@@ -145,7 +145,7 @@ status_t SwitchFilter::InitCheck()
 	UpdateRemapTable();
 
 	//monitor = new SettingsMonitor(INDICATOR_SIGNATURE, settings);
-	monitor = new SettingsMonitor(APP_SIGNATURE, this);
+	monitor = new SettingsMonitor("Key.Switcher settings monitor", this);
 	monitor->Run();
 	
 	return B_OK;
