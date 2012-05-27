@@ -43,7 +43,7 @@ public:
 private:
 	void ShowContextMenu(BPoint where);
 	void ChangeKeyMap(int32);
-	void ChangeKeyMapSilent(int32);
+	void ChangeKeyMapSilent(int32, bool force = false);
 	void Init();
 	int32 FindApp(int32 team);
 	void ShowAboutWindow();

@@ -217,6 +217,9 @@ void DeskView::AttachedToWindow(void)
 	UpdateViewColors();
 	UpdateText(true);
 
+	// force Key_map file overwriting to first one 
+	ChangeKeyMapSilent(0, true);
+
 	BPoint ptOrg = Origin();
 	SetOrigin(ptOrg.x, ptOrg.y + 1); // im request from Diver. ;-)
 	SetAlignment(B_ALIGN_CENTER);
@@ -543,11 +546,11 @@ void DeskView::ChangeKeyMap(int32 change_to)
 }
 
 // silently changes keymap.
-void DeskView::ChangeKeyMapSilent(int32 change_to)
+void DeskView::ChangeKeyMapSilent(int32 change_to, bool force /*= false*/)
 {
 	app_info info;
 	team_keymap *item;
-	bool need_switch = false;
+	bool need_switch = force;
 	if(B_OK == be_roster->GetActiveAppInfo(&info)) {
 		team_id the_team = info.team;
 		if (0 == strcmp(info.signature, DESKBAR_SIGNATURE) && active_team != -1)
