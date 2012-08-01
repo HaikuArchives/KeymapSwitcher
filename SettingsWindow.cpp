@@ -328,7 +328,7 @@ SettingsWindow::SettingsWindow(bool fromDeskbar)
 
 	int32 nSystemWide = 0;
 	if (B_OK == settings->FindInt32("system_wide", &nSystemWide))
-		checkSystemWideKeymap->SetValue(nSystemWide);
+		checkSystemWideKeymap->SetValue(!nSystemWide);
 
 	checkUseActiveKeymap->MoveTo(ptOrg);
 	checkUseActiveKeymap->ResizeTo(fMaxListsWidth, ptActiveKeymap.y);
@@ -530,7 +530,7 @@ void SettingsWindow::MessageReceived(BMessage *msg)
 			buttonCancel->SetEnabled(true);
 
 			settings->SetInt32("remap", checkRemap->Index());
-			settings->SetInt32("system_wide", checkSystemWideKeymap->Value());
+			settings->SetInt32("system_wide", !checkSystemWideKeymap->Value());
 			settings->SetInt32("use_active_keymap", checkUseActiveKeymap->Value());
 		}
 
