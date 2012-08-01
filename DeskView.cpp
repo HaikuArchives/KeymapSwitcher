@@ -395,7 +395,9 @@ void DeskView::MessageReceived(BMessage *message)
 			app_info info;
 			be_roster->GetRunningAppInfo(team, &info);
 
-			if((info.flags & B_BACKGROUND_APP) || (0 == strcmp(info.signature, DESKBAR_SIGNATURE))){
+			if((info.flags & B_BACKGROUND_APP)
+					|| (0 == strcmp(info.signature, DESKBAR_SIGNATURE)))
+			{
 				break; // we don't need any background apps here
 			}
 			team_keymap *item = new team_keymap;
@@ -418,7 +420,9 @@ void DeskView::MessageReceived(BMessage *message)
 	case B_SOME_APP_ACTIVATED: {
 		app_info info;
 		if(B_OK == be_roster->GetActiveAppInfo(&info)) {
-			if((info.flags & B_BACKGROUND_APP) || (0 == strcmp(info.signature, DESKBAR_SIGNATURE))){
+			if((info.flags & B_BACKGROUND_APP)
+				|| (0 == strcmp(info.signature, DESKBAR_SIGNATURE)))
+			{
 				break; // we don't need any background apps here
 			}
 			active_team = info.team;

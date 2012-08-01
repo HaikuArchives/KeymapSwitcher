@@ -235,11 +235,31 @@ SettingsWindow::SettingsWindow(bool fromDeskbar)
 	checkRemap->GetPreferredSize(&ptRemap.x, &ptRemap.y);
 	checkRemap->ResizeToPreferred();
 
+	checkSystemWideKeymap = new BCheckBox(rc, "check_system_wide", 
+			B_TRANSLATE("Use separate keymaps for each application"),
+			   new BMessage(MSG_CHECK_SYSTEM_WIDE), B_FOLLOW_LEFT | B_FOLLOW_BOTTOM);
+	box->AddChild(checkSystemWideKeymap);
+
+	BPoint ptSystemWide;
+	checkSystemWideKeymap->GetPreferredSize(&ptSystemWide.x, &ptSystemWide.y);
+	checkSystemWideKeymap->ResizeToPreferred();
+
+	checkUseActiveKeymap = new BCheckBox(rc, "check_use_active", 
+			B_TRANSLATE("Use active keymap for new applications"),
+			   new BMessage(MSG_CHECK_USE_ACTIVE), B_FOLLOW_LEFT | B_FOLLOW_BOTTOM);
+	box->AddChild(checkUseActiveKeymap);
+
+	BPoint ptActiveKeymap;
+	checkUseActiveKeymap->GetPreferredSize(&ptActiveKeymap.x, &ptActiveKeymap.y);
+	checkUseActiveKeymap->ResizeToPreferred();
+
 	BBox* dividerBottom = new BBox(rc, B_EMPTY_STRING,
 		   B_FOLLOW_LEFT_RIGHT | B_FOLLOW_BOTTOM, B_WILL_DRAW, B_FANCY_BORDER);
 	box->AddChild(dividerBottom);
 	
 	fMaxListsWidth = fmax(fMaxListsWidth, ptRemap.x);
+	fMaxListsWidth = fmax(fMaxListsWidth, ptSystemWide.x);
+	fMaxListsWidth = fmax(fMaxListsWidth, ptActiveKeymap.x);
 	float fMaxWindowWidth =  X_INSET * 2 
 					+ fmax(fMaxListsWidth, b[0].pt.x + b[1].pt.x + X_INSET);
 
@@ -301,6 +321,22 @@ SettingsWindow::SettingsWindow(bool fromDeskbar)
 	fprintf(stderr, "init:%ld\n", index);
 	checkRemap->SetIndex(index);
 	AdjustRemapCheck(false);
+
+	checkSystemWideKeymap->MoveTo(ptOrg);
+	checkSystemWideKeymap->ResizeTo(fMaxListsWidth, ptSystemWide.y);
+	ptOrg.y += checkSystemWideKeymap->Bounds().Height() + fYSpacing;
+
+	int32 nSystemWide = 0;
+	if (B_OK == settings->FindInt32("system_wide", &nSystemWide))
+		checkSystemWideKeymap->SetValue(nSystemWide);
+
+	checkUseActiveKeymap->MoveTo(ptOrg);
+	checkUseActiveKeymap->ResizeTo(fMaxListsWidth, ptActiveKeymap.y);
+	ptOrg.y += checkUseActiveKeymap->Bounds().Height() + fYSpacing;
+
+	int32 nUseActiveKeymap = 0;
+	if (B_OK == settings->FindInt32("use_active_keymap", &nUseActiveKeymap))
+		checkUseActiveKeymap->SetValue(nUseActiveKeymap);
 
 	dividerBottom->MoveTo(ptOrg);
 	dividerBottom->ResizeTo(fMaxListsWidth, 1);
@@ -417,6 +453,15 @@ void SettingsWindow::MessageReceived(BMessage *msg)
 		AdjustRemapCheck(true);
 		break;
 	}
+	case MSG_CHECK_SYSTEM_WIDE:
+	case MSG_CHECK_USE_ACTIVE: {
+		if (!keymaps_changed) {
+			buttonOK->SetEnabled(true);
+			keymaps_changed = true;
+		}
+		AdjustRemapCheck(false);
+		break;
+	}
 	case MSG_LIST_SEL_CHANGE: {
 		int32 index = available_list->CurrentSelection();
 		addButton->SetEnabled(index != -1
@@ -485,6 +530,8 @@ void SettingsWindow::MessageReceived(BMessage *msg)
 			buttonCancel->SetEnabled(true);
 
 			settings->SetInt32("remap", checkRemap->Index());
+			settings->SetInt32("system_wide", checkSystemWideKeymap->Value());
+			settings->SetInt32("use_active_keymap", checkUseActiveKeymap->Value());
 		}
 
 		trace("settings saved!");
