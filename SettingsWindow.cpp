@@ -5,6 +5,7 @@
 
 #include "SettingsWindow.h"
 
+#include <new>
 #include <stdio.h>
 #include <syslog.h>
 
@@ -21,6 +22,7 @@
 #include <Locale.h>
 #include <Menu.h>
 #include <MenuItem.h>
+#include <MessageFilter.h>
 #include <Path.h>
 #include <PopUpMenu.h>
 #include <Roster.h>
@@ -58,6 +60,22 @@ const float kBmpBtnY = 16.;
 const char* remapLabel0 = B_TRANSLATE("Activate shortcuts substitution");
 const char* remapLabel1	= B_TRANSLATE("Substitute shortcuts with %KEYMAP%'s ones");
 
+class _KeysFilter_ : public BMessageFilter {
+public:
+	_KeysFilter_() : BMessageFilter(B_KEY_DOWN) {}  
+	~_KeysFilter_() {}
+
+    virtual filter_result Filter(BMessage* msg, BHandler** target) {
+		int32 rawChar = 0;
+		if (msg->what == B_KEY_DOWN
+			&& msg->FindInt32("raw_char", &rawChar) == B_OK
+			&& rawChar == B_ESCAPE)
+		{
+			be_app->PostMessage(B_QUIT_REQUESTED);
+		}
+		return B_DISPATCH_MESSAGE;
+	}
+};
 
 //  construct main window
 SettingsWindow::SettingsWindow(bool fromDeskbar) 
@@ -380,6 +398,7 @@ SettingsWindow::SettingsWindow(bool fromDeskbar)
 	ptOrg.y = rcScreen.top + (rcScreen.Height() - Bounds().Height()) / 3;
 	MoveTo(ptOrg);
 
+	AddCommonFilter(new (std::nothrow) _KeysFilter_);
 	hotkey_changed = false;
 	Unlock();
 	Show();
@@ -564,6 +583,10 @@ void SettingsWindow::MessageReceived(BMessage *msg)
 				item->SetMarked(true);
 		break;
 		}
+/*	case B_KEY_DOWN:
+		if (msg->FindInt32("raw_char") == B_ESCAPE)
+			be_app->PostMessage(B_QUIT_REQUESTED); 
+		break; */
 	case MSG_ABOUT:
 	//	ShowAboutWindow();
 		break;
