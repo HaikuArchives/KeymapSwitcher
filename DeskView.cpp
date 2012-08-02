@@ -391,7 +391,7 @@ void DeskView::MessageReceived(BMessage *message)
 	}			
 	case B_SOME_APP_LAUNCHED: {
 		int32 team = 0;
-		if(B_OK == message->FindInt32("team", &team)) {
+		if(B_OK == message->FindInt32("be:team", &team)) {
 			app_info info;
 			be_roster->GetRunningAppInfo(team, &info);
 
@@ -402,7 +402,10 @@ void DeskView::MessageReceived(BMessage *message)
 			}
 			team_keymap *item = new team_keymap;
 			item->team = team;
-			item->keymap = 0;
+			int32 nUseActive = 0;
+			if (B_OK != settings->FindInt32("use_active_keymap", &nUseActive))
+				nUseActive = 0;
+			item->keymap = nUseActive != 0 ? active_keymap : 0;
 			app_list->AddItem((void *)item);
 			ChangeKeyMapSilent(item->keymap);
 		}
@@ -410,7 +413,7 @@ void DeskView::MessageReceived(BMessage *message)
 	}
 	case B_SOME_APP_QUIT: {
 		int32 team = 0;
-		if(B_OK == message->FindInt32("team", &team)) {
+		if(B_OK == message->FindInt32("be:team", &team)) {
 			int32 index = FindApp(team);
 			if (index != -1)
 				app_list->RemoveItem(index);
@@ -418,6 +421,11 @@ void DeskView::MessageReceived(BMessage *message)
 		break;
 	}
 	case B_SOME_APP_ACTIVATED: {
+		int32 nSystemWide = 0;
+		if (B_OK == settings->FindInt32("system_wide", &nSystemWide))
+			if (nSystemWide != 0)
+				break; // do not change keymap
+
 		app_info info;
 		if(B_OK == be_roster->GetActiveAppInfo(&info)) {
 			if((info.flags & B_BACKGROUND_APP)
@@ -552,10 +560,14 @@ void DeskView::ChangeKeyMap(int32 change_to)
 // silently changes keymap.
 void DeskView::ChangeKeyMapSilent(int32 change_to, bool force /*= false*/)
 {
-	app_info info;
-	team_keymap *item;
+	int32 nSystemWide = 0;
+	if (B_OK != settings->FindInt32("system_wide", &nSystemWide))
+		nSystemWide = 0;
+
 	bool need_switch = force;
-	if(B_OK == be_roster->GetActiveAppInfo(&info)) {
+	app_info info;
+	if(!nSystemWide && B_OK == be_roster->GetActiveAppInfo(&info)) {
+		team_keymap *item;
 		team_id the_team = info.team;
 		if (0 == strcmp(info.signature, DESKBAR_SIGNATURE) && active_team != -1)
 			the_team = active_team;
