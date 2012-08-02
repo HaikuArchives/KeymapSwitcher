@@ -62,6 +62,7 @@ class SettingsWindow: public BWindow
 		void ResetKeymapsList(const Settings* settings);
 		void ReadKeymapsList(Settings* settings);
 		virtual void SelectionChanged();
+		virtual void MouseDown(BPoint point);
 	};
 
 	class KeymapOutlineListView : public BOutlineListView
@@ -72,6 +73,7 @@ class SettingsWindow: public BWindow
 
 		void PopulateTheTree();
 		virtual void SelectionChanged();
+		virtual void MouseDown(BPoint point);
 	};
 
 	class MoveButton : public BPictureButton

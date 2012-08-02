@@ -812,6 +812,20 @@ SettingsWindow::KeymapListView::SelectionChanged()
 	Window()->PostMessage(&message);
 }
 	
+void
+SettingsWindow::KeymapListView::MouseDown(BPoint point)
+{
+	int32 clicks = 0;
+	if (Window()->CurrentMessage()->FindInt32("clicks", &clicks) == B_OK
+			&& clicks > 1)
+	{
+		BMessage message(MSG_BUTTON_REMOVE_ITEM);
+		Window()->PostMessage(&message);
+	}
+
+	BListView::MouseDown(point);
+}
+
 SettingsWindow::KeymapOutlineListView::KeymapOutlineListView(BRect r, const char *name) 
 				:
 				BOutlineListView(r, name, B_SINGLE_SELECTION_LIST, B_FOLLOW_ALL_SIDES) 
@@ -872,7 +886,9 @@ SettingsWindow::KeymapOutlineListView::InitiateDrag(BPoint point, int32 index, b
 	message.AddPointer("keymap_item", ItemAt(index));
 	if (NULL != Superitem(ItemAt(index)))
 		DragMessage(&message, ItemFrame(index));
-	else return false;
+	else
+		return false;
+
 	return true;
 }
 
@@ -882,7 +898,22 @@ SettingsWindow::KeymapOutlineListView::SelectionChanged()
 	BMessage message(MSG_LIST_SEL_CHANGE);
 	Window()->PostMessage(&message);
 }
-	
+
+void
+SettingsWindow::KeymapOutlineListView::MouseDown(BPoint point)
+{
+	int32 clicks = 0;
+	if (Window()->CurrentMessage()->FindInt32("clicks", &clicks) == B_OK
+			&& clicks > 1)
+	{
+		BMessage message(MSG_BUTTON_ADD_ITEM);
+		Window()->PostMessage(&message);
+	}
+
+	BOutlineListView::MouseDown(point);
+}
+
+
 static BPicture sPicture;
 
 SettingsWindow::MoveButton::MoveButton(BRect 		frame, const char *name,  
