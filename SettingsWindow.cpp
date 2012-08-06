@@ -256,7 +256,7 @@ SettingsWindow::SettingsWindow(bool fromDeskbar)
 	checkRemap->ResizeToPreferred();
 
 	checkSystemWideKeymap = new BCheckBox(rc, "check_system_wide", 
-			B_TRANSLATE("Use separate keymaps for each application"),
+			B_TRANSLATE("Use the separate keymap in each application"),
 			   new BMessage(MSG_CHECK_SYSTEM_WIDE), B_FOLLOW_LEFT | B_FOLLOW_BOTTOM);
 	box->AddChild(checkSystemWideKeymap);
 
@@ -265,7 +265,7 @@ SettingsWindow::SettingsWindow(bool fromDeskbar)
 	checkSystemWideKeymap->ResizeToPreferred();
 
 	checkUseActiveKeymap = new BCheckBox(rc, "check_use_active", 
-			B_TRANSLATE("Use active keymap for new applications"),
+			B_TRANSLATE("Launch application using active keymap"),
 			   new BMessage(MSG_CHECK_USE_ACTIVE), B_FOLLOW_LEFT | B_FOLLOW_BOTTOM);
 	box->AddChild(checkUseActiveKeymap);
 
