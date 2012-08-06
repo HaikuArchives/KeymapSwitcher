@@ -138,7 +138,9 @@ SettingsWindow::SettingsWindow(bool fromDeskbar)
 	for (size_t i = 0; i < sizeof(a)/sizeof(a[0]); i++) {
 		BMessage *msg = new BMessage(MSG_HOTKEY_CHANGED + a[i].hotkey);
 		msg->AddInt32("hotkey", a[i].hotkey);
-		pop_key->AddItem(new BMenuItem(a[i].name, msg));
+		BMenuItem* item = new BMenuItem(a[i].name, msg);
+		item->SetMarked(a[i].hotkey == hotkey);
+		pop_key->AddItem(item);
 	}
 	
 	menuField = new BMenuField(rc, "HotKey", NULL, pop_key);
