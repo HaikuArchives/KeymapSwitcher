@@ -40,7 +40,7 @@ $(CATALOGS_DEST): $(OBJ_DIR)/$(APP_MIME_SIG)
 $(OBJ_DIR)/$(APP_MIME_SIG):
 	make -f app.makefile catalogs
 
-package: $(OBJ_DIR)/$(APP) $(APP_DEST) $(ADDON_DEST) $(CATALOGS_DEST)
+package: clean $(OBJ_DIR)/$(APP) $(APP_DEST) $(ADDON_DEST) $(CATALOGS_DEST)
 	-cp $(OBJ_DIR)/$(APP) $(APP_DEST)
 	-cp $(OBJ_DIR)/$(ADDON) $(ADDON_DEST)
 	-cp -r $(OBJ_DIR)/$(APP_MIME_SIG) $(CATALOGS_DEST)
