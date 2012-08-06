@@ -908,8 +908,11 @@ SettingsWindow::KeymapOutlineListView::MouseDown(BPoint point)
 	if (Window()->CurrentMessage()->FindInt32("clicks", &clicks) == B_OK
 			&& clicks > 1)
 	{
-		BMessage message(MSG_BUTTON_ADD_ITEM);
-		Window()->PostMessage(&message);
+		int32 index = CurrentSelection();
+		if (index != -1 && NULL != Superitem(ItemAt(index))) {
+			BMessage message(MSG_BUTTON_ADD_ITEM);
+			Window()->PostMessage(&message);
+		}
 	}
 
 	BOutlineListView::MouseDown(point);
