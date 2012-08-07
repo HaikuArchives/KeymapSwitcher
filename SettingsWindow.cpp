@@ -355,9 +355,13 @@ SettingsWindow::SettingsWindow(bool fromDeskbar)
 	ptOrg.y += checkUseActiveKeymap->Bounds().Height() + fYSpacing;
 
 	int32 nUseActiveKeymap = 0;
-	if (B_OK == settings->FindInt32("use_active_keymap", &nUseActiveKeymap))
+	if (B_OK == settings->FindInt32("use_active_keymap", &nUseActiveKeymap)) {
 		checkUseActiveKeymap->SetValue(nUseActiveKeymap);
-
+		if (nSystemWide != 0) {
+			checkUseActiveKeymap->SetValue(1);
+			checkUseActiveKeymap->SetEnabled(false);
+		}
+	}
 	dividerBottom->MoveTo(ptOrg);
 	dividerBottom->ResizeTo(fMaxListsWidth, 1);
 
@@ -474,7 +478,14 @@ void SettingsWindow::MessageReceived(BMessage *msg)
 		AdjustRemapCheck(true);
 		break;
 	}
-	case MSG_CHECK_SYSTEM_WIDE:
+	case MSG_CHECK_SYSTEM_WIDE: {
+			int32 on = 0;
+			if (B_OK == msg->FindInt32("be:value", &on)) {
+				if (on == 0)
+					checkUseActiveKeymap->SetValue(!on);
+				checkUseActiveKeymap->SetEnabled(on != 0);
+			}
+		}
 	case MSG_CHECK_USE_ACTIVE: {
 		if (!keymaps_changed) {
 			buttonOK->SetEnabled(true);
@@ -554,7 +565,6 @@ void SettingsWindow::MessageReceived(BMessage *msg)
 			settings->SetInt32("system_wide", !checkSystemWideKeymap->Value());
 			settings->SetInt32("use_active_keymap", checkUseActiveKeymap->Value());
 		}
-
 		trace("settings saved!");
 		settings->Save();
 		::UpdateIndicator(MSG_UPDATESETTINGS);
