@@ -38,6 +38,6 @@ Unable to create Settings configuration window.	SwitcherApplication		Невоз�
 Unable to install keymap indicator. Deskbar application is not running.	SwitcherApplication		Невозможно установить индикатор расскладки. Deskbar не запущен.
 Unable to install keymap indicator. Deskbar application is not running.	SwitcherSettingsWindow		Невозможно установить индикатор расскладки. Deskbar не запущен.
 Unable to start Deskbar application. Keymap indicator was not installed.	SwitcherSettingsWindow		Невозможно запустить Deskbar. Индикатор текущей раскладки не был установлен.
-Use the separate keymap in each application	SwitcherSettingsWindow		Use the separate keymap in each application
+Use the separate keymap in each application	SwitcherSettingsWindow		Каждое приложение использует свою раскладку
 User	SwitcherSettingsWindow		Пользовательские
 Version  %VERSION \n\n	SwitcherDeskView		Версия  %VERSION \n\n
