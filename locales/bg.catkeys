@@ -1,4 +1,4 @@
-1	bulgarian	x-vnd.Nexus-KeymapSwitcher	3535026967
+1	bulgarian	x-vnd.Nexus-KeymapSwitcher	1889466053
  (system)	SwitcherSettingsWindow		 (системна)
  (user)	SwitcherSettingsWindow		 (потребителска)
 About	SwitcherDeskView		Относно
@@ -9,7 +9,7 @@ Available keymaps:	SwitcherSettingsWindow		Налични клавиатурни
 Caps Lock	SwitcherSettingsWindow		Caps Lock
 Cmd+Shift	SwitcherSettingsWindow		Cmd+Shift
 Copyright © 1999-2003 Stas Maximov.\n	SwitcherDeskView		Copyright © 1999-2003 Стас Максимов.\n
-Copyright © 2008-2010 Haiku, Inc.\n	SwitcherDeskView		Copyright © 2008-2010 Haiku, Inc.\n
+Copyright © 2008-%YEAR Haiku, Inc.\n	SwitcherDeskView		Copyright © 2008-%YEAR Haiku, Inc.\n
 Ctrl+Shift	SwitcherSettingsWindow		Ctrl+Shift
 Exit	SwitcherSettingsWindow		Изход
 Hotkey:	SwitcherSettingsWindow		Бързи клавиши:
@@ -38,5 +38,6 @@ Unable to create Settings configuration window.	SwitcherApplication		Не мож
 Unable to install keymap indicator. Deskbar application is not running.	SwitcherApplication		Не може да се инсталира индикатора на клавиатурната подредба. Приложението Deskbar не работи.
 Unable to install keymap indicator. Deskbar application is not running.	SwitcherSettingsWindow		Не може да се инсталира индикатора на клавиатурната подредба. Приложението Deskbar не работи.
 Unable to start Deskbar application. Keymap indicator was not installed.	SwitcherSettingsWindow		Не може да се зареди Deskbar. Индикаторът на клавиатурната подредба не е инсталиран.
+Use the separate keymap in each application	SwitcherSettingsWindow		Use the separate keymap in each application
 User	SwitcherSettingsWindow		Потребител
 Version  %VERSION \n\n	SwitcherDeskView		Версия  %VERSION \n\n

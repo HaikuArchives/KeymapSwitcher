@@ -1,4 +1,4 @@
-1	russian	x-vnd.Nexus-KeymapSwitcher	3535026967
+1	russian	x-vnd.Nexus-KeymapSwitcher	1889466053
  (system)	SwitcherSettingsWindow		 (системная)
  (user)	SwitcherSettingsWindow		 (пользовательская)
 About	SwitcherDeskView		О программе
@@ -9,7 +9,7 @@ Available keymaps:	SwitcherSettingsWindow		Доступные раскладки
 Caps Lock	SwitcherSettingsWindow		Caps Lock
 Cmd+Shift	SwitcherSettingsWindow		Cmd+Shift
 Copyright © 1999-2003 Stas Maximov.\n	SwitcherDeskView		Copyright © 1999-2003 Стас Максимов.\n
-Copyright © 2008-2010 Haiku, Inc.\n	SwitcherDeskView		Copyright © 2008-2010 Haiku, Inc.\n
+Copyright © 2008-%YEAR Haiku, Inc.\n	SwitcherDeskView		Copyright © 2008-%YEAR Haiku, Inc.\n
 Ctrl+Shift	SwitcherSettingsWindow		Ctrl+Shift
 Exit	SwitcherSettingsWindow		Выход
 Hotkey:	SwitcherSettingsWindow		Переключатель:
@@ -38,5 +38,6 @@ Unable to create Settings configuration window.	SwitcherApplication		Невоз�
 Unable to install keymap indicator. Deskbar application is not running.	SwitcherApplication		Невозможно установить индикатор расскладки. Deskbar не запущен.
 Unable to install keymap indicator. Deskbar application is not running.	SwitcherSettingsWindow		Невозможно установить индикатор расскладки. Deskbar не запущен.
 Unable to start Deskbar application. Keymap indicator was not installed.	SwitcherSettingsWindow		Невозможно запустить Deskbar. Индикатор текущей раскладки не был установлен.
+Use the separate keymap in each application	SwitcherSettingsWindow		Use the separate keymap in each application
 User	SwitcherSettingsWindow		Пользовательские
 Version  %VERSION \n\n	SwitcherDeskView		Версия  %VERSION \n\n

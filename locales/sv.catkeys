@@ -1,4 +1,4 @@
-1	swedish	x-vnd.Nexus-KeymapSwitcher	3535026967
+1	swedish	x-vnd.Nexus-KeymapSwitcher	1889466053
  (system)	SwitcherSettingsWindow		 (systeminstallerad)
  (user)	SwitcherSettingsWindow		 (användarspecifik)
 About	SwitcherDeskView		Om
@@ -9,7 +9,7 @@ Available keymaps:	SwitcherSettingsWindow		Valbara tangentbordslayouter:
 Caps Lock	SwitcherSettingsWindow		Caps Lock
 Cmd+Shift	SwitcherSettingsWindow		Cmd+Shift
 Copyright © 1999-2003 Stas Maximov.\n	SwitcherDeskView		Copyright © 1999-2003 Stas Maximov.\n
-Copyright © 2008-2010 Haiku, Inc.\n	SwitcherDeskView		Copyright © 2008-2010 Haiku, Inc.\n
+Copyright © 2008-%YEAR Haiku, Inc.\n	SwitcherDeskView		Copyright © 2008-%YEAR Haiku, Inc.\n
 Ctrl+Shift	SwitcherSettingsWindow		Ctrl+Shift
 Exit	SwitcherSettingsWindow		Avsluta
 Hotkey:	SwitcherSettingsWindow		Snabbtangent:
@@ -38,5 +38,6 @@ Unable to create Settings configuration window.	SwitcherApplication		Kunde inte 
 Unable to install keymap indicator. Deskbar application is not running.	SwitcherApplication		Kunde inte lägga till layoutindikatorn eftersom Deskbar inte kör.
 Unable to install keymap indicator. Deskbar application is not running.	SwitcherSettingsWindow		Kunde inte lägga till layoutindikatorn eftersom Deskbar inte kör.
 Unable to start Deskbar application. Keymap indicator was not installed.	SwitcherSettingsWindow		Kunde inte starta Deskbar. Installation av layoutindikatorn misslyckades.
+Use the separate keymap in each application	SwitcherSettingsWindow		Use the separate keymap in each application
 User	SwitcherSettingsWindow		Användaren
 Version  %VERSION \n\n	SwitcherDeskView		Version  %VERSION \n\n

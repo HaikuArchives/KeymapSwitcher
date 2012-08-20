@@ -1,4 +1,4 @@
-1	romanian	x-vnd.Nexus-KeymapSwitcher	3535026967
+1	romanian	x-vnd.Nexus-KeymapSwitcher	1889466053
  (system)	SwitcherSettingsWindow		 (sistem)
  (user)	SwitcherSettingsWindow		 (utilizator)
 About	SwitcherDeskView		Despre
@@ -9,7 +9,7 @@ Available keymaps:	SwitcherSettingsWindow		Hărți de taste disponibile:
 Caps Lock	SwitcherSettingsWindow		Caps Lock
 Cmd+Shift	SwitcherSettingsWindow		Cmd+Shift
 Copyright © 1999-2003 Stas Maximov.\n	SwitcherDeskView		Drepturi de autor © 1999-2003 Stas Maximov.\n
-Copyright © 2008-2010 Haiku, Inc.\n	SwitcherDeskView		Drepturi de autor © 2008-2010 Haiku, Inc.\n
+Copyright © 2008-%YEAR Haiku, Inc.\n	SwitcherDeskView		Drepturi de autor © 2008-%YEAR Haiku, Inc.\n
 Ctrl+Shift	SwitcherSettingsWindow		Ctrl+Shift
 Exit	SwitcherSettingsWindow		Ieșire
 Hotkey:	SwitcherSettingsWindow		Tastă rapidă:
@@ -38,5 +38,6 @@ Unable to create Settings configuration window.	SwitcherApplication		Nu s-a putu
 Unable to install keymap indicator. Deskbar application is not running.	SwitcherApplication		Nu s-a putut instala indicatorul hartă taste. Aplicația Deskbar nu rulează.
 Unable to install keymap indicator. Deskbar application is not running.	SwitcherSettingsWindow		Nu s-a putut instala indicatorul hartă taste. Aplicația Deskbar nu rulează.
 Unable to start Deskbar application. Keymap indicator was not installed.	SwitcherSettingsWindow		Nu s-a putut porni aplicația Deskbar. Indicatorul HartăTaste nu a fost instalat.
+Use the separate keymap in each application	SwitcherSettingsWindow		Use the separate keymap in each application
 User	SwitcherSettingsWindow		Utilizator
 Version  %VERSION \n\n	SwitcherDeskView		Versiune  %VERSION \n\n

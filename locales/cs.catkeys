@@ -1,4 +1,4 @@
-1	english	x-vnd.Nexus-KeymapSwitcher	3535026967
+1	english	x-vnd.Nexus-KeymapSwitcher	1889466053
  (system)	SwitcherSettingsWindow		 (systém)
  (user)	SwitcherSettingsWindow		 (uživatel)
 About	SwitcherDeskView		O…
@@ -9,7 +9,7 @@ Available keymaps:	SwitcherSettingsWindow		Dostupné klávesnice:
 Caps Lock	SwitcherSettingsWindow		Caps Lock
 Cmd+Shift	SwitcherSettingsWindow		Cmd+Shift
 Copyright © 1999-2003 Stas Maximov.\n	SwitcherDeskView		Copyright © 1999-2003 Stas Maximov.\n
-Copyright © 2008-2010 Haiku, Inc.\n	SwitcherDeskView		Copyright © 2008-2010 Haiku, Inc.\n
+Copyright © 2008-%YEAR Haiku, Inc.\n	SwitcherDeskView		Copyright © 2008-%YEAR Haiku, Inc.\n
 Ctrl+Shift	SwitcherSettingsWindow		Ctrl+Shift
 Exit	SwitcherSettingsWindow		Konec
 Hotkey:	SwitcherSettingsWindow		Klávesová zkratka:
@@ -38,5 +38,6 @@ Unable to create Settings configuration window.	SwitcherApplication		Nebylo mož
 Unable to install keymap indicator. Deskbar application is not running.	SwitcherApplication		Nebylo možno instalovat indikátor klávesnice. Miniaplikace v liště neběží.
 Unable to install keymap indicator. Deskbar application is not running.	SwitcherSettingsWindow		Nebylo možno instalovat indikátor klávesnice. Miniaplikace v liště neběží.
 Unable to start Deskbar application. Keymap indicator was not installed.	SwitcherSettingsWindow		Nebylo možno spustit aplikaci miniaplikaci v liště. Indikátor klávesnice nebyl nainstalován.
+Use the separate keymap in each application	SwitcherSettingsWindow		Use the separate keymap in each application
 User	SwitcherSettingsWindow		Uživatel
 Version  %VERSION \n\n	SwitcherDeskView		Verze %VERSION \n\n

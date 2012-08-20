@@ -1,4 +1,4 @@
-1	english	x-vnd.Nexus-KeymapSwitcher	3535026967
+1	english	x-vnd.Nexus-KeymapSwitcher	1889466053
  (system)	SwitcherSettingsWindow		 (järjestelmä)
  (user)	SwitcherSettingsWindow		 (käyttäjä)
 About	SwitcherDeskView		Ohjelmasta
@@ -9,7 +9,7 @@ Available keymaps:	SwitcherSettingsWindow		Käytettävissä olevat näppäinkart
 Caps Lock	SwitcherSettingsWindow		Caps Lock
 Cmd+Shift	SwitcherSettingsWindow		Alt+Vaihto
 Copyright © 1999-2003 Stas Maximov.\n	SwitcherDeskView		Copyright © 1999-2003 Stas Maximov.\n
-Copyright © 2008-2010 Haiku, Inc.\n	SwitcherDeskView		Copyright © 2008-2010 Haiku, Inc.\n
+Copyright © 2008-%YEAR Haiku, Inc.\n	SwitcherDeskView		Copyright © 2008-%YEAR Haiku, Inc.\n
 Ctrl+Shift	SwitcherSettingsWindow		Ctrl+Vaihto
 Exit	SwitcherSettingsWindow		Poistu
 Hotkey:	SwitcherSettingsWindow		Pikanäppäin:
@@ -38,5 +38,6 @@ Unable to create Settings configuration window.	SwitcherApplication		Ei kyetä l
 Unable to install keymap indicator. Deskbar application is not running.	SwitcherApplication		Ei kyetä asentamaan näppäinkarttaindikaattoria. Työpöytäpalkki ei ole käynnissä.
 Unable to install keymap indicator. Deskbar application is not running.	SwitcherSettingsWindow		Ei kyetä asentamaan näppäinkarttaindikaattoria. Työpöytäpalkki ei ole käynnissä.
 Unable to start Deskbar application. Keymap indicator was not installed.	SwitcherSettingsWindow		Työpöytäpalkkisovellusta ei kyetty käynnistämään. Näppäinkarttavaihtajaa ei asennettu.
+Use the separate keymap in each application	SwitcherSettingsWindow		Use the separate keymap in each application
 User	SwitcherSettingsWindow		Käyttäjä
 Version  %VERSION \n\n	SwitcherDeskView		Versio  %VERSION \n\n

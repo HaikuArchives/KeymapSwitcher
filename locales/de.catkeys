@@ -1,4 +1,4 @@
-1	german	x-vnd.Nexus-KeymapSwitcher	3535026967
+1	german	x-vnd.Nexus-KeymapSwitcher	1889466053
  (system)	SwitcherSettingsWindow		 (System)
  (user)	SwitcherSettingsWindow		 (Benutzer)
 About	SwitcherDeskView		Über
@@ -9,7 +9,7 @@ Available keymaps:	SwitcherSettingsWindow		Verfügbare Tastaturschemen:
 Caps Lock	SwitcherSettingsWindow		Feststelltaste
 Cmd+Shift	SwitcherSettingsWindow		Cmd+Shift
 Copyright © 1999-2003 Stas Maximov.\n	SwitcherDeskView		Copyright © 1999-2003 Stas Maximov.\n
-Copyright © 2008-2010 Haiku, Inc.\n	SwitcherDeskView		Copyright © 2008-2010 Haiku, Inc.\n
+Copyright © 2008-%YEAR Haiku, Inc.\n	SwitcherDeskView		Copyright © 2008-%YEAR Haiku, Inc.\n
 Ctrl+Shift	SwitcherSettingsWindow		STRG+Shift
 Exit	SwitcherSettingsWindow		Verlassen
 Hotkey:	SwitcherSettingsWindow		Tastenkombination zum Wechseln:
@@ -38,5 +38,6 @@ Unable to create Settings configuration window.	SwitcherApplication		Das Einstel
 Unable to install keymap indicator. Deskbar application is not running.	SwitcherApplication		Die Anzeige der des aktuellen Tastaturschemas konnte nicht in der Deskbar installiert werden, da diese momentan nicht läuft.
 Unable to install keymap indicator. Deskbar application is not running.	SwitcherSettingsWindow		Die Anzeige der des aktuellen Tastaturschemas konnte nicht in der Deskbar installiert werden, da diese momentan nicht läuft.
 Unable to start Deskbar application. Keymap indicator was not installed.	SwitcherSettingsWindow		Die Anwendung für die Deskbar konnte nicht gestartet werden. Die Keymap-Anzeige wurde nicht installiert.
+Use the separate keymap in each application	SwitcherSettingsWindow		Use the separate keymap in each application
 User	SwitcherSettingsWindow		Benutzer
 Version  %VERSION \n\n	SwitcherDeskView		Version  %VERSION \n\n

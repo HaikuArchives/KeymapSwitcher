@@ -638,7 +638,7 @@ void DeskView::ShowAboutWindow()
 	BString str(B_TRANSLATE("Keymap Switcher\n\n"));
 	int nameLen = str.Length();
 	str << B_TRANSLATE("Copyright " B_UTF8_COPYRIGHT " 1999-2003 Stas Maximov.\n");
-	str << B_TRANSLATE("Copyright " B_UTF8_COPYRIGHT " 2008-2012 Haiku, Inc.\n");
+	str << B_TRANSLATE("Copyright " B_UTF8_COPYRIGHT " 2008-%YEAR Haiku, Inc.\n");
 	str << B_TRANSLATE("Version  %VERSION \n\n");
 	str << B_TRANSLATE("Original notice from Stas Maximov:\n");
 	str << B_TRANSLATE("Tested and inspired by"
@@ -652,6 +652,7 @@ void DeskView::ShowAboutWindow()
 			"whether they use this app or not"
 			" - they're keeping BeOS alive!\n\n");
 	str.ReplaceAll("%VERSION", VERSION);
+	str.ReplaceAll("%YEAR", "2012");
 	BAlert *alert = new BAlert(B_TRANSLATE("About"), str,
 			B_TRANSLATE("Okay"), 0, 0, B_WIDTH_AS_USUAL, B_IDEA_ALERT);
 

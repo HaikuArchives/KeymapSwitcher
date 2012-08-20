@@ -1,7 +1,6 @@
-1	english	x-vnd.Nexus-KeymapSwitcher	3535026967
+1	english	x-vnd.Nexus-KeymapSwitcher	1889466053
 KeymapSwitcher options:\n\t--deskbar\tautomatically add replicant to Deskbar\n\t--help\t\tprint this info and exit\n	SwitcherApplication		KeymapSwitcher options:\n\t--deskbar\tautomatically add replicant to Deskbar\n\t--help\t\tprint this info and exit\n
  (system)	SwitcherSettingsWindow		 (system)
-Copyright © 2008-2010 Haiku, Inc.\n	SwitcherDeskView		Copyright © 2008-2010 Haiku, Inc.\n
 Quit	SwitcherDeskView		Quit
 OK	SwitcherSettingsWindow		OK
 Unable to start Deskbar application. Keymap indicator was not installed.	SwitcherSettingsWindow		Unable to start Deskbar application. Keymap indicator was not installed.
@@ -17,6 +16,7 @@ Original notice from Stas Maximov:\n	SwitcherDeskView		Original notice from Stas
 Cmd+Shift	SwitcherSettingsWindow		Cmd+Shift
 KeymapSwitcher	System name		KeymapSwitcher
 Install in Deskbar	SwitcherSettingsWindow		Install in Deskbar
+Copyright © 2008-%YEAR Haiku, Inc.\n	SwitcherDeskView		Copyright © 2008-%YEAR Haiku, Inc.\n
 Special thanks to all BeOS users, whether they use this app or not - they're keeping BeOS alive!\n\n	SwitcherDeskView		Special thanks to all BeOS users, whether they use this app or not - they're keeping BeOS alive!\n\n
 Unable to install keymap indicator. Deskbar application is not running.	SwitcherApplication		Unable to install keymap indicator. Deskbar application is not running.
 OK	SwitcherApplication		OK
@@ -37,6 +37,7 @@ Version  %VERSION \n\n	SwitcherDeskView		Version  %VERSION \n\n
 Selected keymaps:	SwitcherSettingsWindow		Selected keymaps:
 Unable to create Settings configuration window.	SwitcherApplication		Unable to create Settings configuration window.
 Keymap Switcher\n\n	SwitcherDeskView		Keymap Switcher\n\n
+Use the separate keymap in each application	SwitcherSettingsWindow		Use the separate keymap in each application
 Tested and inspired by\n\tSergey \"fyysik\" Dolgov,\n\tMaxim \"baza\" Bazarov,\n\tDenis Korotkov,\n\tNur Nazmetdinov and others.\n\n	SwitcherDeskView		Tested and inspired by\n\tSergey \"fyysik\" Dolgov,\n\tMaxim \"baza\" Bazarov,\n\tDenis Korotkov,\n\tNur Nazmetdinov and others.\n\n
 User	SwitcherSettingsWindow		User
 Activate shortcuts substitution	SwitcherSettingsWindow		Activate shortcuts substitution
