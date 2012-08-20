@@ -36,7 +36,7 @@ class SettingsWindow: public BWindow
 		MSG_BUTTON_REMOVE_ITEM,
 		MSG_CHECK_REMAP,
 		MSG_CHECK_SYSTEM_WIDE,
-		MSG_CHECK_USE_ACTIVE,
+//		MSG_CHECK_USE_ACTIVE,
 		MSG_LIST_SEL_CHANGE
 	};
 
@@ -139,7 +139,7 @@ private:
 	BButton* buttonCancel;
 	RemapCheckBox* checkRemap;
 	BCheckBox* checkSystemWideKeymap;
-	BCheckBox* checkUseActiveKeymap;
+//	BCheckBox* checkUseActiveKeymap;
 };
 
 

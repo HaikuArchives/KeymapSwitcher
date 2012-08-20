@@ -402,10 +402,10 @@ void DeskView::MessageReceived(BMessage *message)
 			}
 			team_keymap *item = new team_keymap;
 			item->team = team;
-			int32 nUseActive = 0;
-			if (B_OK != settings->FindInt32("use_active_keymap", &nUseActive))
-				nUseActive = 0;
-			item->keymap = nUseActive != 0 ? active_keymap : 0;
+			//int32 nUseActive = 0;
+			//if (B_OK != settings->FindInt32("use_active_keymap", &nUseActive))
+			//	nUseActive = 0;
+			item->keymap = /*nUseActive != 0 ? active_keymap :*/ 0;
 			app_list->AddItem((void *)item);
 			ChangeKeyMapSilent(item->keymap);
 		}
