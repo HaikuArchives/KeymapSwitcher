@@ -20,8 +20,6 @@ TYPE=APP
 
 APP_MIME_SIG=x-vnd.Nexus-KeymapSwitcher
 
-GCC_VER=$(word 1, $(subst -, , $(subst ., , $(shell $(CC) -dumpversion))))
-
 #	add support for new Pe and Eddie features
 #	to fill in generic makefile
 
@@ -63,11 +61,7 @@ LOCALES=be bg cs de en fi ro ru sv uk
 #		naming scheme you need to specify the path to the library
 #		and it's name
 #		library: my_lib.a entry: my_lib.a or path/my_lib.a
-ifeq ($(GCC_VER), 2)
-LIBS=be stdc++.r4 locale localestub
-else
-LIBS=be stdc++ locale localestub
-endif
+LIBS=be $(STDCPPLIBS) localestub
 
 #	specify additional paths to directories following the standard
 #	libXXX.so or libXXX.a naming scheme.  You can specify full paths
