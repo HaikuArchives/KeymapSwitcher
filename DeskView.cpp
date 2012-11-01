@@ -407,7 +407,8 @@ void DeskView::MessageReceived(BMessage *message)
 			//	nUseActive = 0;
 			item->keymap = /*nUseActive != 0 ? active_keymap :*/ 0;
 			app_list->AddItem((void *)item);
-			ChangeKeyMapSilent(item->keymap);
+			// will be handled in _ACTIVATED?
+			// ChangeKeyMapSilent(item->keymap);
 		}
 		break;
 	}
