@@ -68,14 +68,14 @@ const uint32	kSettings = 'CSet';
 const uint32	kAbout = 'CAbt';
 const uint32	kUnloadNow = 'CUnl';
 
-struct async_menu_info
+/*struct async_menu_info
 {
 	BPopUpMenu*	menu;
 	BPoint		where;
 	BRect		bounds;
 	async_menu_info() : menu(0) {}
 	~async_menu_info() { delete menu; }
-};
+}; */
 
 
 BView *instantiate_deskbar_item() { 
@@ -83,6 +83,7 @@ BView *instantiate_deskbar_item() {
 }
 
 //
+/*
 int32 ShowContextMenuAsync(void *pMenuInfo)
 {
 	async_menu_info *pMI = (async_menu_info*)pMenuInfo;
@@ -90,6 +91,7 @@ int32 ShowContextMenuAsync(void *pMenuInfo)
 	delete pMI;
 	return B_OK;
 }
+*/
 
 // General constructor
 DeskView::DeskView(const char *name,
@@ -537,13 +539,17 @@ void DeskView::ShowContextMenu(BPoint where)
 
 	menu->AddItem(item = new BMenuItem(B_TRANSLATE("Quit"), new BMessage(kUnloadNow)));
 	item->SetTarget(this);
-	BRect bounds = Bounds();
-	
+//	BRect bounds = Bounds();
+
+	menu->Go(ConvertToScreen(where), true, true, true);
+
+/*	
 	async_menu_info *pMI = new async_menu_info();
 	pMI->menu = menu;
 	pMI->where = ConvertToScreen(where);
 	pMI->bounds = ConvertToScreen(bounds);
 	resume_thread(spawn_thread(ShowContextMenuAsync, "Switcher Menu", B_NORMAL_PRIORITY, pMI) ); 
+*/	
 }
 
 
