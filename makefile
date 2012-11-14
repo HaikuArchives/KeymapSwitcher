@@ -9,7 +9,6 @@ DIST_DIR := dist
 ADDON_DEST := $(DIST_DIR)/common/add-ons/input_server/filters/ 
 APP_DEST := $(DIST_DIR)/common/bin/ 
 CATALOGS_DEST := $(DIST_DIR)/common/data/locale/catalogs/
-APP_MIME_SIG := x-vnd.Nexus-KeymapSwitcher
 VERSION := 1.2.7
 DATE := `date +%F`
 PACKAGE_NAME := KeymapSwitcher-$(VERSION)-x86-gcc$(CC_VER)-$(DATE)
@@ -21,6 +20,7 @@ default:
 
 $(OBJ_DIR)/$(APP): $(OBJ_DIR)/$(ADDON)
 	make -f app.makefile
+	make -f app.makefile bindcatalogs
 
 $(OBJ_DIR)/$(ADDON):
 	make -f addon.makefile
@@ -28,22 +28,18 @@ $(OBJ_DIR)/$(ADDON):
 clean:
 	-rm -rf $(OBJ_DIR)/*
 
+clean_dist:
+	-rm -rf $(DIST_DIR)/common/*
+
 $(APP_DEST):
 	mkdir -p $(APP_DEST)
 
 $(ADDON_DEST):
 	mkdir -p $(ADDON_DEST)
 
-$(CATALOGS_DEST): $(OBJ_DIR)/$(APP_MIME_SIG)
-	mkdir -p $(CATALOGS_DEST)
-
-$(OBJ_DIR)/$(APP_MIME_SIG):
-	make -f app.makefile catalogs
-
-package: clean $(OBJ_DIR)/$(APP) $(APP_DEST) $(ADDON_DEST) $(CATALOGS_DEST)
+package: clean clean_dist $(OBJ_DIR)/$(APP) $(APP_DEST) $(ADDON_DEST)
 	-cp $(OBJ_DIR)/$(APP) $(APP_DEST)
 	-cp $(OBJ_DIR)/$(ADDON) $(ADDON_DEST)
-	-cp -r $(OBJ_DIR)/$(APP_MIME_SIG) $(CATALOGS_DEST)
 	echo "Package: KeymapSwitcher" > $(DIST_DIR)/.OptionalPackageDescription
 	echo "Version: $(VERSION)-gcc$(CC_VER)" >> $(DIST_DIR)/.OptionalPackageDescription
 	echo "Copyright: Stanislav Maximov etc." >> $(DIST_DIR)/.OptionalPackageDescription
