@@ -14,7 +14,8 @@
 enum {
 	MSG_CHANGEKEYMAP = 0x400,
 	MSG_UPDATESETTINGS,
-	MSG_SHOW_RC_MENU = 0x500
+	MSG_SHOW_RC_MENU = 0x500,
+	MSG_PULSE_RESEIVED
 }; 
 
 // add/remove keymap buttons ids 
@@ -31,7 +32,7 @@ enum {
 #define	VersionMajor  1
 #define	VersionMiddle 2
 #define	VersionMinor  7
-#define VersionBuild  6
+#define VersionBuild  7
 
 #define _NUM2STR(_x) #_x
 #define NUM2STR(_x) _NUM2STR(_x)

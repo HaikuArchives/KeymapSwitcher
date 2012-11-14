@@ -8,6 +8,7 @@
 
 #include <stdio.h>
 
+#include <Box.h>
 #include <CheckBox.h>
 #include <FindDirectory.h>
 #include <ListView.h>
@@ -114,6 +115,15 @@ class SettingsWindow: public BWindow
 		int32 Index() const { return fIndex; }
 	};
 
+	class ClientBox : public BBox
+	{
+	public:
+		ClientBox(BRect frame, const char* name,
+			uint32 resizingMode, uint32 flags, border_style style);
+
+		virtual void Pulse();
+	};
+
 	bool AlreadyInDeskbar();
 	void AdjustRemapCheck(bool next_index);
 
@@ -132,7 +142,7 @@ private:
 	BMenuField* menuField;
 	KeymapListView *selected_list;
 	KeymapOutlineListView *available_list;
-	BView *parent;
+//	BView *parent;
 	MoveButton* addButton;
 	MoveButton* delButton;
 	BButton* buttonOK;

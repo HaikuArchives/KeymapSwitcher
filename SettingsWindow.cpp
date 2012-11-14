@@ -13,7 +13,6 @@
 #include <Application.h>
 #include <Beep.h>
 #include <Bitmap.h>
-#include <Box.h>
 #include <Button.h>
 #include <Catalog.h>
 #include <Deskbar.h>
@@ -94,9 +93,10 @@ SettingsWindow::SettingsWindow(bool fromDeskbar)
 	Lock();
 
 	// "client" area view
-	BBox *box = new BBox(Bounds(), B_EMPTY_STRING,
+	ClientBox *box = new ClientBox(Bounds(), B_EMPTY_STRING,
 						B_FOLLOW_NONE,
-						B_WILL_DRAW | B_FRAME_EVENTS | B_NAVIGABLE_JUMP,
+						B_WILL_DRAW | B_FRAME_EVENTS
+						| B_NAVIGABLE_JUMP | B_PULSE_NEEDED,
 						B_PLAIN_BORDER);
 	AddChild(box);
 
@@ -602,6 +602,39 @@ void SettingsWindow::MessageReceived(BMessage *msg)
 	case MSG_ABOUT:
 	//	ShowAboutWindow();
 		break;
+	case MSG_PULSE_RESEIVED:
+		{	
+			bool isInDeskbar = AlreadyInDeskbar();
+			const char* labelOK = isInDeskbar
+				? B_TRANSLATE("Apply") : B_TRANSLATE("Install in Deskbar");
+			const char* labelCancel = isInDeskbar
+				? B_TRANSLATE("Revert") : B_TRANSLATE("Exit");
+
+			float w0 = buttonOK->Bounds().Width();
+			buttonOK->SetLabel(labelOK);
+			float w1 = 0.f, h0 = 0.f;
+			buttonOK->GetPreferredSize(&w1, &h0);
+			float deltaOK = min_c(w0 - w1, 0.f);
+			buttonOK->MoveBy(deltaOK, 0.f);
+			if (deltaOK < 0.f)
+				buttonOK->ResizeToPreferred();
+
+			w0 = buttonCancel->Bounds().Width();
+			buttonCancel->SetLabel(labelCancel);
+			buttonCancel->GetPreferredSize(&w1, &h0);
+			float deltaCancel = min_c(w0 - w1, 0.f);
+			buttonCancel->MoveBy(deltaOK + deltaCancel, 0.f);
+			if (deltaCancel < 0.f)
+				buttonCancel->ResizeToPreferred();
+
+			if (!isInDeskbar) {
+				buttonOK->SetEnabled(true);
+				buttonCancel->SetEnabled(true);
+			}
+
+			break;
+		}
+
 	default:
 		break;
 	}
@@ -1000,5 +1033,22 @@ SettingsWindow::MoveButton::LoadPicture(BResources *resFrom, BPicture *picTo, ui
 	RemoveChild(&view);
 		
 	return B_OK;
+}
+
+
+SettingsWindow::ClientBox::ClientBox(BRect frame, const char* name,
+				uint32 resizingMode, uint32 flags, border_style border)
+		: BBox(frame, name, resizingMode, flags, border)
+{
+}
+
+
+void SettingsWindow::ClientBox::Pulse()
+{
+	BBox::Pulse();
+
+	static int pulsesCount = 0;
+	if (((pulsesCount++ % 4) == 0) && Window() != 0)
+		Window()->PostMessage(MSG_PULSE_RESEIVED);
 }
 
