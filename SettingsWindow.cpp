@@ -831,19 +831,23 @@ SettingsWindow::KeymapListView::MessageReceived(BMessage *message)
 
 		// item dropped inside, rearrange items
 		case MSG_ACTIVE_ITEM_DRAGGED: {
-			BMessage notify(MSG_KEYMAPS_CHANGED);
-			Window()->PostMessage(&notify);
 			int32 draggedIndex = -1;
 			message->FindInt32("index", &draggedIndex);
 			int32 index = -1;
 			index = IndexOf(ConvertFromScreen(message->DropPoint()));
-			DeselectAll();
-			if (0>index) 
+			if (0 > index) 
 				index = CountItems() - 1;
+
+			if (index == draggedIndex)
+				return;
+			
+			DeselectAll();
 			MoveItem(draggedIndex, index);
 			Select(index);
 			ScrollToSelection();
-			//trace(index);
+			
+			BMessage notify(MSG_KEYMAPS_CHANGED);
+			Window()->PostMessage(&notify);
 			return;						
 		}
 	}
