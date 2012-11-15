@@ -623,12 +623,35 @@ void DeskView::ChangeKeyMapSilent(int32 change_to, bool force /*= false*/)
 	// read source keymap to buffer
 	source_file.Read((void *)buf, size);
 	source_file.Unset();
+/*
+struct key_map {
+	uint32  version;  // compatible version must be 3
+	uint32  caps_key;
+	uint32  scroll_key;
+	uint32  num_key;
+	uint32  left_shift_key;
+	uint32  right_shift_key;
+	uint32  left_command_key;	// from offset 24
+	uint32  right_command_key;
+	uint32  left_control_key;
+	uint32  right_control_key;	// up to 32 bytes
+*/
+	uint32 keymap_header[10] = { 0 };
 
 	// open target keymap file	
-	uint32 om = B_WRITE_ONLY|B_CREATE_FILE; 
+	uint32 om = B_READ_WRITE; 
 	BFile target_file(cur_map_path.Path(), om);
+	if (sizeof(keymap_header)
+			== target_file.ReadAt(0, keymap_header, sizeof(keymap_header))
+		&& keymap_header[0] ==  B_BENDIAN_TO_HOST_INT32(3)
+		&& size > sizeof(keymap_header))
+	{
+		// preserve Cmd-switch settings from source file
+		memcpy(buf + 24, &keymap_header[6], sizeof(uint32) * 4);
+	}
+
 	// write buffer to target keymap file
-	if (-1 == target_file.Write((void *)buf, size))
+	if (-1 == target_file.WriteAt(0, (void *)buf, size))
 		trace("Target file is NOT okay");
 	target_file.Unset();
 	DELETE(buf);
