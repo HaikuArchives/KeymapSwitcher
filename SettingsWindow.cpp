@@ -414,9 +414,9 @@ SettingsWindow::SettingsWindow(bool fromDeskbar)
 SettingsWindow::~SettingsWindow()
 {
 	while(0 < available_list->CountItems())
-		delete (dynamic_cast<KeymapItem*> (available_list->RemoveItem(0L)));
+		delete (dynamic_cast<KeymapItem*> (available_list->RemoveItem((int32)0)));
 	while(0 < selected_list->CountItems())
-		delete (dynamic_cast<KeymapItem*> (selected_list->RemoveItem(0L)));
+		delete (dynamic_cast<KeymapItem*> (selected_list->RemoveItem((int32)0)));
 	delete settings;
 	delete settingsOrg;
 }
@@ -713,7 +713,7 @@ SettingsWindow::KeymapListView::ResetKeymapsList(const Settings* settings)
 	if(!IsEmpty()) {
 		// first clean the list
 		while(0 < CountItems())
-			delete (dynamic_cast<KeymapItem*> (RemoveItem(0L)));
+			delete (dynamic_cast<KeymapItem*> (RemoveItem((int32)0)));
 		MakeEmpty();
 	}
 

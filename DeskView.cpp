@@ -160,7 +160,7 @@ void DeskView::Init()
 	be_roster->GetAppList(teams);
 	int32 teams_count = teams->CountItems();
 	for (int i=0; i<teams_count; i++) {
-		team_id team = (team_id) teams->ItemAt(i);
+		team_id team = team_id((addr_t)teams->ItemAt(i));
 		app_info info;
 		be_roster->GetRunningAppInfo(team, &info);
 
@@ -184,11 +184,11 @@ DeskView::~DeskView()
 		DELETE(settings);
 	if (NULL != app_list)
 		while (!app_list->IsEmpty())
-			delete (static_cast<team_keymap*> (app_list->RemoveItem(0L))); 
+			delete (static_cast<team_keymap*> (app_list->RemoveItem((int32)0))); 
 	DELETE(app_list);
 	if (NULL != keymaps) {
 		while (!keymaps->IsEmpty())
-			delete (static_cast<BString*> (keymaps->RemoveItem(0L)));
+			delete (static_cast<BString*> (keymaps->RemoveItem((int32)0)));
 		DELETE(keymaps);
 	}
 }

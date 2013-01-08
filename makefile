@@ -1,8 +1,13 @@
 ##
 ##
 ##
-CC_VER = $(word 1, $(subst -, , $(subst ., , $(shell $(CC) -dumpversion))))
-OBJ_DIR := objects.x86-gcc$(CC_VER)-*
+
+MACHINE=$(shell uname -m)
+ifeq ($(MACHINE), BePC)
+	MACHINE = x86-gcc$(word 1, $(subst -, , $(subst ., , $(shell $(CC) -dumpversion))))
+endif
+
+OBJ_DIR := objects.$(MACHINE)-*
 APP := KeymapSwitcher
 ADDON := keymap_switcher
 DIST_DIR := dist
@@ -11,7 +16,7 @@ APP_DEST := $(DIST_DIR)/common/bin/
 CATALOGS_DEST := $(DIST_DIR)/common/data/locale/catalogs/
 VERSION := 1.2.7
 DATE := `date +%F`
-PACKAGE_NAME := KeymapSwitcher-$(VERSION)-x86-gcc$(CC_VER)-$(DATE)
+PACKAGE_NAME := KeymapSwitcher-$(VERSION)-$(MACHINE)-$(DATE)
 
 
 default:
@@ -41,7 +46,7 @@ package: clean clean_dist $(OBJ_DIR)/$(APP) $(APP_DEST) $(ADDON_DEST)
 	-cp $(OBJ_DIR)/$(APP) $(APP_DEST)
 	-cp $(OBJ_DIR)/$(ADDON) $(ADDON_DEST)
 	echo "Package: KeymapSwitcher" > $(DIST_DIR)/.OptionalPackageDescription
-	echo "Version: $(VERSION)-gcc$(CC_VER)" >> $(DIST_DIR)/.OptionalPackageDescription
+	echo "Version: $(VERSION)-$(MACHINE)" >> $(DIST_DIR)/.OptionalPackageDescription
 	echo "Copyright: Stanislav Maximov etc." >> $(DIST_DIR)/.OptionalPackageDescription
 	echo "Description: Easy to use Keymap Switcher for Haiku OS." >> $(DIST_DIR)/.OptionalPackageDescription
 	echo "License: BSD/MIT" >> $(DIST_DIR)/.OptionalPackageDescription

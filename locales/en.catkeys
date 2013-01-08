@@ -1,4 +1,4 @@
-1	english	x-vnd.Nexus-KeymapSwitcher	1889466053
+1	English	x-vnd.Nexus-KeymapSwitcher	1889466053
 KeymapSwitcher options:\n\t--deskbar\tautomatically add replicant to Deskbar\n\t--help\t\tprint this info and exit\n	SwitcherApplication		KeymapSwitcher options:\n\t--deskbar\tautomatically add replicant to Deskbar\n\t--help\t\tprint this info and exit\n
  (system)	SwitcherSettingsWindow		 (system)
 Quit	SwitcherDeskView		Quit
