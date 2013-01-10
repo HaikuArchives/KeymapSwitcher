@@ -108,7 +108,7 @@ status_t Settings::SetInt16(const char *name, int16 i)
 status_t Settings::SetInt32(const char *name, int32 i)
 {
 	dirty = true;
-	fprintf(stderr, "SetInt32(%s):%ld\n", name, i);
+	fprintf(stderr, "SetInt32(%s):%" B_PRIi32 "d\n", name, i);
 	if (HasInt32(name)) {
 		return ReplaceInt32(name, 0, i);
 	}

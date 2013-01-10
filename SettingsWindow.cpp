@@ -338,7 +338,7 @@ SettingsWindow::SettingsWindow(bool fromDeskbar)
 
 	// read the remap check state
 	int32 index = settings->FindInt32("remap");
-	fprintf(stderr, "init:%ld\n", index);
+	fprintf(stderr, "init:%" B_PRIi32 "d\n", index);
 	checkRemap->SetIndex(index);
 	AdjustRemapCheck(false);
 
@@ -656,7 +656,7 @@ void SettingsWindow::AdjustRemapCheck(bool next_index)
 	}
 	checkRemap->SetLabel(str);
 
-	fprintf(stderr, "adj:%ld\n", checkRemap->Index());
+	fprintf(stderr, "adj:%" B_PRIi32 "d\n", checkRemap->Index());
 }
 
 bool SettingsWindow::AlreadyInDeskbar()

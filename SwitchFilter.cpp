@@ -184,7 +184,7 @@ filter_result SwitchFilter::Filter(BMessage *message, BList *outList)
 		message->FindInt8("states", (int8 *)&states);
 
 		char *buf = new char[128];
-		sprintf(buf, "new: %#010lx, old: %#010lx states:%#04x", 
+		sprintf(buf, "new: %#010" B_PRIx32 "x, old: %#010" B_PRIx32 "x states:%#04x", 
 				new_modifiers, old_modifiers, states);
 		trace(buf);
 		delete buf;
