@@ -13,7 +13,7 @@
 #include <Beep.h>
 #include <Catalog.h>
 #include <Deskbar.h>
-#include <Dragger.h>
+//#include <Dragger.h>
 #include <File.h>
 #include <FindDirectory.h>
 #include <InputServerDevice.h>
@@ -98,7 +98,7 @@ DeskView::DeskView(const char *name,
 	uint32 resizeMask, uint32 flags)
 		: BStringView(BRect(0,0, fIconX, fIconY), name, ":)",  resizeMask, flags)
 {
-	AddChild(new BDragger(BRect(-10, -10, - 10, -10), this));
+//	AddChild(new BDragger(BRect(-10, -10, - 10, -10), this));
 	Init();	// Do prepare...
 }
 
