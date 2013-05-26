@@ -593,11 +593,13 @@ void DeskView::ChangeKeyMapSilent(int32 change_to, bool force /*= false*/)
 			item->keymap = change_to;
 			app_list->AddItem((void *)item);
 		}
-	}
-	if(change_to != active_keymap)
+	} else {
+//	if(change_to != active_keymap)
 		need_switch = true;
+	}
 
-	if (!need_switch) return;
+	if (!need_switch)
+		return;
 
 	active_keymap = change_to;
 	BString param, name;
@@ -682,7 +684,7 @@ void DeskView::ShowAboutWindow()
 			"whether they use this app or not"
 			" - they're keeping BeOS alive!\n\n");
 	str.ReplaceAll("%VERSION", VERSION);
-	str.ReplaceAll("%YEAR", "2012");
+	str.ReplaceAll("%YEAR", "2013");
 	BAlert *alert = new BAlert(B_TRANSLATE("About"), str,
 			B_TRANSLATE("Okay"), 0, 0, B_WIDTH_AS_USUAL, B_IDEA_ALERT);
 

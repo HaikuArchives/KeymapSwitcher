@@ -153,6 +153,8 @@ SettingsWindow::SettingsWindow(bool fromDeskbar)
 	fMaxButtonsWidth += pt.x + fXSpacing;
 	float fSelectorHeight = fmax(fLineHeight, pt.y);
 
+	menuField->ResizeToPreferred();
+
 	// create top divider
 	BBox* dividerTop = new BBox(rc, B_EMPTY_STRING, B_FOLLOW_LEFT_RIGHT, B_WILL_DRAW, B_FANCY_BORDER);
 	box->AddChild(dividerTop);
@@ -216,8 +218,8 @@ SettingsWindow::SettingsWindow(bool fromDeskbar)
 	struct _button {
 		const char* name;
 		const char* label;
-		int32		message;
-		int32		flags;
+		uint32		message;
+		uint32		flags;
 		BButton*	button;
 		BPoint		pt;
 	} b[] = {
