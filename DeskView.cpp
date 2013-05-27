@@ -29,8 +29,6 @@
 #undef B_TRANSLATION_CONTEXT
 #define B_TRANSLATION_CONTEXT "SwitcherDeskView"
 
-#define NEXT_KEYMAP(index, total) ((++index) >= total ? 0 : index)
-
 #define DELETE(p) {if (0 != p) { delete p; p = 0; } }
 
 extern void _restore_key_map_(); // magic undoc function :))
@@ -337,7 +335,7 @@ void DeskView::MessageReceived(BMessage *message)
 	}
 	case MSG_CHANGEKEYMAP:
 		// message from Switcher, change Indicator now!
-		ChangeKeyMap(NEXT_KEYMAP(active_keymap, keymaps->CountItems()));
+		ChangeKeyMap((active_keymap + 1) % keymaps->CountItems());
 		break;
 
 	case MSG_UPDATESETTINGS: {
@@ -502,7 +500,7 @@ void DeskView::MouseDown(BPoint where)
 			// secondary button was clicked or control key was down, show menu and return
 			ShowContextMenu(where);
 		} else if (buttons & B_PRIMARY_MOUSE_BUTTON /*&& !disabled*/) {
-			ChangeKeyMap(NEXT_KEYMAP(active_keymap, keymaps->CountItems()));
+			ChangeKeyMap((active_keymap + 1) % keymaps->CountItems());
 		} else if (buttons & B_TERTIARY_MOUSE_BUTTON) {
 			be_roster->Launch(APP_SIGNATURE);
 		}
@@ -593,10 +591,12 @@ void DeskView::ChangeKeyMapSilent(int32 change_to, bool force /*= false*/)
 			item->keymap = change_to;
 			app_list->AddItem((void *)item);
 		}
-	} else {
-//	if(change_to != active_keymap)
-		need_switch = true;
 	}
+	
+	fprintf(stderr, "change to:%" B_PRIi32 "d active:%ld\n", change_to, active_keymap);
+
+	if(change_to != active_keymap)
+		need_switch = true;
 
 	if (!need_switch)
 		return;
