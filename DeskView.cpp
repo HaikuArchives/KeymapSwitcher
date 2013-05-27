@@ -554,7 +554,7 @@ void DeskView::ShowContextMenu(BPoint where)
 // change keymap, when user changed keymap with mouse on deskbar or via hotkey.
 void DeskView::ChangeKeyMap(int32 change_to)
 {
-	fprintf(stderr, "change to:%" B_PRIi32 "d\n", change_to);
+//	fprintf(stderr, "change to:%" B_PRIi32 "d\n", change_to);
 	ChangeKeyMapSilent(change_to);
 	bool should_beep = false;
 	settings->FindBool("beep", &should_beep);
@@ -593,8 +593,6 @@ void DeskView::ChangeKeyMapSilent(int32 change_to, bool force /*= false*/)
 		}
 	}
 	
-	fprintf(stderr, "change to:%" B_PRIi32 "d active:%ld\n", change_to, active_keymap);
-
 	if(change_to != active_keymap)
 		need_switch = true;
 
