@@ -18,6 +18,11 @@ VERSION := 1.2.7
 DATE := `date +%F`
 PACKAGE_NAME := KeymapSwitcher-$(VERSION)-$(MACHINE)-$(DATE)
 
+# Haiku package support
+APP_MIME_SIG := x-vnd.Nexus-KeymapSwitcher
+HPKG_ADDON_DEST := $(BUILDHOME)/add-ons/input_server/filters/ 
+HPKG_APP_DEST := $(BUILDHOME)/bin/ 
+HPKG_CATALOGS_DEST := $(BUILDHOME)/data/locale/catalogs/
 
 default:
 	make -f app.makefile
@@ -61,3 +66,24 @@ package: clean clean_dist $(OBJ_DIR)/$(APP) $(APP_DEST) $(ADDON_DEST)
 	echo "/boot/system/servers/input_server &" >> $(DIST_DIR)/update-$(PACKAGE_NAME).sh
 	echo "/boot/common/bin/KeymapSwitcher --deskbar" >> $(DIST_DIR)/update-$(PACKAGE_NAME).sh
 	chmod 700 $(DIST_DIR)/update-$(PACKAGE_NAME).sh
+
+# Haiku package support - do not use directly! Only for HPKG building.
+
+$(HPKG_CATALOGS_DEST): $(OBJ_DIR)/$(APP_MIME_SIG)
+	mkdir -p $(HPKG_CATALOGS_DEST)
+
+$(OBJ_DIR)/$(APP_MIME_SIG):
+	make -f app.makefile catalogs
+
+$(HPKG_APP_DEST):
+	mkdir -p $(HPKG_APP_DEST)
+
+$(HPKG_ADDON_DEST):
+	mkdir -p $(HPKG_ADDON_DEST)
+
+hpkg: clean $(OBJ_DIR)/$(APP) $(OBJ_DIR)/$(ADDON) $(HPKG_APP_DEST) \
+		$(HPKG_ADDON_DEST) $(HPKG_CATALOGS_DEST)
+	-cp $(OBJ_DIR)/$(APP) $(HPKG_APP_DEST)
+	-cp $(OBJ_DIR)/$(ADDON) $(HPKG_ADDON_DEST)
+	-cp -r $(OBJ_DIR)/$(APP_MIME_SIG) $(HPKG_CATALOGS_DEST)
+
