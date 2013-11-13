@@ -11,9 +11,9 @@ OBJ_DIR := objects.$(MACHINE)-*
 APP := KeymapSwitcher
 ADDON := keymap_switcher
 DIST_DIR := dist
-ADDON_DEST := $(DIST_DIR)/common/add-ons/input_server/filters/ 
-APP_DEST := $(DIST_DIR)/common/bin/ 
-CATALOGS_DEST := $(DIST_DIR)/common/data/locale/catalogs/
+ADDON_DEST := $(DIST_DIR)/system/add-ons/input_server/filters/ 
+APP_DEST := $(DIST_DIR)/system/preferences/ 
+CATALOGS_DEST := $(DIST_DIR)/system/data/locale/catalogs/
 VERSION := 1.2.7
 DATE := `date +%F`
 PACKAGE_NAME := KeymapSwitcher-$(VERSION)-$(MACHINE)-$(DATE)
@@ -21,7 +21,7 @@ PACKAGE_NAME := KeymapSwitcher-$(VERSION)-$(MACHINE)-$(DATE)
 # Haiku package support
 APP_MIME_SIG := x-vnd.Nexus-KeymapSwitcher
 HPKG_ADDON_DEST := $(BUILDHOME)/add-ons/input_server/filters/ 
-HPKG_APP_DEST := $(BUILDHOME)/bin/ 
+HPKG_APP_DEST := $(BUILDHOME)/preferences/ 
 HPKG_CATALOGS_DEST := $(BUILDHOME)/data/locale/catalogs/
 
 default:
@@ -30,7 +30,7 @@ default:
 
 $(OBJ_DIR)/$(APP): $(OBJ_DIR)/$(ADDON)
 	make -f app.makefile
-	make -f app.makefile bindcatalogs
+#	make -f app.makefile bindcatalogs
 
 $(OBJ_DIR)/$(ADDON):
 	make -f addon.makefile
@@ -64,7 +64,7 @@ package: clean clean_dist $(OBJ_DIR)/$(APP) $(APP_DEST) $(ADDON_DEST)
 	echo "unzip -o $(PACKAGE_NAME).zip -d /boot" >> $(DIST_DIR)/update-$(PACKAGE_NAME).sh
 	echo "/boot/system/Deskbar &" >> $(DIST_DIR)/update-$(PACKAGE_NAME).sh
 	echo "/boot/system/servers/input_server &" >> $(DIST_DIR)/update-$(PACKAGE_NAME).sh
-	echo "/boot/common/bin/KeymapSwitcher --deskbar" >> $(DIST_DIR)/update-$(PACKAGE_NAME).sh
+	echo "/boot/system/preferences/KeymapSwitcher --deskbar" >> $(DIST_DIR)/update-$(PACKAGE_NAME).sh
 	chmod 700 $(DIST_DIR)/update-$(PACKAGE_NAME).sh
 
 # Haiku package support - do not use directly! Only for HPKG building.

@@ -53,6 +53,8 @@ class SettingsWindow: public BWindow
 		BString real_name;
 	};
 
+	static int CompareKeymapItems(const void* left, const void* right);
+
 	class KeymapListView : public BListView
    	{
 	public:

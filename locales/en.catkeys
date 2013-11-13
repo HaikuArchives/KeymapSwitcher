@@ -1,4 +1,4 @@
-1	English	x-vnd.Nexus-KeymapSwitcher	1889466053
+1	English	x-vnd.Nexus-KeymapSwitcher	6804397
 KeymapSwitcher options:\n\t--deskbar\tautomatically add replicant to Deskbar\n\t--help\t\tprint this info and exit\n	SwitcherApplication		KeymapSwitcher options:\n\t--deskbar\tautomatically add replicant to Deskbar\n\t--help\t\tprint this info and exit\n
  (system)	SwitcherSettingsWindow		 (system)
 Quit	SwitcherDeskView		Quit
@@ -6,11 +6,11 @@ OK	SwitcherSettingsWindow		OK
 Unable to start Deskbar application. Keymap indicator was not installed.	SwitcherSettingsWindow		Unable to start Deskbar application. Keymap indicator was not installed.
 About…	SwitcherDeskView		About…
 Unable to install keymap indicator. Deskbar application is not running.	SwitcherSettingsWindow		Unable to install keymap indicator. Deskbar application is not running.
-Hotkey:	SwitcherSettingsWindow		Hotkey:
 Settings…	SwitcherDeskView		Settings…
 Shift+Shift	SwitcherSettingsWindow		Shift+Shift
 Substitute shortcuts with %KEYMAP%'s ones	SwitcherSettingsWindow		Substitute shortcuts with %KEYMAP%'s ones
 System	SwitcherSettingsWindow		System
+Shortcut:	SwitcherSettingsWindow		Shortcut:
 Thanks to Pierre Raynaud-Richard and Robert Polic for BeOS tips.\n\n	SwitcherDeskView		Thanks to Pierre Raynaud-Richard and Robert Polic for BeOS tips.\n\n
 Original notice from Stas Maximov:\n	SwitcherDeskView		Original notice from Stas Maximov:\n
 Cmd+Shift	SwitcherSettingsWindow		Cmd+Shift

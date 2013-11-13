@@ -106,12 +106,13 @@ SettingsWindow::SettingsWindow(bool fromDeskbar)
 	BRect rc(RC.LeftTop(), RC.LeftTop());
 	// create hot-key selector
 	BStringView* selectorLabel = new BStringView(rc, "string1",
-								B_TRANSLATE("Hotkey:"));
+								B_TRANSLATE("Shortcut:"));
 	box->AddChild(selectorLabel);
 	
 	float fLineHeight = 0.f;
 	float fMaxButtonsWidth = 0.f;
 	selectorLabel->GetPreferredSize(&fMaxButtonsWidth, &fLineHeight);
+	float fSelectorLabelWidth = fMaxButtonsWidth + 5.f;
 
 	// create and populate selector menu
 	int32 hotkey = 0;
@@ -154,6 +155,9 @@ SettingsWindow::SettingsWindow(bool fromDeskbar)
 	float fSelectorHeight = fmax(fLineHeight, pt.y);
 
 	menuField->ResizeToPreferred();
+	menuField->SetDivider(fSelectorLabelWidth);
+	menuField->ResizeBy(fSelectorLabelWidth, 0.f);
+	menuField->SetLabel(B_TRANSLATE("Shortcut:"));
 
 	// create top divider
 	BBox* dividerTop = new BBox(rc, B_EMPTY_STRING, B_FOLLOW_LEFT_RIGHT, B_WILL_DRAW, B_FANCY_BORDER);
@@ -291,9 +295,10 @@ SettingsWindow::SettingsWindow(bool fromDeskbar)
 	BPoint ptOrg(RC.LeftTop());
 	selectorLabel->ResizeToPreferred();
 	
-	selectorLabel->MoveTo(ptOrg.x,
-		   ptOrg.y + (fSelectorHeight - selectorLabel->Bounds().Height()) / 2);
-	menuField->MoveTo(ptOrg.x + selectorLabel->Bounds().Width() + fXSpacing, ptOrg.y);
+	//selectorLabel->MoveTo(ptOrg.x,
+	//	   ptOrg.y + (fSelectorHeight - selectorLabel->Bounds().Height()) / 2);
+	selectorLabel->MoveTo(-1000.f, -1000.f);
+	menuField->MoveTo(ptOrg.x /*+ selectorLabel->Bounds().Width() + fXSpacing*/, ptOrg.y);
 	ptOrg.y += fSelectorHeight + Y_INSET;
 
 	dividerTop->MoveTo(ptOrg);
@@ -883,6 +888,14 @@ SettingsWindow::KeymapOutlineListView::KeymapOutlineListView(BRect r, const char
 {
 }
 
+int
+SettingsWindow::CompareKeymapItems(const void* left, const void* right)
+{
+	KeymapItem* leftItem = *(KeymapItem**)left;
+	KeymapItem* rightItem = *(KeymapItem**)right;
+	return -strcmp(leftItem->Text(), rightItem->Text());
+}
+
 void
 SettingsWindow::KeymapOutlineListView::PopulateTheTree()
 {
@@ -922,10 +935,13 @@ SettingsWindow::KeymapOutlineListView::PopulateTheTree()
 			list.AddItem(new KeymapItem(ref.name, ref.name, (int32)ad[d].which ), 0);
 		}
 
+		list.SortItems(&CompareKeymapItems);
+
 		for (int i = 0; i < list.CountItems(); i++) {
 			/*available_list->*/AddUnder((KeymapItem*) list.ItemAt(i), keymap_node);
 		}
 	}
+
 }
 
 bool

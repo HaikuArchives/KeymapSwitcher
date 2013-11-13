@@ -1,4 +1,4 @@
-1	romanian	x-vnd.Nexus-KeymapSwitcher	1889466053
+1	romanian	x-vnd.Nexus-KeymapSwitcher	6804397
  (system)	SwitcherSettingsWindow		 (sistem)
  (user)	SwitcherSettingsWindow		 (utilizator)
 About	SwitcherDeskView		Despre
@@ -12,7 +12,7 @@ Copyright © 1999-2003 Stas Maximov.\n	SwitcherDeskView		Drepturi de autor © 19
 Copyright © 2008-%YEAR Haiku, Inc.\n	SwitcherDeskView		Drepturi de autor © 2008-%YEAR Haiku, Inc.\n
 Ctrl+Shift	SwitcherSettingsWindow		Ctrl+Shift
 Exit	SwitcherSettingsWindow		Ieșire
-Hotkey:	SwitcherSettingsWindow		Tastă rapidă:
+Shortcut:	SwitcherSettingsWindow		Tastă rapidă:
 Install in Deskbar	SwitcherSettingsWindow		Instalează pe Deskbar
 Keymap Switcher	SwitcherSettingsWindow		Comutator HartăTaste
 Keymap Switcher\n\n	SwitcherDeskView		Comutator HartăTaste\n\n

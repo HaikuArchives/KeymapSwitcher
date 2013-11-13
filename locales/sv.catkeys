@@ -1,4 +1,4 @@
-1	swedish	x-vnd.Nexus-KeymapSwitcher	1889466053
+1	swedish	x-vnd.Nexus-KeymapSwitcher	6804397
  (system)	SwitcherSettingsWindow		 (systeminstallerad)
  (user)	SwitcherSettingsWindow		 (användarspecifik)
 About	SwitcherDeskView		Om
@@ -12,7 +12,7 @@ Copyright © 1999-2003 Stas Maximov.\n	SwitcherDeskView		Copyright © 1999-2003 
 Copyright © 2008-%YEAR Haiku, Inc.\n	SwitcherDeskView		Copyright © 2008-%YEAR Haiku, Inc.\n
 Ctrl+Shift	SwitcherSettingsWindow		Ctrl+Shift
 Exit	SwitcherSettingsWindow		Avsluta
-Hotkey:	SwitcherSettingsWindow		Snabbtangent:
+Shortcut:	SwitcherSettingsWindow		Snabbtangent:
 Install in Deskbar	SwitcherSettingsWindow		Lägg till i Deskbar
 Keymap Switcher	SwitcherSettingsWindow		LayoutVäxlaren
 Keymap Switcher\n\n	SwitcherDeskView		LayoutVäxlaren\n\n

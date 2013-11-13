@@ -1,4 +1,4 @@
-1	german	x-vnd.Nexus-KeymapSwitcher	1889466053
+1	german	x-vnd.Nexus-KeymapSwitcher	6804397
  (system)	SwitcherSettingsWindow		 (System)
  (user)	SwitcherSettingsWindow		 (Benutzer)
 About	SwitcherDeskView		Über
@@ -12,7 +12,7 @@ Copyright © 1999-2003 Stas Maximov.\n	SwitcherDeskView		Copyright © 1999-2003 
 Copyright © 2008-%YEAR Haiku, Inc.\n	SwitcherDeskView		Copyright © 2008-%YEAR Haiku, Inc.\n
 Ctrl+Shift	SwitcherSettingsWindow		STRG+Shift
 Exit	SwitcherSettingsWindow		Verlassen
-Hotkey:	SwitcherSettingsWindow		Tastenkombination zum Wechseln:
+Shortcut:	SwitcherSettingsWindow		Tastenkombination zum Wechseln:
 Install in Deskbar	SwitcherSettingsWindow		In Deskbar installieren
 Keymap Switcher	SwitcherSettingsWindow		Keymap-Wechsler
 Keymap Switcher\n\n	SwitcherDeskView		Keymap-Wechsler\n\n

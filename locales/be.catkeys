@@ -1,4 +1,4 @@
-1	belarusian	x-vnd.Nexus-KeymapSwitcher	1889466053
+1	belarusian	x-vnd.Nexus-KeymapSwitcher	6804397
  (system)	SwitcherSettingsWindow		 (сістэмная)
  (user)	SwitcherSettingsWindow		 (карыстальніцкая)
 About	SwitcherDeskView		Пра Праграму
@@ -12,7 +12,7 @@ Copyright © 1999-2003 Stas Maximov.\n	SwitcherDeskView		Copyright © 1999-2003 
 Copyright © 2008-%YEAR Haiku, Inc.\n	SwitcherDeskView		Copyright © 2008-%YEAR Haiku\n
 Ctrl+Shift	SwitcherSettingsWindow		Ctrl+Shift
 Exit	SwitcherSettingsWindow		Выйсці
-Hotkey:	SwitcherSettingsWindow		Пераключальнік:
+Shortcut:	SwitcherSettingsWindow		Пераключальнік:
 Install in Deskbar	SwitcherSettingsWindow		Усталяваць у Дэскбар
 Keymap Switcher	SwitcherSettingsWindow		Пераключальнік Клавіятуры
 Keymap Switcher\n\n	SwitcherDeskView		Пераключальнік Клавіятуры\n\n
