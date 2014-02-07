@@ -78,6 +78,7 @@ class SettingsWindow: public BWindow
 		virtual void SelectionChanged();
 		virtual void MouseDown(BPoint point);
 	};
+	friend class KeymapOutlineListView;
 
 	class MoveButton : public BPictureButton
    	{
