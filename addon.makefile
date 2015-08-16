@@ -122,7 +122,7 @@ all: _APP_ default
 ## include the makefile-engine
 include $(BUILDHOME)/etc/makefile-engine
 
-clean ::
+clean :
 	rm -f _APP_
 
 $(TARGET) : _APP_
