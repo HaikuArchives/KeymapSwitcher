@@ -20,9 +20,9 @@ PACKAGE_NAME := KeymapSwitcher-$(VERSION)-$(MACHINE)-$(DATE)
 
 # Haiku package support
 APP_MIME_SIG := x-vnd.Nexus-KeymapSwitcher
-HPKG_ADDON_DEST := $(BUILDHOME)/add-ons/input_server/filters/ 
-HPKG_APP_DEST := $(BUILDHOME)/preferences/ 
-HPKG_CATALOGS_DEST := $(BUILDHOME)/data/locale/catalogs/
+HPKG_ADDON_DEST := $(HPKG_INSTALL_DIR)/add-ons/input_server/filters/ 
+HPKG_APP_DEST := $(HPKG_INSTALL_DIR)/preferences/ 
+HPKG_CATALOGS_DEST := $(HPKG_INSTALL_DIR)/data/locale/catalogs/
 
 default:
 	make -f app.makefile
