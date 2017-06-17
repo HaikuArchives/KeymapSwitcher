@@ -610,7 +610,7 @@ void DeskView::ChangeKeyMapSilent(int32 change_to, bool force /*= false*/)
 	param << "d" << active_keymap;
 	settings->FindInt32(param.String(), &dir);
 	find_directory((directory_which)dir, &path);
-	if(dir == B_BEOS_DATA_DIRECTORY)
+	if(dir == B_SYSTEM_DATA_DIRECTORY)
 		path.Append("Keymaps");
 	else	
 		path.Append("Keymap");

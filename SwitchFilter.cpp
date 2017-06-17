@@ -404,7 +404,7 @@ SwitchFilter::UpdateRemapTable()
 
 	BPath path;
 	find_directory((directory_which)dir, &path);
-	if(dir == B_BEOS_DATA_DIRECTORY)
+	if(dir == B_SYSTEM_DATA_DIRECTORY)
 		path.Append("Keymaps");
 	else
 		path.Append("Keymap");

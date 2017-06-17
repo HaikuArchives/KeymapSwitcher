@@ -742,14 +742,14 @@ SettingsWindow::KeymapListView::ResetKeymapsList(const Settings* settings)
 
 		BPath path;
 		find_directory((directory_which)dir, &path);
-		if(dir == B_BEOS_DATA_DIRECTORY)
+		if(dir == B_SYSTEM_DATA_DIRECTORY)
 			path.Append("Keymaps");
 		else
 			path.Append("Keymap");
 		path.Append(name.String());
 
 		BString display_name(name);
-		if(dir == B_BEOS_DATA_DIRECTORY)
+		if(dir == B_SYSTEM_DATA_DIRECTORY)
 			display_name += B_TRANSLATE(" (system)");
 		else
 			display_name += B_TRANSLATE(" (user)");
@@ -803,7 +803,7 @@ SettingsWindow::KeymapListView::MessageReceived(BMessage *message)
 			index = IndexOf(ConvertFromScreen(message->DropPoint()));
 			KeymapItem *new_item = new KeymapItem(item);
 			BString name = new_item->Text();
-			if(B_BEOS_DATA_DIRECTORY == new_item->Dir())
+			if(B_SYSTEM_DATA_DIRECTORY == new_item->Dir())
 				name += B_TRANSLATE(" (system)");
 			else
 				name += B_TRANSLATE(" (user)");
@@ -904,7 +904,7 @@ SettingsWindow::KeymapOutlineListView::PopulateTheTree()
 		const char* subDir;
 		const char* name;
 	} ad[] = {
-		{ B_BEOS_DATA_DIRECTORY,	 "Keymaps", B_TRANSLATE("System") },
+		{ B_SYSTEM_DATA_DIRECTORY,	 "Keymaps", B_TRANSLATE("System") },
 		{ B_USER_SETTINGS_DIRECTORY, "Keymap",  B_TRANSLATE("User")   }
 	};
 

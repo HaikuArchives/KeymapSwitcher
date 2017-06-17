@@ -56,7 +56,7 @@ status_t Settings::SetDefaults()
 	SetInt32("active", 0L);
 	SetInt32("keymaps", 1L);
 	SetString("n0", "US-International");
-	SetInt32("d0", B_BEOS_DATA_DIRECTORY); 
+	SetInt32("d0", B_SYSTEM_DATA_DIRECTORY); 
 	SetInt32("system_wide", 0);
 
 	return status = B_OK;
