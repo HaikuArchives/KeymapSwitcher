@@ -4,7 +4,7 @@
 
 MACHINE=$(shell uname -m)
 ifeq ($(MACHINE), BePC)
-	MACHINE = x86-gcc$(word 1, $(subst -, , $(subst ., , $(shell $(CC) -dumpversion))))
+	MACHINE = x86-cc$(word 1, $(subst -, , $(subst ., , $(shell $(CC) -dumpversion))))
 endif
 
 OBJ_DIR := objects.$(MACHINE)-*
