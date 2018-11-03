@@ -42,6 +42,7 @@ public:
 
 private:
 	void ShowContextMenu(BPoint where);
+	void SwitchToNextKeyMap();
 	void ChangeKeyMap(int32);
 	void ChangeKeyMapSilent(int32, bool force = false);
 	void Init();
