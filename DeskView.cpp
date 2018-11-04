@@ -335,7 +335,7 @@ void DeskView::MessageReceived(BMessage *message)
 	}
 	case MSG_CHANGEKEYMAP:
 		// message from Switcher, change Indicator now!
-		ChangeKeyMap((active_keymap + 1) % keymaps->CountItems());
+		SwitchToNextKeyMap();
 		break;
 
 	case MSG_UPDATESETTINGS: {
@@ -500,7 +500,7 @@ void DeskView::MouseDown(BPoint where)
 			// secondary button was clicked or control key was down, show menu and return
 			ShowContextMenu(where);
 		} else if (buttons & B_PRIMARY_MOUSE_BUTTON /*&& !disabled*/) {
-			ChangeKeyMap((active_keymap + 1) % keymaps->CountItems());
+			SwitchToNextKeyMap();
 		} else if (buttons & B_TERTIARY_MOUSE_BUTTON) {
 			be_roster->Launch(APP_SIGNATURE);
 		}
@@ -550,6 +550,13 @@ void DeskView::ShowContextMenu(BPoint where)
 */	
 }
 
+// Switch to the next keymap in the list
+void DeskView::SwitchToNextKeyMap()
+{
+	int32 keymapsCount = keymaps->CountItems();
+	if (keymapsCount > 0)
+		ChangeKeyMap((active_keymap + 1) % keymapsCount);
+}
 
 // change keymap, when user changed keymap with mouse on deskbar or via hotkey.
 void DeskView::ChangeKeyMap(int32 change_to)
