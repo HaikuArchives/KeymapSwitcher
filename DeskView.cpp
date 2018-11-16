@@ -39,9 +39,6 @@ extern void _restore_key_map_(); // magic undoc function :))
 #define trace(s) ((void) 0)
 #endif
 
-const float fIconX = 21;
-const float fIconY = 15;
-
 #define TRACE_MODIFIERS(s, m) \
 	trace(s); \
 	if(m & B_SHIFT_KEY) trace("    B_SHIFT_KEY"); \
@@ -76,8 +73,8 @@ const uint32	kUnloadNow = 'CUnl';
 }; */
 
 
-BView *instantiate_deskbar_item() { 
-	return new DeskView(REPLICANT_NAME); 
+BView *instantiate_deskbar_item(float maxWidth, float maxHeight) {
+	return new DeskView(REPLICANT_NAME, BRect(0, 0, maxHeight * 1.4, maxHeight));
 }
 
 //
@@ -92,9 +89,9 @@ int32 ShowContextMenuAsync(void *pMenuInfo)
 */
 
 // General constructor
-DeskView::DeskView(const char *name,
+DeskView::DeskView(const char *name, BRect rect,
 	uint32 resizeMask, uint32 flags)
-		: BStringView(BRect(0,0, fIconX, fIconY), name, ":)",  resizeMask, flags)
+		: BStringView(rect, name, ":)",  resizeMask, flags)
 {
 //	AddChild(new BDragger(BRect(-10, -10, - 10, -10), this));
 	Init();	// Do prepare...
@@ -223,7 +220,7 @@ void DeskView::AttachedToWindow(void)
 	ChangeKeyMapSilent(0, true);
 
 	BPoint ptOrg = Origin();
-	SetOrigin(ptOrg.x, ptOrg.y + 1); // im request from Diver. ;-)
+	SetOrigin(ptOrg.x, ptOrg.y + 2); // im request from Diver. ;-)
 	SetAlignment(B_ALIGN_CENTER);
 }
 
@@ -269,7 +266,7 @@ void DeskView::UpdateText(bool init)
 	BPoint pt;
 	GetPreferredSize(&pt.x, &pt.y);
 	if (init || ((pt.x + 2) > Bounds().Width())) {
-		ResizeTo(pt.x + 2, fIconY); // let some place for better look
+		ResizeTo(pt.x + 2, Bounds().Height()); // let some place for better look
 	}
 }
 

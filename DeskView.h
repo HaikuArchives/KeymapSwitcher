@@ -13,7 +13,7 @@
 
 // the dragger part has to be exported
 class _EXPORT DeskView;
-extern "C" _EXPORT BView *instantiate_deskbar_item();
+extern "C" _EXPORT BView *instantiate_deskbar_item(float maxWidth, float maxHeight);
 
 class DeskView : public BStringView
 {
@@ -24,7 +24,7 @@ class DeskView : public BStringView
 
 public:
 
-	DeskView(const char *name,
+	DeskView(const char *name, BRect rect,
 		uint32 resizeMask = B_FOLLOW_LEFT | B_FOLLOW_TOP, 
 		uint32 flags = B_WILL_DRAW | B_NAVIGABLE | B_PULSE_NEEDED);
 		
