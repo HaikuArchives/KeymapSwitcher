@@ -15,7 +15,7 @@
 class _EXPORT DeskView;
 extern "C" _EXPORT BView *instantiate_deskbar_item(float maxWidth, float maxHeight);
 
-class DeskView : public BStringView
+class DeskView : public BView
 {
 	typedef struct {
 		team_id	team;
@@ -38,6 +38,7 @@ public:
 	virtual void MouseDown(BPoint);
 	virtual void Pulse();
 	virtual void MessageReceived(BMessage *);
+	void     Draw(BRect r);
     void     AttachedToWindow();
 
 private:
@@ -50,13 +51,17 @@ private:
 	void ShowAboutWindow();
 	void UpdateViewColors();
 	void UpdateText(bool init);
+	BRect GetTextRect(const char *text);
 private:
+	BString keymap_text;
 	Settings *settings; 
 	bool watching;
 	BPath cur_map_path;
 	int32 active_keymap;
 	BList *keymaps;
 	BList *app_list;
+	rgb_color background_color;
+	rgb_color text_color;
 	team_id active_team; // tracked to ignore Deskbar activation
 };
 

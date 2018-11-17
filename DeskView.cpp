@@ -74,7 +74,7 @@ const uint32	kUnloadNow = 'CUnl';
 
 
 BView *instantiate_deskbar_item(float maxWidth, float maxHeight) {
-	return new DeskView(REPLICANT_NAME, BRect(0, 0, maxHeight * 1.4, maxHeight));
+	return new DeskView(REPLICANT_NAME, BRect(0, 0, maxHeight * 1.44, maxHeight));
 }
 
 //
@@ -91,7 +91,7 @@ int32 ShowContextMenuAsync(void *pMenuInfo)
 // General constructor
 DeskView::DeskView(const char *name, BRect rect,
 	uint32 resizeMask, uint32 flags)
-		: BStringView(rect, name, ":)",  resizeMask, flags)
+		: BView(rect, name, resizeMask, flags)
 {
 //	AddChild(new BDragger(BRect(-10, -10, - 10, -10), this));
 	Init();	// Do prepare...
@@ -99,12 +99,11 @@ DeskView::DeskView(const char *name, BRect rect,
 
 // Archive constructor
 DeskView::DeskView(BMessage *message) : 
-		BStringView(message)
+		BView(message)
 {
 	BFont font;
 //	font.SetSize(12.f);
 	SetFont(&font);
-	SetAlignment(B_ALIGN_CENTER);
 
 	Init();	// Do prepare...
 }
@@ -112,6 +111,7 @@ DeskView::DeskView(BMessage *message) :
 // Prepare 
 void DeskView::Init()
 {
+	keymap_text.SetTo(":)");
 	keymaps = new BList();
 	settings = new Settings("Switcher");
 	if (settings->InitCheck() != B_OK) {
@@ -202,7 +202,7 @@ DeskView *DeskView::Instantiate(BMessage *data)
 //
 status_t DeskView::Archive(BMessage *data, bool deep) const
 {
-	BStringView::Archive(data, deep);
+	BView::Archive(data, deep);
 	data->AddString("add_on", APP_SIGNATURE);
 	data->AddString("class", REPLICANT_NAME);
 	return B_NO_ERROR;
@@ -211,32 +211,66 @@ status_t DeskView::Archive(BMessage *data, bool deep) const
 //
 void DeskView::AttachedToWindow(void)
 {
-	BStringView::AttachedToWindow();
+	BView::AttachedToWindow();
 
 	UpdateViewColors();
 	UpdateText(true);
 
 	// force Key_map file overwriting to first one 
 	ChangeKeyMapSilent(0, true);
-
-	BPoint ptOrg = Origin();
-	SetOrigin(ptOrg.x, ptOrg.y + 2); // im request from Diver. ;-)
-	SetAlignment(B_ALIGN_CENTER);
 }
 
 void DeskView::UpdateViewColors()
 {
-	rgb_color low = ui_color(B_DESKTOP_COLOR);
-	rgb_color high = make_color(255, 255, 255, 255);
+	background_color = ui_color(B_DESKTOP_COLOR);
+	text_color = make_color(255, 255, 255, 255);
 
-	if (!settings->GetColor("low", &low))
-		low = ui_color(B_DESKTOP_COLOR);
-	if (!settings->GetColor("high", &high))
-		high = make_color(255, 255, 255, 255);
+	if (!settings->GetColor("low", &background_color))
+		background_color = ui_color(B_DESKTOP_COLOR);
+	if (!settings->GetColor("high", &text_color))
+		text_color = make_color(255, 255, 255, 255);
 
-	SetViewColor(low);
-	SetLowColor(low);
-	SetHighColor(high);
+	SetViewColor(Parent()->ViewColor());
+	SetLowColor(background_color);
+	SetHighColor(text_color);
+}
+
+BRect DeskView::GetTextRect(const char *text)
+{
+	BFont font;
+	GetFont(&font);
+
+	const char* stringArray[1];
+	stringArray[0] = text;
+	BRect rectArray[1];
+	escapement_delta delta = { 0.0, 0.0 };
+	font.GetBoundingBoxesForStrings(stringArray, 1, B_SCREEN_METRIC, &delta, rectArray);
+
+	return rectArray[0];
+}
+
+void DeskView::Draw(BRect r)
+{
+	SetDrawingMode(B_OP_COPY);
+
+	SetHighColor(Parent()->ViewColor());
+	FillRect(Bounds());
+
+	SetDrawingMode(B_OP_ALPHA);
+	SetHighColor(background_color);
+	float radius = Bounds().Height() * 0.2;
+	FillRoundRect(Bounds(), radius, radius);
+
+	rgb_color frame_color = tint_color(background_color, 1.15);
+	SetHighColor(frame_color);
+	StrokeRoundRect(Bounds(), radius, radius);
+
+	BRect textRect = GetTextRect(keymap_text.String());
+	BPoint point(ceilf((Bounds().Width() - textRect.Width() + 1.0) / 2.0 - textRect.left),
+		ceilf((Bounds().Height() - textRect.Height() + 1.0) / 2.0 - textRect.top));
+	SetLowColor(background_color);
+	SetHighColor(text_color);
+	DrawString(keymap_text.String(), point);
 }
 
 void DeskView::UpdateText(bool init)
@@ -258,16 +292,15 @@ void DeskView::UpdateText(bool init)
 
 	map_name.Truncate(2, true);
 
-	if(0 != map_name.Compare(Text())) {
-		SetText(map_name);
-	}
+	if(0 != map_name.Compare(keymap_text))
+		keymap_text = map_name;
 
 	// handle case of too narrow language-codes ("It" for example)
-	BPoint pt;
-	GetPreferredSize(&pt.x, &pt.y);
-	if (init || ((pt.x + 2) > Bounds().Width())) {
-		ResizeTo(pt.x + 2, Bounds().Height()); // let some place for better look
+	BRect textRect = GetTextRect(keymap_text.String());
+	if (init || ((textRect.Width() + 5) > Bounds().Width())) {
+		ResizeTo(textRect.Width() + 5, Bounds().Height()); // let some place for better look
 	}
+	Invalidate();
 }
 
 //
@@ -285,22 +318,22 @@ void DeskView::MessageReceived(BMessage *message)
 					&& (buttons & B_PRIMARY_MOUSE_BUTTON))
 			{
 				settings->SetColor("low", color);
-				SetViewColor(*color);
+				background_color = *color;
 				SetLowColor(*color);
 
 			} else if (buttons & B_TERTIARY_MOUSE_BUTTON) {
-				rgb_color low = ui_color(B_DESKTOP_COLOR);
-				rgb_color high = make_color(255, 255, 255, 255);
+				background_color = ui_color(B_DESKTOP_COLOR);
+				text_color = make_color(255, 255, 255, 255);
 
-				settings->SetColor("low",  &low);
-				settings->SetColor("high", &high);
+				settings->SetColor("low",  &background_color);
+				settings->SetColor("high", &text_color);
 
-				SetViewColor(low);
-				SetLowColor(low);
-				SetHighColor(high);
+				SetLowColor(background_color);
+				SetHighColor(text_color);
 
 			} else {
 				settings->SetColor("high", color);
+				text_color = *color;
 				SetHighColor(*color);
 			}
 			Invalidate();
@@ -450,7 +483,7 @@ void DeskView::MessageReceived(BMessage *message)
 	}
 		
 	}
-	BStringView::MessageReceived(message);
+	BView::MessageReceived(message);
 }
 
 int32 DeskView::FindApp(int32 team)
