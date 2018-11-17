@@ -46,15 +46,15 @@
 // the initial dimensions of the window.
 const float WINDOW_X      = 100;
 const float WINDOW_Y      = 100;
-const float WINDOW_WIDTH  = 600;
-const float WINDOW_HEIGHT = 600;
+const float WINDOW_WIDTH  = 800;
+const float WINDOW_HEIGHT = 800;
 const float X_INSET	= 10;
 const float Y_INSET	= 10;
 
 const float fYSpacing = 5.;
 const float fXSpacing = 5.;
 const float kBmpBtnX = 17.;
-const float kBmpBtnY = 16.;
+const float kBmpBtnY = 24.;
 
 const char* remapLabel0 = B_TRANSLATE("Activate shortcuts substitution");
 const char* remapLabel1	= B_TRANSLATE("Substitute shortcuts with %KEYMAP%'s ones");
