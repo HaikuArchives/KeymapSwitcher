@@ -9,11 +9,12 @@
 
 // hot-keys constants...
 const int32 KEY_LCTRL_SHIFT = 0x2000;
-const int32 KEY_OPT_SHIFT	 = 0x2001;
+const int32 KEY_OPT_SHIFT   = 0x2001;
 const int32 KEY_ALT_SHIFT   = 0x2002;
 const int32 KEY_SHIFT_SHIFT = 0x2003;
 const int32 KEY_CAPS_LOCK   = 0x2004;
 const int32 KEY_SCROLL_LOCK = 0x2005;
+const int32 KEY_OPT_SPACE   = 0x2006;
 
 
 class Settings : public BMessage

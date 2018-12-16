@@ -166,6 +166,9 @@ filter_result SwitchFilter::Filter(BMessage *message, BList *outList)
 	trace("Filter:%s\n", u.b);
 #endif
 
+	int32 hotkey;
+	settings->FindInt32("hotkey", &hotkey);
+
 	switch (message->what) {
 	case B_KEY_MAP_CHANGED:
 		trace("key_map_changed");
@@ -188,9 +191,6 @@ filter_result SwitchFilter::Filter(BMessage *message, BList *outList)
 				new_modifiers, old_modifiers, states);
 		trace(buf);
 		delete buf;
-
-		int32 hotkey;
-		settings->FindInt32("hotkey", &hotkey);
 
 		if(!switch_on_hold) {
 			// handle one-key switches first ...
@@ -290,6 +290,19 @@ filter_result SwitchFilter::Filter(BMessage *message, BList *outList)
 		break;
 */
 	case B_KEY_DOWN: {
+		// check if it is Alt+Key key pressed, we shall put correct value
+		// just as it is with American keymap
+		int32 modifiers = message->FindInt32("modifiers");
+		int32 raw = message->FindInt32("raw_char");
+
+		if (hotkey == KEY_OPT_SPACE) {
+			if ((modifiers & B_OPTION_KEY) && (raw == B_SPACE)) {
+				UpdateIndicator();
+				// eat the message to prevent additional space
+				return B_SKIP_MESSAGE;
+			}
+		}
+
 		trace("Key down:\n");
 		if(switch_on_hold) {
 			trace("skipping last modifier change");
@@ -300,11 +313,6 @@ filter_result SwitchFilter::Filter(BMessage *message, BList *outList)
 		settings->FindInt32("remap", &index);
 		if(--index < 0)
 			break; // no remap option was configured
-
-		// check if it is Alt+Key key pressed, we shall put correct value 
-		// just as it is with American keymap 
-		int32 modifiers = message->FindInt32("modifiers");
-		//int32 raw = message->FindInt32("raw_char");
 
 /*		if ((modifiers & B_CONTROL_KEY) && (raw == B_ESCAPE)) {
 			trace("Ctrl+Esc found. Generating message...");

@@ -126,7 +126,8 @@ SettingsWindow::SettingsWindow(bool fromDeskbar)
 		{ KEY_ALT_SHIFT,	B_TRANSLATE("Cmd+Shift") },
 		{ KEY_SHIFT_SHIFT,	B_TRANSLATE("Shift+Shift") },
 		{ KEY_CAPS_LOCK,	B_TRANSLATE("Caps Lock") },
-		{ KEY_SCROLL_LOCK,	B_TRANSLATE("Scroll Lock") }
+		{ KEY_SCROLL_LOCK,	B_TRANSLATE("Scroll Lock") },
+		{ KEY_OPT_SPACE,	B_TRANSLATE("Opt+Space") }
 	};
 
 	const char* menuName = "none";
@@ -469,7 +470,8 @@ void SettingsWindow::MessageReceived(BMessage *msg)
 	case MSG_HOTKEY_CHANGED + KEY_ALT_SHIFT:
 	case MSG_HOTKEY_CHANGED + KEY_SHIFT_SHIFT:
 	case MSG_HOTKEY_CHANGED + KEY_CAPS_LOCK:
-	case MSG_HOTKEY_CHANGED + KEY_SCROLL_LOCK: {
+	case MSG_HOTKEY_CHANGED + KEY_SCROLL_LOCK:
+	case MSG_HOTKEY_CHANGED + KEY_OPT_SPACE: {
 		int32 temp = 0;
 		if (B_OK==msg->FindInt32("hotkey",&temp))
 			settings->SetInt32("hotkey", temp);
