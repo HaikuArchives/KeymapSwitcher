@@ -1,43 +1,43 @@
-1	swedish	x-vnd.Nexus-KeymapSwitcher	6804397
- (system)	SwitcherSettingsWindow		 (systeminstallerad)
- (user)	SwitcherSettingsWindow		 (användarspecifik)
-About	SwitcherDeskView		Om
-About…	SwitcherDeskView		Om…
-Activate shortcuts substitution	SwitcherSettingsWindow		Aktivera snabbtangentsersättning
-Apply	SwitcherSettingsWindow		Använd
-Available keymaps:	SwitcherSettingsWindow		Valbara tangentbordslayouter:
-Caps Lock	SwitcherSettingsWindow		Caps Lock
-Cmd+Shift	SwitcherSettingsWindow		Cmd+Shift
-Copyright © 1999-2003 Stas Maximov.\n	SwitcherDeskView		Copyright © 1999-2003 Stas Maximov.\n
-Copyright © 2008-%YEAR Haiku, Inc.\n	SwitcherDeskView		Copyright © 2008-%YEAR Haiku, Inc.\n
-Ctrl+Shift	SwitcherSettingsWindow		Ctrl+Shift
-Exit	SwitcherSettingsWindow		Avsluta
-Shortcut:	SwitcherSettingsWindow		Snabbtangent:
-Install in Deskbar	SwitcherSettingsWindow		Lägg till i Deskbar
-Keymap Switcher	SwitcherSettingsWindow		LayoutVäxlaren
-Keymap Switcher\n\n	SwitcherDeskView		LayoutVäxlaren\n\n
-KeymapSwitcher	System name		LayoutVäxlaren
+1	Swedish	x-vnd.Nexus-KeymapSwitcher	6804397
 KeymapSwitcher options:\n\t--deskbar\tautomatically add replicant to Deskbar\n\t--help\t\tprint this info and exit\n	SwitcherApplication		LayoutVäxlarens alternativ:\n\t--deskbar\tlägg till replikant i Deskbar\n\t--help\t\tvisa denna info och avsluta\n
+Unable to install keymap indicator. Deskbar application is not running.	SwitcherApplication		Kunde inte lägga till layoutindikatorn eftersom Deskbar inte kör.
 OK	SwitcherApplication		OK
+Unable to create Settings configuration window.	SwitcherApplication		Kunde inte skapa fönstret för med inställningsfunktionerna.
+ (system)	SwitcherSettingsWindow		 (systeminstallerad)
 OK	SwitcherSettingsWindow		OK
-Okay	SwitcherDeskView		Okej
-Original notice from Stas Maximov:\n	SwitcherDeskView		Ursprungsmeddelande från Stas Maximov:\n
-Quit	SwitcherDeskView		Avsluta
-Revert	SwitcherSettingsWindow		Återgå
-Scroll Lock	SwitcherSettingsWindow		Scroll Lock
-Selected keymaps:	SwitcherSettingsWindow		Valda layouter:
-Settings…	SwitcherDeskView		Inställningar…
+Unable to start Deskbar application. Keymap indicator was not installed.	SwitcherSettingsWindow		Kunde inte starta Deskbar. Installation av layoutindikatorn misslyckades.
+Unable to install keymap indicator. Deskbar application is not running.	SwitcherSettingsWindow		Kunde inte lägga till layoutindikatorn eftersom Deskbar inte kör.
 Shift+Shift	SwitcherSettingsWindow		Shift+Shift
-Special thanks to all BeOS users, whether they use this app or not - they're keeping BeOS alive!\n\n	SwitcherDeskView		Tack till alla BeOS-användare, oavsett om ni använder det här programmet eller inte - ni håller BeOS levande!\n\n
-Start Deskbar	SwitcherSettingsWindow		Starta Deskbar
 Substitute shortcuts with %KEYMAP%'s ones	SwitcherSettingsWindow		Ersätt snabbtangenter med dem ur %KEYMAP%
 System	SwitcherSettingsWindow		Systemet
-Tested and inspired by\n\tSergey \"fyysik\" Dolgov,\n\tMaxim \"baza\" Bazarov,\n\tDenis Korotkov,\n\tNur Nazmetdinov and others.\n\n	SwitcherDeskView		Testat och påhejat av\n\tSergey \"fyysik\" Dolgov,\n\tMaxim \"baza\" Bazarov,\n\tDenis Korotkov,\n\tNur Nazmetdinov, med flera.\n\n
-Thanks to Pierre Raynaud-Richard and Robert Polic for BeOS tips.\n\n	SwitcherDeskView		Tack till Pierre Raynaud-Richard och Robert Polic för BeOS-tips.\n\n
-Unable to create Settings configuration window.	SwitcherApplication		Kunde inte skapa fönstret för med inställningsfunktionerna.
-Unable to install keymap indicator. Deskbar application is not running.	SwitcherApplication		Kunde inte lägga till layoutindikatorn eftersom Deskbar inte kör.
-Unable to install keymap indicator. Deskbar application is not running.	SwitcherSettingsWindow		Kunde inte lägga till layoutindikatorn eftersom Deskbar inte kör.
-Unable to start Deskbar application. Keymap indicator was not installed.	SwitcherSettingsWindow		Kunde inte starta Deskbar. Installation av layoutindikatorn misslyckades.
-Use the separate keymap in each application	SwitcherSettingsWindow		Use the separate keymap in each application
+Shortcut:	SwitcherSettingsWindow		Snabbtangent:
+Cmd+Shift	SwitcherSettingsWindow		Cmd+Shift
+Install in Deskbar	SwitcherSettingsWindow		Lägg till i Deskbar
+Apply	SwitcherSettingsWindow		Använd
+Scroll Lock	SwitcherSettingsWindow		Scroll Lock
+Revert	SwitcherSettingsWindow		Återgå
+Caps Lock	SwitcherSettingsWindow		Caps Lock
+ (user)	SwitcherSettingsWindow		 (användarspecifik)
+Ctrl+Shift	SwitcherSettingsWindow		Ctrl+Shift
+Keymap Switcher	SwitcherSettingsWindow		LayoutVäxlaren
+Exit	SwitcherSettingsWindow		Avsluta
+Start Deskbar	SwitcherSettingsWindow		Starta Deskbar
+Available keymaps:	SwitcherSettingsWindow		Valbara tangentbordslayouter:
+Selected keymaps:	SwitcherSettingsWindow		Valda layouter:
+Use the separate keymap in each application	SwitcherSettingsWindow		Använd en separat tangentuppsättning i varje applikation
 User	SwitcherSettingsWindow		Användaren
+Activate shortcuts substitution	SwitcherSettingsWindow		Aktivera snabbtangentsersättning
+Quit	SwitcherDeskView		Avsluta
+About…	SwitcherDeskView		Om…
+Settings…	SwitcherDeskView		Inställningar…
+Thanks to Pierre Raynaud-Richard and Robert Polic for BeOS tips.\n\n	SwitcherDeskView		Tack till Pierre Raynaud-Richard och Robert Polic för BeOS-tips.\n\n
+Original notice from Stas Maximov:\n	SwitcherDeskView		Ursprungsmeddelande från Stas Maximov:\n
+Copyright © 2008-%YEAR Haiku, Inc.\n	SwitcherDeskView		Copyright © 2008-%YEAR Haiku, Inc.\n
+Special thanks to all BeOS users, whether they use this app or not - they're keeping BeOS alive!\n\n	SwitcherDeskView		Tack till alla BeOS-användare, oavsett om ni använder det här programmet eller inte - ni håller BeOS levande!\n\n
+About	SwitcherDeskView		Om
+Copyright © 1999-2003 Stas Maximov.\n	SwitcherDeskView		Copyright © 1999-2003 Stas Maximov.\n
+Okay	SwitcherDeskView		Okej
 Version  %VERSION \n\n	SwitcherDeskView		Version  %VERSION \n\n
+Keymap Switcher\n\n	SwitcherDeskView		LayoutVäxlaren\n\n
+Tested and inspired by\n\tSergey \"fyysik\" Dolgov,\n\tMaxim \"baza\" Bazarov,\n\tDenis Korotkov,\n\tNur Nazmetdinov and others.\n\n	SwitcherDeskView		Testat och påhejat av\n\tSergey \"fyysik\" Dolgov,\n\tMaxim \"baza\" Bazarov,\n\tDenis Korotkov,\n\tNur Nazmetdinov, med flera.\n\n
+KeymapSwitcher	System name		LayoutVäxlaren

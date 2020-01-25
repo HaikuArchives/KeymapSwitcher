@@ -1,0 +1,43 @@
+1	Friulian	x-vnd.Nexus-KeymapSwitcher	6804397
+KeymapSwitcher options:\n\t--deskbar\tautomatically add replicant to Deskbar\n\t--help\t\tprint this info and exit\n	SwitcherApplication		Opzions di KeymapSwitcher:\n\t--deskbar\tzonte in automatic il replicant su Deskbar\n\t--help\t\tstampe cheste info e jes\n
+Unable to install keymap indicator. Deskbar application is not running.	SwitcherApplication		Impussibil instalâ l'indicadôr de mape di tastiere. La aplicazion Deskbar no je in esecuzion.
+OK	SwitcherApplication		Va ben
+Unable to create Settings configuration window.	SwitcherApplication		Impussibil creâ il barcon di configurazion des Impostazions.
+ (system)	SwitcherSettingsWindow		(sisteme)
+OK	SwitcherSettingsWindow		Va ben
+Unable to start Deskbar application. Keymap indicator was not installed.	SwitcherSettingsWindow		Impussibil inviâ la aplicazion Deskbar. L'indicadôr de mape di tastiere nol jere instalât.
+Unable to install keymap indicator. Deskbar application is not running.	SwitcherSettingsWindow		Impussibil instalâ l'indicadôr de mape di tastiere. La aplicazion Deskbar no je in esecuzion.
+Shift+Shift	SwitcherSettingsWindow		Maiusc+Maiusc
+Substitute shortcuts with %KEYMAP%'s ones	SwitcherSettingsWindow		Sostituìs lis scurtis cun chês par %KEYMAP%
+System	SwitcherSettingsWindow		Sisteme
+Shortcut:	SwitcherSettingsWindow		Scurte:
+Cmd+Shift	SwitcherSettingsWindow		Cmd+Maiusc
+Install in Deskbar	SwitcherSettingsWindow		Instale tal Deskbar
+Apply	SwitcherSettingsWindow		Apliche
+Scroll Lock	SwitcherSettingsWindow		Bloc Scor
+Revert	SwitcherSettingsWindow		Torne indaûr
+Caps Lock	SwitcherSettingsWindow		Bloc Maiusc
+ (user)	SwitcherSettingsWindow		(utent)
+Ctrl+Shift	SwitcherSettingsWindow		Ctrl+Maiusc
+Keymap Switcher	SwitcherSettingsWindow		Keymap Switcher
+Exit	SwitcherSettingsWindow		Jes
+Start Deskbar	SwitcherSettingsWindow		Invie Deskbar
+Available keymaps:	SwitcherSettingsWindow		Mapis di tastiere disponibilis:
+Selected keymaps:	SwitcherSettingsWindow		Mapis di tastiere selzionadis:
+Use the separate keymap in each application	SwitcherSettingsWindow		Dopre une mape di tastiere separade par ogni aplicazion
+User	SwitcherSettingsWindow		Utent
+Activate shortcuts substitution	SwitcherSettingsWindow		Ative sostituzion des scurtis
+Quit	SwitcherDeskView		Jes
+About…	SwitcherDeskView		Informazions…
+Settings…	SwitcherDeskView		Impostazions…
+Thanks to Pierre Raynaud-Richard and Robert Polic for BeOS tips.\n\n	SwitcherDeskView		Graciis a Pierre Raynaud-Richard e Robert Polic pai conseis di BeOS.\n\n
+Original notice from Stas Maximov:\n	SwitcherDeskView		Messaç origjinâl di Stas Maximov:\n
+Copyright © 2008-%YEAR Haiku, Inc.\n	SwitcherDeskView		Copyright © 2008-%YEAR Haiku, Inc.\n
+Special thanks to all BeOS users, whether they use this app or not - they're keeping BeOS alive!\n\n	SwitcherDeskView		Ringraciaments speciâi a ducj i utents di BeOS, che a dopredin o mancul cheste aplicazion - a tegnin BeOS vîf!\n\n
+About	SwitcherDeskView		Informazions
+Copyright © 1999-2003 Stas Maximov.\n	SwitcherDeskView		Copyright © 1999-2003 Stas Maximov.\n
+Okay	SwitcherDeskView		Va ben
+Version  %VERSION \n\n	SwitcherDeskView		Version  %VERSION \n\n
+Keymap Switcher\n\n	SwitcherDeskView		Keymap Switcher\n\n
+Tested and inspired by\n\tSergey \"fyysik\" Dolgov,\n\tMaxim \"baza\" Bazarov,\n\tDenis Korotkov,\n\tNur Nazmetdinov and others.\n\n	SwitcherDeskView		Provât e ispirât di\n\tSergey \"fyysik\" Dolgov,\n\tMaxim \"baza\" Bazarov,\n\tDenis Korotkov,\n\tNur Nazmetdinov e altris.\n\n
+KeymapSwitcher	System name		KeymapSwitcher

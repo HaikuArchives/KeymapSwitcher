@@ -44,7 +44,7 @@ SRCS=DeskView.cpp\
 #	full path or a relative path to the resource file can be used.
 RSRCS=$(OBJ_DIR)/KeymapSwitcher.rsrc
 
-LOCALES=be bg cs de en fi ro ru sv uk
+LOCALES=be bg cs de en en_GB es fi fr fur hi it ja ro ru sv uk
 
 # @<-src@ 
 #%}

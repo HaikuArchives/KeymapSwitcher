@@ -1,0 +1,43 @@
+1	French	x-vnd.Nexus-KeymapSwitcher	6804397
+KeymapSwitcher options:\n\t--deskbar\tautomatically add replicant to Deskbar\n\t--help\t\tprint this info and exit\n	SwitcherApplication		Options de KeymapSwitcher :\n\t--deskbar\tajoute automatiquement un réplicant à la Deskbar\n\t--help\t\taffiche cette info et quitte\n
+Unable to install keymap indicator. Deskbar application is not running.	SwitcherApplication		Impossible d'installer l'indicateur de mappage. L'application Deskbar n'est pas en fonctionnement.
+OK	SwitcherApplication		OK
+Unable to create Settings configuration window.	SwitcherApplication		Impossible de créer la fenêtre de configuration Réglages.
+ (system)	SwitcherSettingsWindow		(système)
+OK	SwitcherSettingsWindow		OK
+Unable to start Deskbar application. Keymap indicator was not installed.	SwitcherSettingsWindow		Impossible de lancer l'application Deskbar. L'indicateur de mappage n'a pas été installé.
+Unable to install keymap indicator. Deskbar application is not running.	SwitcherSettingsWindow		Impossible d'installer l'indicateur de mappage. L'application Deskbar n'est pas en fonctionnement.
+Shift+Shift	SwitcherSettingsWindow		Shift+Shift
+Substitute shortcuts with %KEYMAP%'s ones	SwitcherSettingsWindow		Remplacer les raccourcis par ceux de %KEYMAP%
+System	SwitcherSettingsWindow		Système
+Shortcut:	SwitcherSettingsWindow		Raccourci :
+Cmd+Shift	SwitcherSettingsWindow		Cmd+Maj.
+Install in Deskbar	SwitcherSettingsWindow		Installer dans la Deskbar
+Apply	SwitcherSettingsWindow		Appliquer
+Scroll Lock	SwitcherSettingsWindow		Arrêt défilement
+Revert	SwitcherSettingsWindow		Retour
+Caps Lock	SwitcherSettingsWindow		Verrouillage Majuscules
+ (user)	SwitcherSettingsWindow		(utilisateur)
+Ctrl+Shift	SwitcherSettingsWindow		Ctrl+Maj.
+Keymap Switcher	SwitcherSettingsWindow		Keymap Switcher
+Exit	SwitcherSettingsWindow		Sortie
+Start Deskbar	SwitcherSettingsWindow		Démarrer Deskbar
+Available keymaps:	SwitcherSettingsWindow		Mappages disponibles :
+Selected keymaps:	SwitcherSettingsWindow		Mappages sélectionnés :
+Use the separate keymap in each application	SwitcherSettingsWindow		Utiliser un mappage séparé pour chaque application
+User	SwitcherSettingsWindow		Utilisateur
+Activate shortcuts substitution	SwitcherSettingsWindow		Activer le remplacement des raccourcis
+Quit	SwitcherDeskView		Quitter
+About…	SwitcherDeskView		À propos...
+Settings…	SwitcherDeskView		Réglages…
+Thanks to Pierre Raynaud-Richard and Robert Polic for BeOS tips.\n\n	SwitcherDeskView		Merci à Pierre Raynaud-Richard et Robert Polic pour les astuces BeOS.\n\n
+Original notice from Stas Maximov:\n	SwitcherDeskView		Note originelle de Stas Maximov :\n
+Copyright © 2008-%YEAR Haiku, Inc.\n	SwitcherDeskView		Copyright © 2008-%YEAR Haiku, Inc.\n
+Special thanks to all BeOS users, whether they use this app or not - they're keeping BeOS alive!\n\n	SwitcherDeskView		Remerciements spéciaux à tous les utilisateurs de BeOS, qu'ils utilisent cette application ou non - ils maintiennent BeOS en vie !\n\n
+About	SwitcherDeskView		À propos
+Copyright © 1999-2003 Stas Maximov.\n	SwitcherDeskView		Copyright © 1999-2003 Stas Maximov.\n
+Okay	SwitcherDeskView		D'accord
+Version  %VERSION \n\n	SwitcherDeskView		Version  %VERSION \n\n
+Keymap Switcher\n\n	SwitcherDeskView		Keymap Switcher\n\n
+Tested and inspired by\n\tSergey \"fyysik\" Dolgov,\n\tMaxim \"baza\" Bazarov,\n\tDenis Korotkov,\n\tNur Nazmetdinov and others.\n\n	SwitcherDeskView		Testé et inspiré par\n\tSergey \"fyysik\" Dolgov,\n\tMaxim \"baza\" Bazarov,\n\tDenis Korotkov,\n\tNur Nazmetdinov et d'autres.\n\n
+KeymapSwitcher	System name		KeymapSwitcher
