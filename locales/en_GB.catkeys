@@ -1,0 +1,43 @@
+1	English (British)	x-vnd.Nexus-KeymapSwitcher	6804397
+KeymapSwitcher options:\n\t--deskbar\tautomatically add replicant to Deskbar\n\t--help\t\tprint this info and exit\n	SwitcherApplication		KeymapSwitcher options:\n\t--deskbar\tautomatically add replicant to Deskbar\n\t--help\t\tprint this info and exit\n
+Unable to install keymap indicator. Deskbar application is not running.	SwitcherApplication		Unable to install keymap indicator. Deskbar application is not running.
+OK	SwitcherApplication		Alright
+Unable to create Settings configuration window.	SwitcherApplication		Unable to create Settings configuration window.
+ (system)	SwitcherSettingsWindow		(system)
+OK	SwitcherSettingsWindow		Alright
+Unable to start Deskbar application. Keymap indicator was not installed.	SwitcherSettingsWindow		Unable to start Deskbar application. Keymap indicator was not installed.
+Unable to install keymap indicator. Deskbar application is not running.	SwitcherSettingsWindow		Unable to install keymap indicator. Deskbar application is not running.
+Shift+Shift	SwitcherSettingsWindow		Shift+Shift
+Substitute shortcuts with %KEYMAP%'s ones	SwitcherSettingsWindow		Substitute shortcuts with %KEYMAP%'s ones
+System	SwitcherSettingsWindow		System
+Shortcut:	SwitcherSettingsWindow		Shortcut:
+Cmd+Shift	SwitcherSettingsWindow		Cmd+Shift
+Install in Deskbar	SwitcherSettingsWindow		Install in Deskbar
+Apply	SwitcherSettingsWindow		Apply
+Scroll Lock	SwitcherSettingsWindow		Scroll Lock
+Revert	SwitcherSettingsWindow		Revert
+Caps Lock	SwitcherSettingsWindow		Caps Lock
+ (user)	SwitcherSettingsWindow		(user)
+Ctrl+Shift	SwitcherSettingsWindow		Ctrl+Shift
+Keymap Switcher	SwitcherSettingsWindow		Keymap Switcher
+Exit	SwitcherSettingsWindow		Exit
+Start Deskbar	SwitcherSettingsWindow		Start Deskbar
+Available keymaps:	SwitcherSettingsWindow		Available keymaps:
+Selected keymaps:	SwitcherSettingsWindow		Selected keymaps:
+Use the separate keymap in each application	SwitcherSettingsWindow		Use the separate keymap in each application
+User	SwitcherSettingsWindow		User
+Activate shortcuts substitution	SwitcherSettingsWindow		Activate shortcuts substitution
+Quit	SwitcherDeskView		Quit
+About…	SwitcherDeskView		About…
+Settings…	SwitcherDeskView		Settings…
+Thanks to Pierre Raynaud-Richard and Robert Polic for BeOS tips.\n\n	SwitcherDeskView		Thanks to Pierre Raynaud-Richard and Robert Polic for BeOS tips.\n\n
+Original notice from Stas Maximov:\n	SwitcherDeskView		Original notice from Stas Maximov:\n
+Copyright © 2008-%YEAR Haiku, Inc.\n	SwitcherDeskView		Copyright © 2008-%YEAR Haiku, Inc.\n
+Special thanks to all BeOS users, whether they use this app or not - they're keeping BeOS alive!\n\n	SwitcherDeskView		Special thanks to all BeOS users, whether they use this app or not - they're keeping BeOS alive!\n\n
+About	SwitcherDeskView		About
+Copyright © 1999-2003 Stas Maximov.\n	SwitcherDeskView		Copyright © 1999-2003 Stas Maximov.\n
+Okay	SwitcherDeskView		Alright
+Version  %VERSION \n\n	SwitcherDeskView		Version  %VERSION \n\n
+Keymap Switcher\n\n	SwitcherDeskView		Keymap Switcher\n\n
+Tested and inspired by\n\tSergey \"fyysik\" Dolgov,\n\tMaxim \"baza\" Bazarov,\n\tDenis Korotkov,\n\tNur Nazmetdinov and others.\n\n	SwitcherDeskView		Tested and inspired by\n\tSergey \"fyysik\" Dolgov,\n\tMaxim \"baza\" Bazarov,\n\tDenis Korotkov,\n\tNur Nazmetdinov and others.\n\n
+KeymapSwitcher	System name		KeymapSwitcher

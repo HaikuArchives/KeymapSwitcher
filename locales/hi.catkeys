@@ -1,0 +1,43 @@
+1	Hindi	x-vnd.Nexus-KeymapSwitcher	6804397
+KeymapSwitcher options:\n\t--deskbar\tautomatically add replicant to Deskbar\n\t--help\t\tprint this info and exit\n	SwitcherApplication		KeymapSwitcher विकल्प :\n\t--deskbar\tस्वचालित रूप से Deskbar में प्रतिकृति जोड़े \n\t--help\t\tइस जानकारी की छपाई करे और बंद करे\n
+Unable to install keymap indicator. Deskbar application is not running.	SwitcherApplication		कीबोर्ड लेआउट संकेतक इनस्टॉल नहीं हो सकता। डेस्कबार ऐप नहीं काम कर रहा है।
+OK	SwitcherApplication		अच्छा
+Unable to create Settings configuration window.	SwitcherApplication		सेटिंग्स कॉन्फ़िगरेशन विंडो नहीं बन रही.
+ (system)	SwitcherSettingsWindow		(प्रणाली)
+OK	SwitcherSettingsWindow		अच्छा
+Unable to start Deskbar application. Keymap indicator was not installed.	SwitcherSettingsWindow		डेस्कबार एप्लिकेशन चालू नहीं हो रहा |  कीमैप सूचक इन्स्टॉल नहीं किया गया है |
+Unable to install keymap indicator. Deskbar application is not running.	SwitcherSettingsWindow		कीबोर्ड लेआउट संकेतक इनस्टॉल नहीं हो सकता। डेस्कबार ऐप नहीं काम कर रहा है।
+Shift+Shift	SwitcherSettingsWindow		Shift+Shift
+Substitute shortcuts with %KEYMAP%'s ones	SwitcherSettingsWindow		किसी कीमैप को %KEYMAP% से बदलने के लिए शॉर्टकट
+System	SwitcherSettingsWindow		प्रणाली
+Shortcut:	SwitcherSettingsWindow		शॉर्टकट:
+Cmd+Shift	SwitcherSettingsWindow		Cmd+Shift
+Install in Deskbar	SwitcherSettingsWindow		Deskbar में इंस्टॉल
+Apply	SwitcherSettingsWindow		बदलाव करे
+Scroll Lock	SwitcherSettingsWindow		Scroll Lock
+Revert	SwitcherSettingsWindow		पूर्व स्थिति में वापस लौटे
+Caps Lock	SwitcherSettingsWindow		Caps Lock
+ (user)	SwitcherSettingsWindow		(उपयोगकर्ता)
+Ctrl+Shift	SwitcherSettingsWindow		Ctrl+Shift
+Keymap Switcher	SwitcherSettingsWindow		कीमैप्स स्विचर
+Exit	SwitcherSettingsWindow		बाहर निकलिए
+Start Deskbar	SwitcherSettingsWindow		Deskbar शुरू करें
+Available keymaps:	SwitcherSettingsWindow		उपलब्ध कीमैप्स:
+Selected keymaps:	SwitcherSettingsWindow		चुने हुए कीमैप्स:
+Use the separate keymap in each application	SwitcherSettingsWindow		हर ऐप में अलग-अलग कीमैप्स का उपयोग करें
+User	SwitcherSettingsWindow		उपयोगकर्ता
+Activate shortcuts substitution	SwitcherSettingsWindow		शॉर्टकट प्रतिस्थापन को सक्रिय करें
+Quit	SwitcherDeskView		बाहर निकले
+About…	SwitcherDeskView		और जानकारी के लिए…
+Settings…	SwitcherDeskView		सेटिंग्स…
+Thanks to Pierre Raynaud-Richard and Robert Polic for BeOS tips.\n\n	SwitcherDeskView		BeOS सुझावों के लिए  Pierre Raynaud-Richard और  Robert Polic को धन्यवाद.\n\n
+Original notice from Stas Maximov:\n	SwitcherDeskView		स्टास मैक्सिमोव के तरफ से महत्वपूर्ण सूचना:\n
+Copyright © 2008-%YEAR Haiku, Inc.\n	SwitcherDeskView		कॉपीराइट © 2008-%YEAR Haiku, Inc.\n
+Special thanks to all BeOS users, whether they use this app or not - they're keeping BeOS alive!\n\n	SwitcherDeskView		सभी BeOS उपयोगकर्ताओं को विशेष धन्यवाद, यदि इस ऐप का उपयोग किया होंगा या नहीं - पर उन्होने BeOS को जीवित रखा हैं!\n\n
+About	SwitcherDeskView		और जानकारी के लिए
+Copyright © 1999-2003 Stas Maximov.\n	SwitcherDeskView		कॉपीराइट © 1999-2003 स्टास मैक्सिमोव.\n
+Okay	SwitcherDeskView		अच्छा
+Version  %VERSION \n\n	SwitcherDeskView		वर्जन   %VERSION \n\n
+Keymap Switcher\n\n	SwitcherDeskView		कीमैप्स स्विचर\n\n
+Tested and inspired by\n\tSergey \"fyysik\" Dolgov,\n\tMaxim \"baza\" Bazarov,\n\tDenis Korotkov,\n\tNur Nazmetdinov and others.\n\n	SwitcherDeskView		इनके द्वारा परीक्षण और प्रेरित किया गया \n\tSergey \"fyysik\" Dolgov,\n\tМаxim \"baza\" Bazarov,\n\tDenis Коrotkov,\n\tNur Nazmetdinov और अन्य सभी .\n\n
+KeymapSwitcher	System name		कीमैप्स स्विचर

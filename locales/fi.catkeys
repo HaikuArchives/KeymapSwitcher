@@ -1,43 +1,43 @@
-1	english	x-vnd.Nexus-KeymapSwitcher	6804397
- (system)	SwitcherSettingsWindow		 (järjestelmä)
- (user)	SwitcherSettingsWindow		 (käyttäjä)
-About	SwitcherDeskView		Ohjelmasta
-About…	SwitcherDeskView		Ohjelmasta…
-Activate shortcuts substitution	SwitcherSettingsWindow		Ota käyttöön pikavalintakorvaus
-Apply	SwitcherSettingsWindow		Sovella
-Available keymaps:	SwitcherSettingsWindow		Käytettävissä olevat näppäinkartat:
-Caps Lock	SwitcherSettingsWindow		Caps Lock
-Cmd+Shift	SwitcherSettingsWindow		Alt+Vaihto
-Copyright © 1999-2003 Stas Maximov.\n	SwitcherDeskView		Copyright © 1999-2003 Stas Maximov.\n
-Copyright © 2008-%YEAR Haiku, Inc.\n	SwitcherDeskView		Copyright © 2008-%YEAR Haiku, Inc.\n
-Ctrl+Shift	SwitcherSettingsWindow		Ctrl+Vaihto
-Exit	SwitcherSettingsWindow		Poistu
-Shortcut:	SwitcherSettingsWindow		Pikanäppäin:
-Install in Deskbar	SwitcherSettingsWindow		Asenna Työpöytäpalkkiin
-Keymap Switcher	SwitcherSettingsWindow		Näppäinkarttavaihtaja
-Keymap Switcher\n\n	SwitcherDeskView		Näppäinkarttavaihtaja\n\n
-KeymapSwitcher	System name		Näppäinkarttavaihtaja
+1	Finnish	x-vnd.Nexus-KeymapSwitcher	6804397
 KeymapSwitcher options:\n\t--deskbar\tautomatically add replicant to Deskbar\n\t--help\t\tprint this info and exit\n	SwitcherApplication		Näppäinkarttavaihtajan valitsimet:\n\t--deskbar\tlisää replikantti automaattisesti Työpöytäpalkkiin\n\t--help\t\ttulosta nämä tiedot ja poistu\n
+Unable to install keymap indicator. Deskbar application is not running.	SwitcherApplication		Ei kyetä asentamaan näppäinkarttaindikaattoria. Työpöytäpalkki ei ole käynnissä.
 OK	SwitcherApplication		Valmis
+Unable to create Settings configuration window.	SwitcherApplication		Ei kyetä luomaan Asetus-ikkunaa.
+ (system)	SwitcherSettingsWindow		 (järjestelmä)
 OK	SwitcherSettingsWindow		Valmis
-Okay	SwitcherDeskView		Valmis
-Original notice from Stas Maximov:\n	SwitcherDeskView		Alkuperäinen suunnittelija on Stas Maximov:\n
-Quit	SwitcherDeskView		Poistu
-Revert	SwitcherSettingsWindow		Palauta
-Scroll Lock	SwitcherSettingsWindow		Scroll Lock
-Selected keymaps:	SwitcherSettingsWindow		Valitus näppäinkartat:
-Settings…	SwitcherDeskView		Asetukset…
+Unable to start Deskbar application. Keymap indicator was not installed.	SwitcherSettingsWindow		Työpöytäpalkkisovellusta ei kyetty käynnistämään. Näppäinkarttavaihtajaa ei asennettu.
+Unable to install keymap indicator. Deskbar application is not running.	SwitcherSettingsWindow		Ei kyetä asentamaan näppäinkarttaindikaattoria. Työpöytäpalkki ei ole käynnissä.
 Shift+Shift	SwitcherSettingsWindow		Vaihto+Vaihto
-Special thanks to all BeOS users, whether they use this app or not - they're keeping BeOS alive!\n\n	SwitcherDeskView		Erityiset kiitokset kaikille BeOS-käyttäjille, käyttivät he sitten tätä sovellusta tai ei - he pitivät BeOS-järjestelmän elossa!\n\n
-Start Deskbar	SwitcherSettingsWindow		Käynnistä Työpöytäpalkki
 Substitute shortcuts with %KEYMAP%'s ones	SwitcherSettingsWindow		Korvaa pikavalitsimet näppäinkartan %KEYMAP% vastaavilla
 System	SwitcherSettingsWindow		Järjestelmä
-Tested and inspired by\n\tSergey \"fyysik\" Dolgov,\n\tMaxim \"baza\" Bazarov,\n\tDenis Korotkov,\n\tNur Nazmetdinov and others.\n\n	SwitcherDeskView		Testaajia ja inspiroijia:\n\tSergey \"fyysik\" Dolgov,\n\tMaxim \"baza\" Bazarov,\n\tDenis Korotkov,\n\tNur Nazmetdinov ja muut.\n\n
-Thanks to Pierre Raynaud-Richard and Robert Polic for BeOS tips.\n\n	SwitcherDeskView		Kiitokset Pierre Raynaud-Richardille ja Robert Policille BeOS-vihjeistä.\n\n
-Unable to create Settings configuration window.	SwitcherApplication		Ei kyetä luomaan Asetus-ikkunaa.
-Unable to install keymap indicator. Deskbar application is not running.	SwitcherApplication		Ei kyetä asentamaan näppäinkarttaindikaattoria. Työpöytäpalkki ei ole käynnissä.
-Unable to install keymap indicator. Deskbar application is not running.	SwitcherSettingsWindow		Ei kyetä asentamaan näppäinkarttaindikaattoria. Työpöytäpalkki ei ole käynnissä.
-Unable to start Deskbar application. Keymap indicator was not installed.	SwitcherSettingsWindow		Työpöytäpalkkisovellusta ei kyetty käynnistämään. Näppäinkarttavaihtajaa ei asennettu.
+Shortcut:	SwitcherSettingsWindow		Pikanäppäin:
+Cmd+Shift	SwitcherSettingsWindow		Alt+Vaihto
+Install in Deskbar	SwitcherSettingsWindow		Asenna Työpöytäpalkkiin
+Apply	SwitcherSettingsWindow		Sovella
+Scroll Lock	SwitcherSettingsWindow		Scroll Lock
+Revert	SwitcherSettingsWindow		Palauta
+Caps Lock	SwitcherSettingsWindow		Caps Lock
+ (user)	SwitcherSettingsWindow		 (käyttäjä)
+Ctrl+Shift	SwitcherSettingsWindow		Ctrl+Vaihto
+Keymap Switcher	SwitcherSettingsWindow		Näppäinkarttavaihtaja
+Exit	SwitcherSettingsWindow		Poistu
+Start Deskbar	SwitcherSettingsWindow		Käynnistä Työpöytäpalkki
+Available keymaps:	SwitcherSettingsWindow		Käytettävissä olevat näppäinkartat:
+Selected keymaps:	SwitcherSettingsWindow		Valitus näppäinkartat:
 Use the separate keymap in each application	SwitcherSettingsWindow		Use the separate keymap in each application
 User	SwitcherSettingsWindow		Käyttäjä
+Activate shortcuts substitution	SwitcherSettingsWindow		Ota käyttöön pikavalintakorvaus
+Quit	SwitcherDeskView		Poistu
+About…	SwitcherDeskView		Ohjelmasta…
+Settings…	SwitcherDeskView		Asetukset…
+Thanks to Pierre Raynaud-Richard and Robert Polic for BeOS tips.\n\n	SwitcherDeskView		Kiitokset Pierre Raynaud-Richardille ja Robert Policille BeOS-vihjeistä.\n\n
+Original notice from Stas Maximov:\n	SwitcherDeskView		Alkuperäinen suunnittelija on Stas Maximov:\n
+Copyright © 2008-%YEAR Haiku, Inc.\n	SwitcherDeskView		Copyright © 2008-%YEAR Haiku, Inc.\n
+Special thanks to all BeOS users, whether they use this app or not - they're keeping BeOS alive!\n\n	SwitcherDeskView		Erityiset kiitokset kaikille BeOS-käyttäjille, käyttivät he sitten tätä sovellusta tai ei - he pitivät BeOS-järjestelmän elossa!\n\n
+About	SwitcherDeskView		Ohjelmasta
+Copyright © 1999-2003 Stas Maximov.\n	SwitcherDeskView		Copyright © 1999-2003 Stas Maximov.\n
+Okay	SwitcherDeskView		Valmis
 Version  %VERSION \n\n	SwitcherDeskView		Versio  %VERSION \n\n
+Keymap Switcher\n\n	SwitcherDeskView		Näppäinkarttavaihtaja\n\n
+Tested and inspired by\n\tSergey \"fyysik\" Dolgov,\n\tMaxim \"baza\" Bazarov,\n\tDenis Korotkov,\n\tNur Nazmetdinov and others.\n\n	SwitcherDeskView		Testaajia ja inspiroijia:\n\tSergey \"fyysik\" Dolgov,\n\tMaxim \"baza\" Bazarov,\n\tDenis Korotkov,\n\tNur Nazmetdinov ja muut.\n\n
+KeymapSwitcher	System name		Näppäinkarttavaihtaja
