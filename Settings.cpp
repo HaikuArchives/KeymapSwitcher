@@ -5,6 +5,8 @@
 #include <stdio.h> //XXX
 
 #include <File.h>
+#include <Locale.h>
+#include <LocaleRoster.h>
 #include <FindDirectory.h>
 
 #include "KeymapSwitcher.h"
@@ -58,6 +60,27 @@ status_t Settings::SetDefaults()
 	SetString("n0", "US-International");
 	SetInt32("d0", B_SYSTEM_DATA_DIRECTORY); 
 	SetInt32("system_wide", 0);
+
+	BMessage preferredLanguages;
+	BLocaleRoster::Default()->GetPreferredLanguages(&preferredLanguages);
+	BString preferredLanguage;
+	if (preferredLanguages.FindString("language", &preferredLanguage) != B_OK) {
+		preferredLanguage = "en";
+	}
+	// Add secondary keymap for cyrilic languages by default
+	if (preferredLanguage.Compare("ru", 2) == 0) {
+		SetString("n1", "Russian");
+		SetInt32("remap", 1L);
+		SetInt32("keymaps", 2L);
+	} else if (preferredLanguage.Compare("uk", 2) == 0) {
+		SetString("n1", "Ukainian");
+		SetInt32("remap", 1L);
+		SetInt32("keymaps", 2L);
+	} else if (preferredLanguage.Compare("be", 2) == 0) {
+		SetString("n1", "Belarusian");
+		SetInt32("remap", 1L);
+		SetInt32("keymaps", 2L);
+	}
 
 	return status = B_OK;
 }
