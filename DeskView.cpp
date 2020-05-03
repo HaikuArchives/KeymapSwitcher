@@ -251,6 +251,9 @@ BRect DeskView::GetTextRect(const char *text)
 
 void DeskView::Draw(BRect r)
 {
+	BRect rect(Bounds());
+	rect.bottom--;
+
 	SetDrawingMode(B_OP_COPY);
 
 	SetHighColor(Parent()->ViewColor());
@@ -258,16 +261,16 @@ void DeskView::Draw(BRect r)
 
 	SetDrawingMode(B_OP_ALPHA);
 	SetHighColor(background_color);
-	float radius = Bounds().Height() * 0.2;
-	FillRoundRect(Bounds(), radius, radius);
+	float radius = rect.Height() * 0.2;
+	FillRoundRect(rect, radius, radius);
 
-	rgb_color frame_color = tint_color(background_color, 1.15);
+	rgb_color frame_color = tint_color(background_color, 1.5);
 	SetHighColor(frame_color);
-	StrokeRoundRect(Bounds(), radius, radius);
+	StrokeRoundRect(rect, radius, radius);
 
 	BRect textRect = GetTextRect(keymap_text.String());
-	BPoint point(ceilf((Bounds().Width() - textRect.Width() + 1.0) / 2.0 - textRect.left),
-		ceilf((Bounds().Height() - textRect.Height() + 1.0) / 2.0 - textRect.top));
+	BPoint point(ceilf((rect.Width() - textRect.Width() + 1.0) / 2.0 - textRect.left),
+		ceilf((rect.Height() - textRect.Height() + 1.0) / 2.0 - textRect.top));
 	SetLowColor(background_color);
 	SetHighColor(text_color);
 	DrawString(keymap_text.String(), point);
