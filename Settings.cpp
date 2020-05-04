@@ -1,5 +1,6 @@
 
 #include "Settings.h"
+#include "DefaultSettings.h"
 
 #include <syslog.h>
 #include <stdio.h> //XXX
@@ -51,12 +52,13 @@ status_t Settings::Reload()
 
 status_t Settings::SetDefaults()
 {
+	int32 numKeymap = 1;
+
 	SetString("version", VERSION);
 	SetInt32("hotkey", KEY_LCTRL_SHIFT);
 	SetBool("beep", true);
 	SetBool("disabled", false);
 	SetInt32("active", 0L);
-	SetInt32("keymaps", 1L);
 	SetString("n0", "US-International");
 	SetInt32("d0", B_SYSTEM_DATA_DIRECTORY); 
 	SetInt32("system_wide", 0);
@@ -67,20 +69,25 @@ status_t Settings::SetDefaults()
 	if (preferredLanguages.FindString("language", &preferredLanguage) != B_OK) {
 		preferredLanguage = "en";
 	}
-	// Add secondary keymap for cyrilic languages by default
-	if (preferredLanguage.Compare("ru", 2) == 0) {
-		SetString("n1", "Russian");
-		SetInt32("remap", 1L);
-		SetInt32("keymaps", 2L);
-	} else if (preferredLanguage.Compare("uk", 2) == 0) {
-		SetString("n1", "Ukainian");
-		SetInt32("remap", 1L);
-		SetInt32("keymaps", 2L);
-	} else if (preferredLanguage.Compare("be", 2) == 0) {
-		SetString("n1", "Belarusian");
-		SetInt32("remap", 1L);
-		SetInt32("keymaps", 2L);
+
+	printf("num=%d\n", sizeof(keymapDefaults) / sizeof(_keymap_data));
+	for (uint32 i = 0; i < sizeof(keymapDefaults) / sizeof(_keymap_data); i++) {
+		if (preferredLanguage.Compare(keymapDefaults[i].locale, 2) == 0) {
+			BString keymapParam = "n";
+			keymapParam << numKeymap;
+			SetString(keymapParam.String(), keymapDefaults[i].keymap);
+
+			BString dirParam = "d";
+			dirParam << numKeymap;
+			SetInt32(dirParam.String(), keymapDefaults[i].directory);
+
+			SetInt32("remap", keymapDefaults[i].remap);
+
+			numKeymap++;
+		}
 	}
+
+	SetInt32("keymaps", numKeymap);
 
 	return status = B_OK;
 }
