@@ -20,7 +20,7 @@
 #endif
 
 
-Settings::Settings(const char *filename) : BMessage('pref')
+Settings::Settings(const char *filename, bool filter) : BMessage('pref'), is_filter(filter)
 {
 	status = find_directory(B_USER_SETTINGS_DIRECTORY, &path);
 	trace("constr:%s %08x\n", path.Path(), status);
@@ -41,7 +41,8 @@ status_t Settings::Reload()
 	trace("reload:%s %08x\n", path.Path(), status);
 	if(status == B_ENTRY_NOT_FOUND) {
 		SetDefaults();
-		Save();
+		if (!is_filter)
+			Save();
 	} else
 	if (status == B_OK) {
 		status = Unflatten(&file);

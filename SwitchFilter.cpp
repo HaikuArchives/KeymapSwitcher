@@ -140,7 +140,7 @@ SwitchFilter::~SwitchFilter()
 status_t SwitchFilter::InitCheck()
 {
 	trace("init check");
-	settings = new Settings("Switcher");
+	settings = new Settings("Switcher", true);
 
 	UpdateRemapTable();
 

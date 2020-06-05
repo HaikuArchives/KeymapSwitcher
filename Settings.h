@@ -20,7 +20,7 @@ const int32 KEY_OPT_SPACE   = 0x2006;
 class Settings : public BMessage
 {
 public:
-	Settings(const char *filename);
+	Settings(const char *filename, bool filter=false);
 	~Settings();
 	status_t InitCheck() { return status; }
 	status_t Reload();
@@ -45,6 +45,7 @@ private:
 	BPath 	path;
 	status_t status;
 	bool dirty;
+	bool is_filter;
 };
 
 #endif
