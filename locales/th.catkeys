@@ -1,43 +1,43 @@
 1	Thai	x-vnd.Nexus-KeymapSwitcher	6804397
-KeymapSwitcher options:\n\t--deskbar\tautomatically add replicant to Deskbar\n\t--help\t\tprint this info and exit\n	SwitcherApplication		ตัวเลือก KeymapSwitcher:\n\t--deskbar\tautomatically เพิ่ม replicant ไปที่เดสก์บาร์ \n\ t--ช่วย\t\ tพิมพ์ข้อมูลนี้และออก \ n
-Unable to install keymap indicator. Deskbar application is not running.	SwitcherApplication		ไม่สามารถติดตั้งตัวแสดงคีย์แมป แอปพลิเคชันเดสก์บาร์ไม่ทำงาน
-OK	SwitcherApplication		ตกลง
-Unable to create Settings configuration window.	SwitcherApplication		ไม่สามารถสร้างหน้าต่างการตั้งค่าการกำหนดค่า
  (system)	SwitcherSettingsWindow		 (ระบบ)
+ (user)	SwitcherSettingsWindow		 (ผู้ใช้งาน)
+Activate shortcuts substitution	SwitcherSettingsWindow		เปิดใช้งานการทดแทนทางลัด
+Apply	SwitcherSettingsWindow		ใช้งาน
+Available keymaps:	SwitcherSettingsWindow		แผนที่แป้นพิมพ์ที่มีอยู่:
+Caps Lock	SwitcherSettingsWindow		Caps Lock
+Cmd+Shift	SwitcherSettingsWindow		Cmd+Shift
+Ctrl+Shift	SwitcherSettingsWindow		Ctrl+Shift
+Exit	SwitcherSettingsWindow		ออก
+Install in Deskbar	SwitcherSettingsWindow		ติดตั้งในเดสก์บาร์
+Keymap Switcher	SwitcherSettingsWindow		Keymap Switcher
 OK	SwitcherSettingsWindow		ตกลง
-Unable to start Deskbar application. Keymap indicator was not installed.	SwitcherSettingsWindow		ไม่สามารถเริ่มแอปพลิเคชันเดสก์บาร์ ไม่ได้ติดตั้งตัวแสดงแผนที่แป้นพิมพ์
-Unable to install keymap indicator. Deskbar application is not running.	SwitcherSettingsWindow		ไม่สามารถติดตั้งตัวแสดงแผนที่แป้นพิมพ์ แอปพลิเคชันเดสก์บาร์ไม่ทำงาน
+Revert	SwitcherSettingsWindow		เปลี่ยนกลับ
+Scroll Lock	SwitcherSettingsWindow		Scroll Lock
+Selected keymaps:	SwitcherSettingsWindow		เลือกแผนที่แป้นพิมพ์
 Shift+Shift	SwitcherSettingsWindow		Shift+Shift
+Shortcut:	SwitcherSettingsWindow		ทางลัด:
+Start Deskbar	SwitcherSettingsWindow		เริ่มใช้งานเดสก์บาร์
 Substitute shortcuts with %KEYMAP%'s ones	SwitcherSettingsWindow		ทางลัดแทนด้วยปุ่ม %KEYMAP%
 System	SwitcherSettingsWindow		ระบบ
-Shortcut:	SwitcherSettingsWindow		ทางลัด:
-Cmd+Shift	SwitcherSettingsWindow		Cmd+Shift
-Install in Deskbar	SwitcherSettingsWindow		ติดตั้งในเดสก์บาร์
-Apply	SwitcherSettingsWindow		ใช้งาน
-Scroll Lock	SwitcherSettingsWindow		Scroll Lock
-Revert	SwitcherSettingsWindow		เปลี่ยนกลับ
-Caps Lock	SwitcherSettingsWindow		Caps Lock
- (user)	SwitcherSettingsWindow		 (ผู้ใช้งาน)
-Ctrl+Shift	SwitcherSettingsWindow		Ctrl+Shift
-Keymap Switcher	SwitcherSettingsWindow		Keymap Switcher
-Exit	SwitcherSettingsWindow		ออก
-Start Deskbar	SwitcherSettingsWindow		เริ่มใช้งานเดสก์บาร์
-Available keymaps:	SwitcherSettingsWindow		แผนที่แป้นพิมพ์ที่มีอยู่:
-Selected keymaps:	SwitcherSettingsWindow		เลือกแผนที่แป้นพิมพ์
+Unable to install keymap indicator. Deskbar application is not running.	SwitcherSettingsWindow		ไม่สามารถติดตั้งตัวแสดงแผนที่แป้นพิมพ์ แอปพลิเคชันเดสก์บาร์ไม่ทำงาน
+Unable to start Deskbar application. Keymap indicator was not installed.	SwitcherSettingsWindow		ไม่สามารถเริ่มแอปพลิเคชันเดสก์บาร์ ไม่ได้ติดตั้งตัวแสดงแผนที่แป้นพิมพ์
 Use the separate keymap in each application	SwitcherSettingsWindow		ใช้แผนที่แป้นพิมพ์แยกในแต่ละแอปพลิเคชัน
 User	SwitcherSettingsWindow		ผู้ใช้งาน
-Activate shortcuts substitution	SwitcherSettingsWindow		เปิดใช้งานการทดแทนทางลัด
-Quit	SwitcherDeskView		ออก
-About…	SwitcherDeskView		เกี่ยวกับ
-Settings…	SwitcherDeskView		ตั้งค่า
-Thanks to Pierre Raynaud-Richard and Robert Polic for BeOS tips.\n\n	SwitcherDeskView		ขอบคุณ Pierre Raynaud-Richard และ Robert Polic สำหรับทิปต่างๆใน BeOS \n\n
-Original notice from Stas Maximov:\n	SwitcherDeskView		ข้อความเดิมจาก Stas Maximov:\n
-Copyright © 2008-%YEAR Haiku, Inc.\n	SwitcherDeskView		ลิขสิทธิ์ © 2008-%YEAR Haiku, Inc.\n
-Special thanks to all BeOS users, whether they use this app or not - they're keeping BeOS alive!\n\n	SwitcherDeskView		ขอขอบคุณเป็นพิเศษสำหรับผู้ใช้ BeOS ทุกคน ไม่ว่าพวกเขาจะใช้แอพนี้หรือไม่ก็ตาม พวกเขายังคงทำให้ BeOS มีชีวิตอยู่! \n\n
 About	SwitcherDeskView		เกี่ยวกับ
+About…	SwitcherDeskView		เกี่ยวกับ
 Copyright © 1999-2003 Stas Maximov.\n	SwitcherDeskView		ลิขสิทธิ์ © 1999-2003 Stas Maximov.\n
-Okay	SwitcherDeskView		ตกลง
-Version  %VERSION \n\n	SwitcherDeskView		เวอร์ชั่น %VERSION \n\n
+Copyright © 2008-%YEAR Haiku, Inc.\n	SwitcherDeskView		ลิขสิทธิ์ © 2008-%YEAR Haiku, Inc.\n
 Keymap Switcher\n\n	SwitcherDeskView		Keymap Switcher\n\n
+Okay	SwitcherDeskView		ตกลง
+Original notice from Stas Maximov:\n	SwitcherDeskView		ข้อความเดิมจาก Stas Maximov:\n
+Quit	SwitcherDeskView		ออก
+Settings…	SwitcherDeskView		ตั้งค่า
+Special thanks to all BeOS users, whether they use this app or not - they're keeping BeOS alive!\n\n	SwitcherDeskView		ขอขอบคุณเป็นพิเศษสำหรับผู้ใช้ BeOS ทุกคน ไม่ว่าพวกเขาจะใช้แอพนี้หรือไม่ก็ตาม พวกเขายังคงทำให้ BeOS มีชีวิตอยู่! \n\n
 Tested and inspired by\n\tSergey \"fyysik\" Dolgov,\n\tMaxim \"baza\" Bazarov,\n\tDenis Korotkov,\n\tNur Nazmetdinov and others.\n\n	SwitcherDeskView		ผ่านการทดสอบและได้แรงบันดาลใจจาก\n\tSergey \"fyysik\" Dolgov,\n\tMaxim \"baza\" Bazarov,\n\tDenis Korotkov,\n\tNur Nazmetdinov และคนอื่นๆ\n\n
+Thanks to Pierre Raynaud-Richard and Robert Polic for BeOS tips.\n\n	SwitcherDeskView		ขอบคุณ Pierre Raynaud-Richard และ Robert Polic สำหรับทิปต่างๆใน BeOS \n\n
+Version  %VERSION \n\n	SwitcherDeskView		เวอร์ชั่น %VERSION \n\n
 KeymapSwitcher	System name		ปุ่มกดเปลี่ยนภาษา
+KeymapSwitcher options:\n\t--deskbar\tautomatically add replicant to Deskbar\n\t--help\t\tprint this info and exit\n	SwitcherApplication		ตัวเลือก KeymapSwitcher:\n\t--deskbar\tautomatically เพิ่ม replicant ไปที่เดสก์บาร์ \n\ t--ช่วย\t\ tพิมพ์ข้อมูลนี้และออก \ n
+OK	SwitcherApplication		ตกลง
+Unable to create Settings configuration window.	SwitcherApplication		ไม่สามารถสร้างหน้าต่างการตั้งค่าการกำหนดค่า
+Unable to install keymap indicator. Deskbar application is not running.	SwitcherApplication		ไม่สามารถติดตั้งตัวแสดงคีย์แมป แอปพลิเคชันเดสก์บาร์ไม่ทำงาน

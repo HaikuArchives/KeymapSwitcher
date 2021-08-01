@@ -1,43 +1,43 @@
 1	Portuguese	x-vnd.Nexus-KeymapSwitcher	6804397
-KeymapSwitcher options:\n\t--deskbar\tautomatically add replicant to Deskbar\n\t--help\t\tprint this info and exit\n	SwitcherApplication		Opções do KeymapSwitcher:\n\t--deskbar\tadicionar automaticamente um replicante à Deskbar\n\t--help\t\tmostrar esta informação e sair\n
-Unable to install keymap indicator. Deskbar application is not running.	SwitcherApplication		Não foi possível instalar o indicador de disposição do teclado. A aplicação Deskbar não está em execução.
-OK	SwitcherApplication		OK
-Unable to create Settings configuration window.	SwitcherApplication		Não foi possível criar a janela de configuração das Definições.
  (system)	SwitcherSettingsWindow		 (sistema)
+ (user)	SwitcherSettingsWindow		 (utilizador)
+Activate shortcuts substitution	SwitcherSettingsWindow		Ativar substituição de atalhos
+Apply	SwitcherSettingsWindow		Aplicar
+Available keymaps:	SwitcherSettingsWindow		Disposições de teclado disponíveis:
+Caps Lock	SwitcherSettingsWindow		Caps Lock
+Cmd+Shift	SwitcherSettingsWindow		Cmd+Shift
+Ctrl+Shift	SwitcherSettingsWindow		Ctrl+Shift
+Exit	SwitcherSettingsWindow		Sair
+Install in Deskbar	SwitcherSettingsWindow		Instalar na Deskbar
+Keymap Switcher	SwitcherSettingsWindow		Keymap Switcher
 OK	SwitcherSettingsWindow		OK
-Unable to start Deskbar application. Keymap indicator was not installed.	SwitcherSettingsWindow		Não foi possível iniciar a aplicação Deskbar. O indicador de disposição do teclado não foi instalado.
-Unable to install keymap indicator. Deskbar application is not running.	SwitcherSettingsWindow		Não foi possível instalar o indicador de disposição do teclado. A aplicação Deskbar não está em execução.
+Revert	SwitcherSettingsWindow		Reverter
+Scroll Lock	SwitcherSettingsWindow		Scroll Lock
+Selected keymaps:	SwitcherSettingsWindow		Disposições de teclado selecionadas:
 Shift+Shift	SwitcherSettingsWindow		Shift+Shift
+Shortcut:	SwitcherSettingsWindow		Atalho:
+Start Deskbar	SwitcherSettingsWindow		Iniciar Deskbar
 Substitute shortcuts with %KEYMAP%'s ones	SwitcherSettingsWindow		Substituir atalhos pelas do %KEYMAP%
 System	SwitcherSettingsWindow		Sistema
-Shortcut:	SwitcherSettingsWindow		Atalho:
-Cmd+Shift	SwitcherSettingsWindow		Cmd+Shift
-Install in Deskbar	SwitcherSettingsWindow		Instalar na Deskbar
-Apply	SwitcherSettingsWindow		Aplicar
-Scroll Lock	SwitcherSettingsWindow		Scroll Lock
-Revert	SwitcherSettingsWindow		Reverter
-Caps Lock	SwitcherSettingsWindow		Caps Lock
- (user)	SwitcherSettingsWindow		 (utilizador)
-Ctrl+Shift	SwitcherSettingsWindow		Ctrl+Shift
-Keymap Switcher	SwitcherSettingsWindow		Keymap Switcher
-Exit	SwitcherSettingsWindow		Sair
-Start Deskbar	SwitcherSettingsWindow		Iniciar Deskbar
-Available keymaps:	SwitcherSettingsWindow		Disposições de teclado disponíveis:
-Selected keymaps:	SwitcherSettingsWindow		Disposições de teclado selecionadas:
+Unable to install keymap indicator. Deskbar application is not running.	SwitcherSettingsWindow		Não foi possível instalar o indicador de disposição do teclado. A aplicação Deskbar não está em execução.
+Unable to start Deskbar application. Keymap indicator was not installed.	SwitcherSettingsWindow		Não foi possível iniciar a aplicação Deskbar. O indicador de disposição do teclado não foi instalado.
 Use the separate keymap in each application	SwitcherSettingsWindow		Utilizar disposição de teclado separada em cada aplicação
 User	SwitcherSettingsWindow		Utilizador
-Activate shortcuts substitution	SwitcherSettingsWindow		Ativar substituição de atalhos
-Quit	SwitcherDeskView		Sair
-About…	SwitcherDeskView		Acerca…
-Settings…	SwitcherDeskView		Definições…
-Thanks to Pierre Raynaud-Richard and Robert Polic for BeOS tips.\n\n	SwitcherDeskView		Obrigado a Pierre Raynaud-Richard e Robert Polic pelas dicas de BeOS.\n\n
-Original notice from Stas Maximov:\n	SwitcherDeskView		Nota original de Stas Maximov:\n
-Copyright © 2008-%YEAR Haiku, Inc.\n	SwitcherDeskView		Copyright © 2008-%YEAR Haiku, Inc.\n
-Special thanks to all BeOS users, whether they use this app or not - they're keeping BeOS alive!\n\n	SwitcherDeskView		Agradecimento especial a todos os utilizadores do BeOS, quer usem esta aplicação ou não - estão a manter o BeOS vivo!\n\n
 About	SwitcherDeskView		Acerca
+About…	SwitcherDeskView		Acerca…
 Copyright © 1999-2003 Stas Maximov.\n	SwitcherDeskView		Copyright © 1999-2003 Stas Maximov.\n
-Okay	SwitcherDeskView		OK
-Version  %VERSION \n\n	SwitcherDeskView		Versão %VERSION \n\n
+Copyright © 2008-%YEAR Haiku, Inc.\n	SwitcherDeskView		Copyright © 2008-%YEAR Haiku, Inc.\n
 Keymap Switcher\n\n	SwitcherDeskView		Keymap Switcher\n\n
+Okay	SwitcherDeskView		OK
+Original notice from Stas Maximov:\n	SwitcherDeskView		Nota original de Stas Maximov:\n
+Quit	SwitcherDeskView		Sair
+Settings…	SwitcherDeskView		Definições…
+Special thanks to all BeOS users, whether they use this app or not - they're keeping BeOS alive!\n\n	SwitcherDeskView		Agradecimento especial a todos os utilizadores do BeOS, quer usem esta aplicação ou não - estão a manter o BeOS vivo!\n\n
 Tested and inspired by\n\tSergey \"fyysik\" Dolgov,\n\tMaxim \"baza\" Bazarov,\n\tDenis Korotkov,\n\tNur Nazmetdinov and others.\n\n	SwitcherDeskView		Testado e inspirado por\n\tSergey \"fyysik\" Dolgov,\n\tMaxim \"baza\" Bazarov,\n\tDenis Korotkov,\n\tNur Nazmetdinov e outros.\n\n
+Thanks to Pierre Raynaud-Richard and Robert Polic for BeOS tips.\n\n	SwitcherDeskView		Obrigado a Pierre Raynaud-Richard e Robert Polic pelas dicas de BeOS.\n\n
+Version  %VERSION \n\n	SwitcherDeskView		Versão %VERSION \n\n
 KeymapSwitcher	System name		KeymapSwitcher
+KeymapSwitcher options:\n\t--deskbar\tautomatically add replicant to Deskbar\n\t--help\t\tprint this info and exit\n	SwitcherApplication		Opções do KeymapSwitcher:\n\t--deskbar\tadicionar automaticamente um replicante à Deskbar\n\t--help\t\tmostrar esta informação e sair\n
+OK	SwitcherApplication		OK
+Unable to create Settings configuration window.	SwitcherApplication		Não foi possível criar a janela de configuração das Definições.
+Unable to install keymap indicator. Deskbar application is not running.	SwitcherApplication		Não foi possível instalar o indicador de disposição do teclado. A aplicação Deskbar não está em execução.

@@ -1,43 +1,43 @@
 1	Polish	x-vnd.Nexus-KeymapSwitcher	6804397
-KeymapSwitcher options:\n\t--deskbar\tautomatically add replicant to Deskbar\n\t--help\t\tprint this info and exit\n	SwitcherApplication		Opcje KeymapSwitchera:\n\t--deskbar\tautomatycznie dodaj replikant do Deskbara\n\t--help\t\twypisz tę informację i zakończ\n
-Unable to install keymap indicator. Deskbar application is not running.	SwitcherApplication		Nie udało się zainstalować wskaźnika mapy klawiszy. Deskbar nie jest uruchomiony.
-OK	SwitcherApplication		OK
-Unable to create Settings configuration window.	SwitcherApplication		Nie udało się stworzyć okna konfiguracji.
  (system)	SwitcherSettingsWindow		 (systemowa)
+ (user)	SwitcherSettingsWindow		 (użytkownika)
+Activate shortcuts substitution	SwitcherSettingsWindow		Aktywuj podmianę skrótów klawiszowych
+Apply	SwitcherSettingsWindow		Zastosuj
+Available keymaps:	SwitcherSettingsWindow		Dostępne układy klawiatury:
+Caps Lock	SwitcherSettingsWindow		Caps Lock
+Cmd+Shift	SwitcherSettingsWindow		Cmd+Shift
+Ctrl+Shift	SwitcherSettingsWindow		Ctrl+Shift
+Exit	SwitcherSettingsWindow		Wyjdź
+Install in Deskbar	SwitcherSettingsWindow		Zainstaluj w Deskbarze
+Keymap Switcher	SwitcherSettingsWindow		Keymap Switcher
 OK	SwitcherSettingsWindow		OK
-Unable to start Deskbar application. Keymap indicator was not installed.	SwitcherSettingsWindow		Nie udało się uruchomić Deskbara. Wskaźnik mapy klawiszy nie został zainstalowany.
-Unable to install keymap indicator. Deskbar application is not running.	SwitcherSettingsWindow		Nie udało się zainstalować wskaźnika mapy klawiszy. Deskbar nie jest uruchomiony.
+Revert	SwitcherSettingsWindow		Przywróć
+Scroll Lock	SwitcherSettingsWindow		Scroll Lock
+Selected keymaps:	SwitcherSettingsWindow		Wybrane układy klawiatury:
 Shift+Shift	SwitcherSettingsWindow		Shift+Shift
+Shortcut:	SwitcherSettingsWindow		Skrót:
+Start Deskbar	SwitcherSettingsWindow		Uruchom Deskbara
 Substitute shortcuts with %KEYMAP%'s ones	SwitcherSettingsWindow		Zastąp skróty klawiszowe skrótami %KEYMAP%
 System	SwitcherSettingsWindow		System
-Shortcut:	SwitcherSettingsWindow		Skrót:
-Cmd+Shift	SwitcherSettingsWindow		Cmd+Shift
-Install in Deskbar	SwitcherSettingsWindow		Zainstaluj w Deskbarze
-Apply	SwitcherSettingsWindow		Zastosuj
-Scroll Lock	SwitcherSettingsWindow		Scroll Lock
-Revert	SwitcherSettingsWindow		Przywróć
-Caps Lock	SwitcherSettingsWindow		Caps Lock
- (user)	SwitcherSettingsWindow		 (użytkownika)
-Ctrl+Shift	SwitcherSettingsWindow		Ctrl+Shift
-Keymap Switcher	SwitcherSettingsWindow		Keymap Switcher
-Exit	SwitcherSettingsWindow		Wyjdź
-Start Deskbar	SwitcherSettingsWindow		Uruchom Deskbara
-Available keymaps:	SwitcherSettingsWindow		Dostępne układy klawiatury:
-Selected keymaps:	SwitcherSettingsWindow		Wybrane układy klawiatury:
+Unable to install keymap indicator. Deskbar application is not running.	SwitcherSettingsWindow		Nie udało się zainstalować wskaźnika mapy klawiszy. Deskbar nie jest uruchomiony.
+Unable to start Deskbar application. Keymap indicator was not installed.	SwitcherSettingsWindow		Nie udało się uruchomić Deskbara. Wskaźnik mapy klawiszy nie został zainstalowany.
 Use the separate keymap in each application	SwitcherSettingsWindow		Użyj osobnej mapy klawiszy dla każdej aplikacji
 User	SwitcherSettingsWindow		Użytkownik
-Activate shortcuts substitution	SwitcherSettingsWindow		Aktywuj podmianę skrótów klawiszowych
-Quit	SwitcherDeskView		Zakończ
-About…	SwitcherDeskView		O programie…
-Settings…	SwitcherDeskView		Ustawienia…
-Thanks to Pierre Raynaud-Richard and Robert Polic for BeOS tips.\n\n	SwitcherDeskView		Podziękowania dla Pierre’a Raynaud-Richarda and Roberta Polica za wskazówki dotyczące BeOS-a.\n\n
-Original notice from Stas Maximov:\n	SwitcherDeskView		Oryginalna wiadomość od Stasa Maximova:\n
-Copyright © 2008-%YEAR Haiku, Inc.\n	SwitcherDeskView		Copyright © 2008-%YEAR Haiku, Inc.\n
-Special thanks to all BeOS users, whether they use this app or not - they're keeping BeOS alive!\n\n	SwitcherDeskView		Specjalne podziękowania dla wszystkich użytkowników BeOS, niezależnie od tego czy używają tej aplikacji – to oni trzymają BeOS-a przy życiu!\n\n
 About	SwitcherDeskView		O programie
+About…	SwitcherDeskView		O programie…
 Copyright © 1999-2003 Stas Maximov.\n	SwitcherDeskView		Copyright © 1999-2003 Stas Maximov.\n
-Okay	SwitcherDeskView		OK
-Version  %VERSION \n\n	SwitcherDeskView		Wersja  %VERSION \n\n
+Copyright © 2008-%YEAR Haiku, Inc.\n	SwitcherDeskView		Copyright © 2008-%YEAR Haiku, Inc.\n
 Keymap Switcher\n\n	SwitcherDeskView		Keymap Switcher\n\n
+Okay	SwitcherDeskView		OK
+Original notice from Stas Maximov:\n	SwitcherDeskView		Oryginalna wiadomość od Stasa Maximova:\n
+Quit	SwitcherDeskView		Zakończ
+Settings…	SwitcherDeskView		Ustawienia…
+Special thanks to all BeOS users, whether they use this app or not - they're keeping BeOS alive!\n\n	SwitcherDeskView		Specjalne podziękowania dla wszystkich użytkowników BeOS, niezależnie od tego czy używają tej aplikacji – to oni trzymają BeOS-a przy życiu!\n\n
 Tested and inspired by\n\tSergey \"fyysik\" Dolgov,\n\tMaxim \"baza\" Bazarov,\n\tDenis Korotkov,\n\tNur Nazmetdinov and others.\n\n	SwitcherDeskView		Inspiracja i testowanie:\n\tSergey „fyysik” Dolgov,\n\tMaxim „baza” Bazarov,\n\tDenis Korotkov,\n\tNur Nazmetdinov i inni.\n\n
+Thanks to Pierre Raynaud-Richard and Robert Polic for BeOS tips.\n\n	SwitcherDeskView		Podziękowania dla Pierre’a Raynaud-Richarda i Roberta Polica za wskazówki dotyczące BeOS-a.\n\n
+Version  %VERSION \n\n	SwitcherDeskView		Wersja  %VERSION \n\n
 KeymapSwitcher	System name		KeymapSwitcher
+KeymapSwitcher options:\n\t--deskbar\tautomatically add replicant to Deskbar\n\t--help\t\tprint this info and exit\n	SwitcherApplication		Opcje KeymapSwitchera:\n\t--deskbar\tautomatycznie dodaj replikant do Deskbara\n\t--help\t\twypisz tę informację i zakończ\n
+OK	SwitcherApplication		OK
+Unable to create Settings configuration window.	SwitcherApplication		Nie udało się stworzyć okna konfiguracji.
+Unable to install keymap indicator. Deskbar application is not running.	SwitcherApplication		Nie udało się zainstalować wskaźnika mapy klawiszy. Deskbar nie jest uruchomiony.

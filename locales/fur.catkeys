@@ -1,43 +1,43 @@
 1	Friulian	x-vnd.Nexus-KeymapSwitcher	6804397
-KeymapSwitcher options:\n\t--deskbar\tautomatically add replicant to Deskbar\n\t--help\t\tprint this info and exit\n	SwitcherApplication		Opzions di KeymapSwitcher:\n\t--deskbar\tzonte in automatic il replicant su Deskbar\n\t--help\t\tstampe cheste info e jes\n
-Unable to install keymap indicator. Deskbar application is not running.	SwitcherApplication		Impussibil instalâ l'indicadôr de mape di tastiere. La aplicazion Deskbar no je in esecuzion.
-OK	SwitcherApplication		Va ben
-Unable to create Settings configuration window.	SwitcherApplication		Impussibil creâ il barcon di configurazion des Impostazions.
  (system)	SwitcherSettingsWindow		(sisteme)
+ (user)	SwitcherSettingsWindow		(utent)
+Activate shortcuts substitution	SwitcherSettingsWindow		Ative sostituzion des scurtis
+Apply	SwitcherSettingsWindow		Apliche
+Available keymaps:	SwitcherSettingsWindow		Mapis di tastiere disponibilis:
+Caps Lock	SwitcherSettingsWindow		Bloc Maiusc
+Cmd+Shift	SwitcherSettingsWindow		Cmd+Maiusc
+Ctrl+Shift	SwitcherSettingsWindow		Ctrl+Maiusc
+Exit	SwitcherSettingsWindow		Jes
+Install in Deskbar	SwitcherSettingsWindow		Instale tal Deskbar
+Keymap Switcher	SwitcherSettingsWindow		Keymap Switcher
 OK	SwitcherSettingsWindow		Va ben
-Unable to start Deskbar application. Keymap indicator was not installed.	SwitcherSettingsWindow		Impussibil inviâ la aplicazion Deskbar. L'indicadôr de mape di tastiere nol jere instalât.
-Unable to install keymap indicator. Deskbar application is not running.	SwitcherSettingsWindow		Impussibil instalâ l'indicadôr de mape di tastiere. La aplicazion Deskbar no je in esecuzion.
+Revert	SwitcherSettingsWindow		Torne indaûr
+Scroll Lock	SwitcherSettingsWindow		Bloc Scor
+Selected keymaps:	SwitcherSettingsWindow		Mapis di tastiere selzionadis:
 Shift+Shift	SwitcherSettingsWindow		Maiusc+Maiusc
+Shortcut:	SwitcherSettingsWindow		Scurte:
+Start Deskbar	SwitcherSettingsWindow		Invie Deskbar
 Substitute shortcuts with %KEYMAP%'s ones	SwitcherSettingsWindow		Sostituìs lis scurtis cun chês par %KEYMAP%
 System	SwitcherSettingsWindow		Sisteme
-Shortcut:	SwitcherSettingsWindow		Scurte:
-Cmd+Shift	SwitcherSettingsWindow		Cmd+Maiusc
-Install in Deskbar	SwitcherSettingsWindow		Instale tal Deskbar
-Apply	SwitcherSettingsWindow		Apliche
-Scroll Lock	SwitcherSettingsWindow		Bloc Scor
-Revert	SwitcherSettingsWindow		Torne indaûr
-Caps Lock	SwitcherSettingsWindow		Bloc Maiusc
- (user)	SwitcherSettingsWindow		(utent)
-Ctrl+Shift	SwitcherSettingsWindow		Ctrl+Maiusc
-Keymap Switcher	SwitcherSettingsWindow		Keymap Switcher
-Exit	SwitcherSettingsWindow		Jes
-Start Deskbar	SwitcherSettingsWindow		Invie Deskbar
-Available keymaps:	SwitcherSettingsWindow		Mapis di tastiere disponibilis:
-Selected keymaps:	SwitcherSettingsWindow		Mapis di tastiere selzionadis:
+Unable to install keymap indicator. Deskbar application is not running.	SwitcherSettingsWindow		Impussibil instalâ l'indicadôr de mape di tastiere. La aplicazion Deskbar no je in esecuzion.
+Unable to start Deskbar application. Keymap indicator was not installed.	SwitcherSettingsWindow		Impussibil inviâ la aplicazion Deskbar. L'indicadôr de mape di tastiere nol jere instalât.
 Use the separate keymap in each application	SwitcherSettingsWindow		Dopre une mape di tastiere separade par ogni aplicazion
 User	SwitcherSettingsWindow		Utent
-Activate shortcuts substitution	SwitcherSettingsWindow		Ative sostituzion des scurtis
-Quit	SwitcherDeskView		Jes
-About…	SwitcherDeskView		Informazions…
-Settings…	SwitcherDeskView		Impostazions…
-Thanks to Pierre Raynaud-Richard and Robert Polic for BeOS tips.\n\n	SwitcherDeskView		Graciis a Pierre Raynaud-Richard e Robert Polic pai conseis di BeOS.\n\n
-Original notice from Stas Maximov:\n	SwitcherDeskView		Messaç origjinâl di Stas Maximov:\n
-Copyright © 2008-%YEAR Haiku, Inc.\n	SwitcherDeskView		Copyright © 2008-%YEAR Haiku, Inc.\n
-Special thanks to all BeOS users, whether they use this app or not - they're keeping BeOS alive!\n\n	SwitcherDeskView		Ringraciaments speciâi a ducj i utents di BeOS, che a dopredin o mancul cheste aplicazion - a tegnin BeOS vîf!\n\n
 About	SwitcherDeskView		Informazions
+About…	SwitcherDeskView		Informazions…
 Copyright © 1999-2003 Stas Maximov.\n	SwitcherDeskView		Copyright © 1999-2003 Stas Maximov.\n
-Okay	SwitcherDeskView		Va ben
-Version  %VERSION \n\n	SwitcherDeskView		Version  %VERSION \n\n
+Copyright © 2008-%YEAR Haiku, Inc.\n	SwitcherDeskView		Copyright © 2008-%YEAR Haiku, Inc.\n
 Keymap Switcher\n\n	SwitcherDeskView		Keymap Switcher\n\n
+Okay	SwitcherDeskView		Va ben
+Original notice from Stas Maximov:\n	SwitcherDeskView		Messaç origjinâl di Stas Maximov:\n
+Quit	SwitcherDeskView		Jes
+Settings…	SwitcherDeskView		Impostazions…
+Special thanks to all BeOS users, whether they use this app or not - they're keeping BeOS alive!\n\n	SwitcherDeskView		Ringraciaments speciâi a ducj i utents di BeOS, che a dopredin o mancul cheste aplicazion - a tegnin BeOS vîf!\n\n
 Tested and inspired by\n\tSergey \"fyysik\" Dolgov,\n\tMaxim \"baza\" Bazarov,\n\tDenis Korotkov,\n\tNur Nazmetdinov and others.\n\n	SwitcherDeskView		Provât e ispirât di\n\tSergey \"fyysik\" Dolgov,\n\tMaxim \"baza\" Bazarov,\n\tDenis Korotkov,\n\tNur Nazmetdinov e altris.\n\n
+Thanks to Pierre Raynaud-Richard and Robert Polic for BeOS tips.\n\n	SwitcherDeskView		Graciis a Pierre Raynaud-Richard e Robert Polic pai conseis di BeOS.\n\n
+Version  %VERSION \n\n	SwitcherDeskView		Version  %VERSION \n\n
 KeymapSwitcher	System name		KeymapSwitcher
+KeymapSwitcher options:\n\t--deskbar\tautomatically add replicant to Deskbar\n\t--help\t\tprint this info and exit\n	SwitcherApplication		Opzions di KeymapSwitcher:\n\t--deskbar\tzonte in automatic il replicant su Deskbar\n\t--help\t\tstampe cheste info e jes\n
+OK	SwitcherApplication		Va ben
+Unable to create Settings configuration window.	SwitcherApplication		Impussibil creâ il barcon di configurazion des Impostazions.
+Unable to install keymap indicator. Deskbar application is not running.	SwitcherApplication		Impussibil instalâ l'indicadôr de mape di tastiere. La aplicazion Deskbar no je in esecuzion.

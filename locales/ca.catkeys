@@ -1,43 +1,43 @@
 1	Catalan	x-vnd.Nexus-KeymapSwitcher	6804397
-KeymapSwitcher options:\n\t--deskbar\tautomatically add replicant to Deskbar\n\t--help\t\tprint this info and exit\n	SwitcherApplication		Opcions del Canviador de teclat:\n\t--deskbar\tafegeix-ne automàticament el replicant a la barra d'escriptori\n\t--help\t\timprimeix aquesta informació i surt\n
-Unable to install keymap indicator. Deskbar application is not running.	SwitcherApplication		No es pot instal·lar l'indicador de mapa de tecles. L'aplicació de la barra d'escriptori no s'executa.
-OK	SwitcherApplication		D'acord
-Unable to create Settings configuration window.	SwitcherApplication		No es pot crear la finestra de configuració dels paràmetres.
  (system)	SwitcherSettingsWindow		 (sistema)
+ (user)	SwitcherSettingsWindow		 (usuari)
+Activate shortcuts substitution	SwitcherSettingsWindow		Activa la substitució de dreceres
+Apply	SwitcherSettingsWindow		Aplica-ho
+Available keymaps:	SwitcherSettingsWindow		Mapes de tecles disponibles:
+Caps Lock	SwitcherSettingsWindow		Bloqueig de majúscules
+Cmd+Shift	SwitcherSettingsWindow		Ord+Maj.
+Ctrl+Shift	SwitcherSettingsWindow		Ctrl+Maj.
+Exit	SwitcherSettingsWindow		Surt
+Install in Deskbar	SwitcherSettingsWindow		Instal·la a la barra d'escriptori
+Keymap Switcher	SwitcherSettingsWindow		Canviador de teclat
 OK	SwitcherSettingsWindow		D'acord
-Unable to start Deskbar application. Keymap indicator was not installed.	SwitcherSettingsWindow		No es pot iniciar l'aplicació de la barra d'escriptori. L’indicador de mapa de tecles no s’ha instal·lat.
-Unable to install keymap indicator. Deskbar application is not running.	SwitcherSettingsWindow		No es pot instal·lar l'indicador de mapa de tecles. L'aplicació de la barra d'escriptori no s'executa.
+Revert	SwitcherSettingsWindow		Reverteix
+Scroll Lock	SwitcherSettingsWindow		Bloqueig de desplaçament
+Selected keymaps:	SwitcherSettingsWindow		Mapes de tecles seleccionats:
 Shift+Shift	SwitcherSettingsWindow		Maj.+Maj.
+Shortcut:	SwitcherSettingsWindow		Drecera
+Start Deskbar	SwitcherSettingsWindow		Inicia la barra d'escriptori
 Substitute shortcuts with %KEYMAP%'s ones	SwitcherSettingsWindow		Substitueix les dreceres per les de %KEYMAP%
 System	SwitcherSettingsWindow		Sistema
-Shortcut:	SwitcherSettingsWindow		Drecera
-Cmd+Shift	SwitcherSettingsWindow		Ord+Maj.
-Install in Deskbar	SwitcherSettingsWindow		Instal·la a la barra d'escriptori
-Apply	SwitcherSettingsWindow		Aplica-ho
-Scroll Lock	SwitcherSettingsWindow		Bloqueig de desplaçament
-Revert	SwitcherSettingsWindow		Reverteix
-Caps Lock	SwitcherSettingsWindow		Bloqueig de majúscules
- (user)	SwitcherSettingsWindow		 (usuari)
-Ctrl+Shift	SwitcherSettingsWindow		Ctrl+Maj.
-Keymap Switcher	SwitcherSettingsWindow		Canviador de teclat
-Exit	SwitcherSettingsWindow		Surt
-Start Deskbar	SwitcherSettingsWindow		Inicia la barra d'escriptori
-Available keymaps:	SwitcherSettingsWindow		Mapes de tecles disponibles:
-Selected keymaps:	SwitcherSettingsWindow		Mapes de tecles seleccionats:
+Unable to install keymap indicator. Deskbar application is not running.	SwitcherSettingsWindow		No es pot instal·lar l'indicador de mapa de tecles. L'aplicació de la barra d'escriptori no s'executa.
+Unable to start Deskbar application. Keymap indicator was not installed.	SwitcherSettingsWindow		No es pot iniciar l'aplicació de la barra d'escriptori. L’indicador de mapa de tecles no s’ha instal·lat.
 Use the separate keymap in each application	SwitcherSettingsWindow		Usa un mapa de tecles diferent a cada aplicació.
 User	SwitcherSettingsWindow		Usuari
-Activate shortcuts substitution	SwitcherSettingsWindow		Activa la substitució de dreceres
-Quit	SwitcherDeskView		Surt
-About…	SwitcherDeskView		Quant a...
-Settings…	SwitcherDeskView		Paràmetres...
-Thanks to Pierre Raynaud-Richard and Robert Polic for BeOS tips.\n\n	SwitcherDeskView		Gràcies a Pierre Raynaud-Richard i Robert Polic pels consells sobre BeOS.\n\n
-Original notice from Stas Maximov:\n	SwitcherDeskView		Nota original de l'Stas Maximov:\n
-Copyright © 2008-%YEAR Haiku, Inc.\n	SwitcherDeskView		Copyright © 2008-%YEAR Haiku, Inc.\n
-Special thanks to all BeOS users, whether they use this app or not - they're keeping BeOS alive!\n\n	SwitcherDeskView		Gràcies especials a tots els usuaris de BeOS, tant si utilitzen aquesta aplicació com si no, mantenen el BeOS viu!\n\n
 About	SwitcherDeskView		Quant a
+About…	SwitcherDeskView		Quant a...
 Copyright © 1999-2003 Stas Maximov.\n	SwitcherDeskView		Copyright © 1999-2003 Stas Maximov.\n
-Okay	SwitcherDeskView		Entesos
-Version  %VERSION \n\n	SwitcherDeskView		Versió %VERSION \n\n
+Copyright © 2008-%YEAR Haiku, Inc.\n	SwitcherDeskView		Copyright © 2008-%YEAR Haiku, Inc.\n
 Keymap Switcher\n\n	SwitcherDeskView		Keymap Switcher\n\n
+Okay	SwitcherDeskView		Entesos
+Original notice from Stas Maximov:\n	SwitcherDeskView		Nota original de l'Stas Maximov:\n
+Quit	SwitcherDeskView		Surt
+Settings…	SwitcherDeskView		Paràmetres...
+Special thanks to all BeOS users, whether they use this app or not - they're keeping BeOS alive!\n\n	SwitcherDeskView		Gràcies especials a tots els usuaris de BeOS, tant si utilitzen aquesta aplicació com si no, mantenen el BeOS viu!\n\n
 Tested and inspired by\n\tSergey \"fyysik\" Dolgov,\n\tMaxim \"baza\" Bazarov,\n\tDenis Korotkov,\n\tNur Nazmetdinov and others.\n\n	SwitcherDeskView		Provat i inspirat per\n\tSergey \"fyysik\" Dolgov,\n\tMaxim \"baza\" Bazarov,\n\tDenis Korotkov,\n\tNur Nazmetdinov i altres.\n\n
+Thanks to Pierre Raynaud-Richard and Robert Polic for BeOS tips.\n\n	SwitcherDeskView		Gràcies a Pierre Raynaud-Richard i Robert Polic pels consells sobre BeOS.\n\n
+Version  %VERSION \n\n	SwitcherDeskView		Versió %VERSION \n\n
 KeymapSwitcher	System name		Canviador de teclat
+KeymapSwitcher options:\n\t--deskbar\tautomatically add replicant to Deskbar\n\t--help\t\tprint this info and exit\n	SwitcherApplication		Opcions del Canviador de teclat:\n\t--deskbar\tafegeix-ne automàticament el replicant a la barra d'escriptori\n\t--help\t\timprimeix aquesta informació i surt\n
+OK	SwitcherApplication		D'acord
+Unable to create Settings configuration window.	SwitcherApplication		No es pot crear la finestra de configuració dels paràmetres.
+Unable to install keymap indicator. Deskbar application is not running.	SwitcherApplication		No es pot instal·lar l'indicador de mapa de tecles. L'aplicació de la barra d'escriptori no s'executa.

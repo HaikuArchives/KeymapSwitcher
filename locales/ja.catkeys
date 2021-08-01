@@ -1,43 +1,43 @@
 1	Japanese	x-vnd.Nexus-KeymapSwitcher	6804397
-KeymapSwitcher options:\n\t--deskbar\tautomatically add replicant to Deskbar\n\t--help\t\tprint this info and exit\n	SwitcherApplication		KeymapSwitcher options:\n\t--deskbar\tautomatically add replicant to Deskbar\n\t--help\t\tprint this info and exit\n
-Unable to install keymap indicator. Deskbar application is not running.	SwitcherApplication		キーマップインジケーターをインストールできません。Deskbar が動作していません。
-OK	SwitcherApplication		OK
-Unable to create Settings configuration window.	SwitcherApplication		設定ウィンドウを作成できません。
  (system)	SwitcherSettingsWindow		(システム)
+ (user)	SwitcherSettingsWindow		(ユーザー)
+Activate shortcuts substitution	SwitcherSettingsWindow		ショートカット置換を有効にする
+Apply	SwitcherSettingsWindow		適用
+Available keymaps:	SwitcherSettingsWindow		利用可能なキーマップ:
+Caps Lock	SwitcherSettingsWindow		Caps Lock
+Cmd+Shift	SwitcherSettingsWindow		Cmd+Shift
+Ctrl+Shift	SwitcherSettingsWindow		Ctrl+Shift
+Exit	SwitcherSettingsWindow		終了
+Install in Deskbar	SwitcherSettingsWindow		Deskbar にインストール
+Keymap Switcher	SwitcherSettingsWindow		Keymap Switcher
 OK	SwitcherSettingsWindow		OK
-Unable to start Deskbar application. Keymap indicator was not installed.	SwitcherSettingsWindow		Deskbar を開始できません。キーマップ表示はインストールされませんでした。
-Unable to install keymap indicator. Deskbar application is not running.	SwitcherSettingsWindow		キーマップ表示をインストールできません。 Deskbar が実行中ではありません。
+Revert	SwitcherSettingsWindow		元に戻す
+Scroll Lock	SwitcherSettingsWindow		Scroll Lock
+Selected keymaps:	SwitcherSettingsWindow		選択されたキーマップ:
 Shift+Shift	SwitcherSettingsWindow		Shift+Shift
+Shortcut:	SwitcherSettingsWindow		ショートカット:
+Start Deskbar	SwitcherSettingsWindow		Deskbar を開始します
 Substitute shortcuts with %KEYMAP%'s ones	SwitcherSettingsWindow		%KEYMAP% のショートカットを置換する
 System	SwitcherSettingsWindow		システム
-Shortcut:	SwitcherSettingsWindow		ショートカット:
-Cmd+Shift	SwitcherSettingsWindow		Cmd+Shift
-Install in Deskbar	SwitcherSettingsWindow		Deskbar にインストール
-Apply	SwitcherSettingsWindow		適用
-Scroll Lock	SwitcherSettingsWindow		Scroll Lock
-Revert	SwitcherSettingsWindow		元に戻す
-Caps Lock	SwitcherSettingsWindow		Caps Lock
- (user)	SwitcherSettingsWindow		(ユーザー)
-Ctrl+Shift	SwitcherSettingsWindow		Ctrl+Shift
-Keymap Switcher	SwitcherSettingsWindow		Keymap Switcher
-Exit	SwitcherSettingsWindow		終了
-Start Deskbar	SwitcherSettingsWindow		Deskbar を開始します
-Available keymaps:	SwitcherSettingsWindow		利用可能なキーマップ:
-Selected keymaps:	SwitcherSettingsWindow		選択されたキーマップ:
+Unable to install keymap indicator. Deskbar application is not running.	SwitcherSettingsWindow		キーマップ表示をインストールできません。 Deskbar が実行中ではありません。
+Unable to start Deskbar application. Keymap indicator was not installed.	SwitcherSettingsWindow		Deskbar を開始できません。キーマップ表示はインストールされませんでした。
 Use the separate keymap in each application	SwitcherSettingsWindow		アプリケーションごとに異なるキーマップを使う
 User	SwitcherSettingsWindow		ユーザー
-Activate shortcuts substitution	SwitcherSettingsWindow		ショートカット置換を有効にする
-Quit	SwitcherDeskView		終了
-About…	SwitcherDeskView		このソフトワエアについて…
-Settings…	SwitcherDeskView		設定…
-Thanks to Pierre Raynaud-Richard and Robert Polic for BeOS tips.\n\n	SwitcherDeskView		Thanks to Pierre Raynaud-Richard and Robert Polic for BeOS tips.\n\n
-Original notice from Stas Maximov:\n	SwitcherDeskView		Original notice from Stas Maximov:\n
-Copyright © 2008-%YEAR Haiku, Inc.\n	SwitcherDeskView		Copyright © 2008-%YEAR Haiku, Inc.\n
-Special thanks to all BeOS users, whether they use this app or not - they're keeping BeOS alive!\n\n	SwitcherDeskView		Special thanks to all BeOS users, whether they use this app or not - they're keeping BeOS alive!\n\n
 About	SwitcherDeskView		このソフトウェアについて
+About…	SwitcherDeskView		このソフトワエアについて…
 Copyright © 1999-2003 Stas Maximov.\n	SwitcherDeskView		Copyright © 1999-2003 Stas Maximov.\n
-Okay	SwitcherDeskView		Okay
-Version  %VERSION \n\n	SwitcherDeskView		バージョン  %VERSION \n\n
+Copyright © 2008-%YEAR Haiku, Inc.\n	SwitcherDeskView		Copyright © 2008-%YEAR Haiku, Inc.\n
 Keymap Switcher\n\n	SwitcherDeskView		Keymap Switcher\n\n
+Okay	SwitcherDeskView		Okay
+Original notice from Stas Maximov:\n	SwitcherDeskView		Original notice from Stas Maximov:\n
+Quit	SwitcherDeskView		終了
+Settings…	SwitcherDeskView		設定…
+Special thanks to all BeOS users, whether they use this app or not - they're keeping BeOS alive!\n\n	SwitcherDeskView		Special thanks to all BeOS users, whether they use this app or not - they're keeping BeOS alive!\n\n
 Tested and inspired by\n\tSergey \"fyysik\" Dolgov,\n\tMaxim \"baza\" Bazarov,\n\tDenis Korotkov,\n\tNur Nazmetdinov and others.\n\n	SwitcherDeskView		Tested and inspired by\n\tSergey \"fyysik\" Dolgov,\n\tMaxim \"baza\" Bazarov,\n\tDenis Korotkov,\n\tNur Nazmetdinov and others.\n\n
+Thanks to Pierre Raynaud-Richard and Robert Polic for BeOS tips.\n\n	SwitcherDeskView		Thanks to Pierre Raynaud-Richard and Robert Polic for BeOS tips.\n\n
+Version  %VERSION \n\n	SwitcherDeskView		バージョン  %VERSION \n\n
 KeymapSwitcher	System name		KeymapSwitcher
+KeymapSwitcher options:\n\t--deskbar\tautomatically add replicant to Deskbar\n\t--help\t\tprint this info and exit\n	SwitcherApplication		KeymapSwitcher options:\n\t--deskbar\tautomatically add replicant to Deskbar\n\t--help\t\tprint this info and exit\n
+OK	SwitcherApplication		OK
+Unable to create Settings configuration window.	SwitcherApplication		設定ウィンドウを作成できません。
+Unable to install keymap indicator. Deskbar application is not running.	SwitcherApplication		キーマップインジケーターをインストールできません。Deskbar が動作していません。

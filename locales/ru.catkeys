@@ -1,43 +1,43 @@
 1	Russian	x-vnd.Nexus-KeymapSwitcher	6804397
-KeymapSwitcher options:\n\t--deskbar\tautomatically add replicant to Deskbar\n\t--help\t\tprint this info and exit\n	SwitcherApplication		Опции KeymapSwitcher:\n\t--deskbar\tавтоматически добавить репликант в Deskbar\n\t--help\t\tвывести эту информацию и выйти\n
-Unable to install keymap indicator. Deskbar application is not running.	SwitcherApplication		Невозможно установить индикатор расскладки. Deskbar не запущен.
-OK	SwitcherApplication		ОК
-Unable to create Settings configuration window.	SwitcherApplication		Невозможно создать окно настроек.
  (system)	SwitcherSettingsWindow		 (системная)
+ (user)	SwitcherSettingsWindow		 (пользовательская)
+Activate shortcuts substitution	SwitcherSettingsWindow		Включить подмену горячих клавиш
+Apply	SwitcherSettingsWindow		Применить
+Available keymaps:	SwitcherSettingsWindow		Доступные раскладки:
+Caps Lock	SwitcherSettingsWindow		Caps Lock
+Cmd+Shift	SwitcherSettingsWindow		Cmd+Shift
+Ctrl+Shift	SwitcherSettingsWindow		Ctrl+Shift
+Exit	SwitcherSettingsWindow		Выход
+Install in Deskbar	SwitcherSettingsWindow		Установить в Deskbar
+Keymap Switcher	SwitcherSettingsWindow		Переключатель раскладок
 OK	SwitcherSettingsWindow		ОК
-Unable to start Deskbar application. Keymap indicator was not installed.	SwitcherSettingsWindow		Невозможно запустить Deskbar. Индикатор текущей раскладки не был установлен.
-Unable to install keymap indicator. Deskbar application is not running.	SwitcherSettingsWindow		Невозможно установить индикатор расскладки. Deskbar не запущен.
+Revert	SwitcherSettingsWindow		Вернуть
+Scroll Lock	SwitcherSettingsWindow		Scroll Lock
+Selected keymaps:	SwitcherSettingsWindow		Выбранные раскладки:
 Shift+Shift	SwitcherSettingsWindow		Shift+Shift
+Shortcut:	SwitcherSettingsWindow		Переключатель:
+Start Deskbar	SwitcherSettingsWindow		Запустить Deskbar
 Substitute shortcuts with %KEYMAP%'s ones	SwitcherSettingsWindow		Заменять горячие клавиши раскладкой %KEYMAP%
 System	SwitcherSettingsWindow		Системные
-Shortcut:	SwitcherSettingsWindow		Переключатель:
-Cmd+Shift	SwitcherSettingsWindow		Cmd+Shift
-Install in Deskbar	SwitcherSettingsWindow		Установить в Deskbar
-Apply	SwitcherSettingsWindow		Применить
-Scroll Lock	SwitcherSettingsWindow		Scroll Lock
-Revert	SwitcherSettingsWindow		Вернуть
-Caps Lock	SwitcherSettingsWindow		Caps Lock
- (user)	SwitcherSettingsWindow		 (пользовательская)
-Ctrl+Shift	SwitcherSettingsWindow		Ctrl+Shift
-Keymap Switcher	SwitcherSettingsWindow		Переключатель раскладок
-Exit	SwitcherSettingsWindow		Выход
-Start Deskbar	SwitcherSettingsWindow		Запустить Deskbar
-Available keymaps:	SwitcherSettingsWindow		Доступные раскладки:
-Selected keymaps:	SwitcherSettingsWindow		Выбранные раскладки:
+Unable to install keymap indicator. Deskbar application is not running.	SwitcherSettingsWindow		Невозможно установить индикатор расскладки. Deskbar не запущен.
+Unable to start Deskbar application. Keymap indicator was not installed.	SwitcherSettingsWindow		Невозможно запустить Deskbar. Индикатор текущей раскладки не был установлен.
 Use the separate keymap in each application	SwitcherSettingsWindow		Каждое приложение использует свою раскладку
 User	SwitcherSettingsWindow		Пользовательские
-Activate shortcuts substitution	SwitcherSettingsWindow		Включить подмену горячих клавиш
-Quit	SwitcherDeskView		Выход
-About…	SwitcherDeskView		О программе…
-Settings…	SwitcherDeskView		Настройки…
-Thanks to Pierre Raynaud-Richard and Robert Polic for BeOS tips.\n\n	SwitcherDeskView		Спасибо Pierre Raynaud-Richard и Robert Polic за советы по BeOS.\n\n
-Original notice from Stas Maximov:\n	SwitcherDeskView		Первоначальное сообщение Стаса Максимова:\n
-Copyright © 2008-%YEAR Haiku, Inc.\n	SwitcherDeskView		Copyright © 2008-%YEAR Haiku, Inc.\n
-Special thanks to all BeOS users, whether they use this app or not - they're keeping BeOS alive!\n\n	SwitcherDeskView		Особая благодарность всем поклонникам BeOS, пользуются они этой программой или нет - они поддерживают в BeOS жизнь!\n\n
 About	SwitcherDeskView		О программе
+About…	SwitcherDeskView		О программе…
 Copyright © 1999-2003 Stas Maximov.\n	SwitcherDeskView		Copyright © 1999-2003 Стас Максимов.\n
-Okay	SwitcherDeskView		Хорошо
-Version  %VERSION \n\n	SwitcherDeskView		Версия  %VERSION \n\n
+Copyright © 2008-%YEAR Haiku, Inc.\n	SwitcherDeskView		Copyright © 2008-%YEAR Haiku, Inc.\n
 Keymap Switcher\n\n	SwitcherDeskView		Переключатель раскладок\n\n
+Okay	SwitcherDeskView		Хорошо
+Original notice from Stas Maximov:\n	SwitcherDeskView		Первоначальное сообщение Стаса Максимова:\n
+Quit	SwitcherDeskView		Выход
+Settings…	SwitcherDeskView		Настройки…
+Special thanks to all BeOS users, whether they use this app or not - they're keeping BeOS alive!\n\n	SwitcherDeskView		Особая благодарность всем поклонникам BeOS, пользуются они этой программой или нет - они поддерживают в BeOS жизнь!\n\n
 Tested and inspired by\n\tSergey \"fyysik\" Dolgov,\n\tMaxim \"baza\" Bazarov,\n\tDenis Korotkov,\n\tNur Nazmetdinov and others.\n\n	SwitcherDeskView		Протестирован и вдохновлен:\n\tСергеем \"fyysik\" Долговым,\n\tМаксимом \"baza\" Базаровым,\n\tДенисом Коротковым,\n\tНуром Назметдиновым и другими.\n\n
+Thanks to Pierre Raynaud-Richard and Robert Polic for BeOS tips.\n\n	SwitcherDeskView		Спасибо Pierre Raynaud-Richard и Robert Polic за советы по BeOS.\n\n
+Version  %VERSION \n\n	SwitcherDeskView		Версия  %VERSION \n\n
 KeymapSwitcher	System name		Переключатель раскладок
+KeymapSwitcher options:\n\t--deskbar\tautomatically add replicant to Deskbar\n\t--help\t\tprint this info and exit\n	SwitcherApplication		Опции KeymapSwitcher:\n\t--deskbar\tавтоматически добавить репликант в Deskbar\n\t--help\t\tвывести эту информацию и выйти\n
+OK	SwitcherApplication		ОК
+Unable to create Settings configuration window.	SwitcherApplication		Невозможно создать окно настроек.
+Unable to install keymap indicator. Deskbar application is not running.	SwitcherApplication		Невозможно установить индикатор расскладки. Deskbar не запущен.

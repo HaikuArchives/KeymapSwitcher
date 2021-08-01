@@ -1,43 +1,43 @@
 1	Turkish	x-vnd.Nexus-KeymapSwitcher	6804397
-KeymapSwitcher options:\n\t--deskbar\tautomatically add replicant to Deskbar\n\t--help\t\tprint this info and exit\n	SwitcherApplication		KeymapSwitcher seçenekleri:\n\t--deskbar\tyinelenmişi kendiliğinden Masaüstü Çubuğu'na ekle\n\t--help\t\tbu bilgiyi yazdır ve çık\n
-Unable to install keymap indicator. Deskbar application is not running.	SwitcherApplication		Klavye dizilimi belirteci yüklenemiyor. Masaüstü Çubuğu uygulaması çalışmıyor.
-OK	SwitcherApplication		Tamam
-Unable to create Settings configuration window.	SwitcherApplication		Ayarlar yapılandırma penceresi oluşturulamıyor.
  (system)	SwitcherSettingsWindow		 (sistem)
+ (user)	SwitcherSettingsWindow		 (kullanıcı)
+Activate shortcuts substitution	SwitcherSettingsWindow		Kısayol değiştirmeleri etkinleştir
+Apply	SwitcherSettingsWindow		Uygula
+Available keymaps:	SwitcherSettingsWindow		Kullanılabilir dizilimler:
+Caps Lock	SwitcherSettingsWindow		Caps Lock
+Cmd+Shift	SwitcherSettingsWindow		Cmd+Shift
+Ctrl+Shift	SwitcherSettingsWindow		Ctrl+Shift
+Exit	SwitcherSettingsWindow		Çıkış
+Install in Deskbar	SwitcherSettingsWindow		Masaüstü Çubuğu'na yükle
+Keymap Switcher	SwitcherSettingsWindow		Dizilim Değiştirici
 OK	SwitcherSettingsWindow		Tamam
-Unable to start Deskbar application. Keymap indicator was not installed.	SwitcherSettingsWindow		Masaüstü Çubuğu uygulaması başlatılamıyor. Dizilim belirticisi yüklenmemiş.
-Unable to install keymap indicator. Deskbar application is not running.	SwitcherSettingsWindow		Dizilim belirticisi yüklenemiyor. Masaüstü Çubuğu uygulaması çalışmıyor.
+Revert	SwitcherSettingsWindow		Eski haline döndür
+Scroll Lock	SwitcherSettingsWindow		Scroll Lock
+Selected keymaps:	SwitcherSettingsWindow		Seçili dizilimler:
 Shift+Shift	SwitcherSettingsWindow		Shift+Shift
+Shortcut:	SwitcherSettingsWindow		Kısayol:
+Start Deskbar	SwitcherSettingsWindow		Masaüstü Çubuğu'nu başlat
 Substitute shortcuts with %KEYMAP%'s ones	SwitcherSettingsWindow		Kısayolları %KEYMAP% için olanlarla değiştir
 System	SwitcherSettingsWindow		Sistem
-Shortcut:	SwitcherSettingsWindow		Kısayol:
-Cmd+Shift	SwitcherSettingsWindow		Cmd+Shift
-Install in Deskbar	SwitcherSettingsWindow		Masaüstü Çubuğu'na yükle
-Apply	SwitcherSettingsWindow		Uygula
-Scroll Lock	SwitcherSettingsWindow		Scroll Lock
-Revert	SwitcherSettingsWindow		Eski haline döndür
-Caps Lock	SwitcherSettingsWindow		Caps Lock
- (user)	SwitcherSettingsWindow		 (kullanıcı)
-Ctrl+Shift	SwitcherSettingsWindow		Ctrl+Shift
-Keymap Switcher	SwitcherSettingsWindow		Dizilim Değiştirici
-Exit	SwitcherSettingsWindow		Çıkış
-Start Deskbar	SwitcherSettingsWindow		Masaüstü Çubuğu'nu başlat
-Available keymaps:	SwitcherSettingsWindow		Kullanılabilir dizilimler:
-Selected keymaps:	SwitcherSettingsWindow		Seçili dizilimler:
+Unable to install keymap indicator. Deskbar application is not running.	SwitcherSettingsWindow		Dizilim belirticisi yüklenemiyor. Masaüstü Çubuğu uygulaması çalışmıyor.
+Unable to start Deskbar application. Keymap indicator was not installed.	SwitcherSettingsWindow		Masaüstü Çubuğu uygulaması başlatılamıyor. Dizilim belirticisi yüklenmemiş.
 Use the separate keymap in each application	SwitcherSettingsWindow		Her uygulamada ayrı dizilim kullan
 User	SwitcherSettingsWindow		Kullanıcı
-Activate shortcuts substitution	SwitcherSettingsWindow		Kısayol değiştirmeleri etkinleştir
-Quit	SwitcherDeskView		Çık
-About…	SwitcherDeskView		Hakkında…
-Settings…	SwitcherDeskView		Ayarlar…
-Thanks to Pierre Raynaud-Richard and Robert Polic for BeOS tips.\n\n	SwitcherDeskView		BeOS ipuçları için Pierre Raynaud-Richard ve Robert Polic'e teşekkürler.\n\n
-Original notice from Stas Maximov:\n	SwitcherDeskView		Stas Maximov notu:\n
-Copyright © 2008-%YEAR Haiku, Inc.\n	SwitcherDeskView		Telif hakkı © 2008-%YEAR Haiku, Inc.\n
-Special thanks to all BeOS users, whether they use this app or not - they're keeping BeOS alive!\n\n	SwitcherDeskView		Tüm BeOS kullanıcılarına teşekkürlerimizle, bu uygulamayı kullanmasalar bile - BeOS'u hayatta tutuyorlar!\n\n
 About	SwitcherDeskView		Hakkında
+About…	SwitcherDeskView		Hakkında…
 Copyright © 1999-2003 Stas Maximov.\n	SwitcherDeskView		Telif hakkı © 1999-2003 Stas Maximov.\n
-Okay	SwitcherDeskView		Tamam
-Version  %VERSION \n\n	SwitcherDeskView		Sürüm  %VERSION \n\n
+Copyright © 2008-%YEAR Haiku, Inc.\n	SwitcherDeskView		Telif hakkı © 2008-%YEAR Haiku, Inc.\n
 Keymap Switcher\n\n	SwitcherDeskView		Dizilim Değiştirici\n\n
+Okay	SwitcherDeskView		Tamam
+Original notice from Stas Maximov:\n	SwitcherDeskView		Stas Maximov notu:\n
+Quit	SwitcherDeskView		Çık
+Settings…	SwitcherDeskView		Ayarlar…
+Special thanks to all BeOS users, whether they use this app or not - they're keeping BeOS alive!\n\n	SwitcherDeskView		Tüm BeOS kullanıcılarına teşekkürlerimizle, bu uygulamayı kullanmasalar bile - BeOS'u hayatta tutuyorlar!\n\n
 Tested and inspired by\n\tSergey \"fyysik\" Dolgov,\n\tMaxim \"baza\" Bazarov,\n\tDenis Korotkov,\n\tNur Nazmetdinov and others.\n\n	SwitcherDeskView		Sınayanlar ve katkıda bulunanlar: \n\tSergey \"fyysik\" Dolgov,\n\tMaxim \"baza\" Bazarov,\n\tDenis Korotkov,\n\tNur Nazmetdinov ve diğerleri.\n\n
+Thanks to Pierre Raynaud-Richard and Robert Polic for BeOS tips.\n\n	SwitcherDeskView		BeOS ipuçları için Pierre Raynaud-Richard ve Robert Polic'e teşekkürler.\n\n
+Version  %VERSION \n\n	SwitcherDeskView		Sürüm  %VERSION \n\n
 KeymapSwitcher	System name		Dizilim Değiştirici
+KeymapSwitcher options:\n\t--deskbar\tautomatically add replicant to Deskbar\n\t--help\t\tprint this info and exit\n	SwitcherApplication		KeymapSwitcher seçenekleri:\n\t--deskbar\tyinelenmişi kendiliğinden Masaüstü Çubuğu'na ekle\n\t--help\t\tbu bilgiyi yazdır ve çık\n
+OK	SwitcherApplication		Tamam
+Unable to create Settings configuration window.	SwitcherApplication		Ayarlar yapılandırma penceresi oluşturulamıyor.
+Unable to install keymap indicator. Deskbar application is not running.	SwitcherApplication		Klavye dizilimi belirteci yüklenemiyor. Masaüstü Çubuğu uygulaması çalışmıyor.

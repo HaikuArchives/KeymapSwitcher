@@ -1,43 +1,43 @@
 1	Romanian	x-vnd.Nexus-KeymapSwitcher	6804397
-KeymapSwitcher options:\n\t--deskbar\tautomatically add replicant to Deskbar\n\t--help\t\tprint this info and exit\n	SwitcherApplication		Opțiuni ComutatorHartăTaste:\n\t--deskbar\tadaugă automat replica la Deskbar\n\t--help\t\ttipărește aceste informații și părăsește\n
-Unable to install keymap indicator. Deskbar application is not running.	SwitcherApplication		Nu s-a putut instala indicatorul hartă taste. Aplicația Deskbar nu rulează.
-OK	SwitcherApplication		OK
-Unable to create Settings configuration window.	SwitcherApplication		Nu s-a putut crea fereastra Configurări.
  (system)	SwitcherSettingsWindow		 (sistem)
+ (user)	SwitcherSettingsWindow		 (utilizator)
+Activate shortcuts substitution	SwitcherSettingsWindow		Activează înlocuirea scurtăturilor
+Apply	SwitcherSettingsWindow		Aplică
+Available keymaps:	SwitcherSettingsWindow		Hărți de taste disponibile:
+Caps Lock	SwitcherSettingsWindow		Caps Lock
+Cmd+Shift	SwitcherSettingsWindow		Cmd+Shift
+Ctrl+Shift	SwitcherSettingsWindow		Ctrl+Shift
+Exit	SwitcherSettingsWindow		Ieșire
+Install in Deskbar	SwitcherSettingsWindow		Instalează pe Deskbar
+Keymap Switcher	SwitcherSettingsWindow		Comutator HartăTaste
 OK	SwitcherSettingsWindow		OK
-Unable to start Deskbar application. Keymap indicator was not installed.	SwitcherSettingsWindow		Nu s-a putut porni aplicația Deskbar. Indicatorul HartăTaste nu a fost instalat.
-Unable to install keymap indicator. Deskbar application is not running.	SwitcherSettingsWindow		Nu s-a putut instala indicatorul hartă taste. Aplicația Deskbar nu rulează.
+Revert	SwitcherSettingsWindow		Revenire
+Scroll Lock	SwitcherSettingsWindow		Scroll Lock
+Selected keymaps:	SwitcherSettingsWindow		Hărți de taste selectate:
 Shift+Shift	SwitcherSettingsWindow		Shift+Shift
+Shortcut:	SwitcherSettingsWindow		Tastă rapidă:
+Start Deskbar	SwitcherSettingsWindow		Pornește Deskbar
 Substitute shortcuts with %KEYMAP%'s ones	SwitcherSettingsWindow		Înlocuiește scurtăturile cu cele %KEYMAP%
 System	SwitcherSettingsWindow		Sistem
-Shortcut:	SwitcherSettingsWindow		Tastă rapidă:
-Cmd+Shift	SwitcherSettingsWindow		Cmd+Shift
-Install in Deskbar	SwitcherSettingsWindow		Instalează pe Deskbar
-Apply	SwitcherSettingsWindow		Aplică
-Scroll Lock	SwitcherSettingsWindow		Scroll Lock
-Revert	SwitcherSettingsWindow		Revenire
-Caps Lock	SwitcherSettingsWindow		Caps Lock
- (user)	SwitcherSettingsWindow		 (utilizator)
-Ctrl+Shift	SwitcherSettingsWindow		Ctrl+Shift
-Keymap Switcher	SwitcherSettingsWindow		Comutator HartăTaste
-Exit	SwitcherSettingsWindow		Ieșire
-Start Deskbar	SwitcherSettingsWindow		Pornește Deskbar
-Available keymaps:	SwitcherSettingsWindow		Hărți de taste disponibile:
-Selected keymaps:	SwitcherSettingsWindow		Hărți de taste selectate:
+Unable to install keymap indicator. Deskbar application is not running.	SwitcherSettingsWindow		Nu s-a putut instala indicatorul hartă taste. Aplicația Deskbar nu rulează.
+Unable to start Deskbar application. Keymap indicator was not installed.	SwitcherSettingsWindow		Nu s-a putut porni aplicația Deskbar. Indicatorul HartăTaste nu a fost instalat.
 Use the separate keymap in each application	SwitcherSettingsWindow		Utilizează harta separată de taste în fiecare aplicație
 User	SwitcherSettingsWindow		Utilizator
-Activate shortcuts substitution	SwitcherSettingsWindow		Activează înlocuirea scurtăturilor
-Quit	SwitcherDeskView		Părăsește
-About…	SwitcherDeskView		Despre…
-Settings…	SwitcherDeskView		Configurări…
-Thanks to Pierre Raynaud-Richard and Robert Polic for BeOS tips.\n\n	SwitcherDeskView		Mulțumesc lui Pierre Raynaud-Richard și lui Robert Polic pentru sfaturile legate de BeOS.\n\n
-Original notice from Stas Maximov:\n	SwitcherDeskView		Notiță originală de la Stas Maximov:\n
-Copyright © 2008-%YEAR Haiku, Inc.\n	SwitcherDeskView		Drepturi de autor © 2008-%YEAR Haiku, Inc.\n
-Special thanks to all BeOS users, whether they use this app or not - they're keeping BeOS alive!\n\n	SwitcherDeskView		Mulțumiri speciale tuturor utilizatorilor BeOS, chiar dacă utilizează sau nu această aplicație - ei mențin BeOS viu!\n\n
 About	SwitcherDeskView		Despre
+About…	SwitcherDeskView		Despre…
 Copyright © 1999-2003 Stas Maximov.\n	SwitcherDeskView		Drepturi de autor © 1999-2003 Stas Maximov.\n
-Okay	SwitcherDeskView		Bine
-Version  %VERSION \n\n	SwitcherDeskView		Versiune  %VERSION \n\n
+Copyright © 2008-%YEAR Haiku, Inc.\n	SwitcherDeskView		Drepturi de autor © 2008-%YEAR Haiku, Inc.\n
 Keymap Switcher\n\n	SwitcherDeskView		Comutator HartăTaste\n\n
+Okay	SwitcherDeskView		Bine
+Original notice from Stas Maximov:\n	SwitcherDeskView		Notiță originală de la Stas Maximov:\n
+Quit	SwitcherDeskView		Părăsește
+Settings…	SwitcherDeskView		Configurări…
+Special thanks to all BeOS users, whether they use this app or not - they're keeping BeOS alive!\n\n	SwitcherDeskView		Mulțumiri speciale tuturor utilizatorilor BeOS, chiar dacă utilizează sau nu această aplicație - ei mențin BeOS viu!\n\n
 Tested and inspired by\n\tSergey \"fyysik\" Dolgov,\n\tMaxim \"baza\" Bazarov,\n\tDenis Korotkov,\n\tNur Nazmetdinov and others.\n\n	SwitcherDeskView		Testat și inspirat de\n\tSergey \"fyysik\" Dolgov,\n\tMaxim \"baza\" Bazarov,\n\tDenis Korotkov,\n\tNur Nazmetdinov și alții.\n\n
+Thanks to Pierre Raynaud-Richard and Robert Polic for BeOS tips.\n\n	SwitcherDeskView		Mulțumesc lui Pierre Raynaud-Richard și lui Robert Polic pentru sfaturile legate de BeOS.\n\n
+Version  %VERSION \n\n	SwitcherDeskView		Versiune  %VERSION \n\n
 KeymapSwitcher	System name		Comutator HartăTaste
+KeymapSwitcher options:\n\t--deskbar\tautomatically add replicant to Deskbar\n\t--help\t\tprint this info and exit\n	SwitcherApplication		Opțiuni ComutatorHartăTaste:\n\t--deskbar\tadaugă automat replica la Deskbar\n\t--help\t\ttipărește aceste informații și părăsește\n
+OK	SwitcherApplication		OK
+Unable to create Settings configuration window.	SwitcherApplication		Nu s-a putut crea fereastra Configurări.
+Unable to install keymap indicator. Deskbar application is not running.	SwitcherApplication		Nu s-a putut instala indicatorul hartă taste. Aplicația Deskbar nu rulează.
